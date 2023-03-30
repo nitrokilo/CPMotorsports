@@ -26,7 +26,7 @@ const style = {
   p: 4,
 };
 
-export default function AddProject(props) {
+export default function AddService(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   // Behaviors and states passed as props and renamed
@@ -49,7 +49,7 @@ export default function AddProject(props) {
   return (
     <div>
       <Button onClick={handleOpen} color="secondary">
-        Add Project
+        Add Service
       </Button>
       <Modal
         open={open}
@@ -58,7 +58,7 @@ export default function AddProject(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="Add Project" subtitle="Add Project" />
+          <Header title="Add Service" subtitle="Add Service" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -72,46 +72,9 @@ export default function AddProject(props) {
                     },
                   }}
                 >
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="text"
-                    label="Car Vin"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.trans_name}
-                    name="trans_name"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <br />
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="date"
-                    label="Part or Service Start Date"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.amount}
-                    name="amount"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="date"
-                    label="Part or Service End Date"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.amount}
-                    name="amount"
-                    sx={{ gridColumn: "span 2" }}
-                  />
                   <FormControl required sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-required-label">
-                      Project Status
+                      Type Status
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-required-label"
@@ -128,10 +91,68 @@ export default function AddProject(props) {
                       {customerstatusoptions}
                     </Select>
                   </FormControl>
+                  <FormControl required sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-required-label">
+                      Vehicle Type
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-required-label"
+                      id="demo-simple-select-required"
+                      value={values.category_id}
+                      label="category_id"
+                      name="category_id"
+                      onChange={handleChange}
+                    >
+                      <FormHelperText>Required</FormHelperText>
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {customerstatusoptions}
+                    </Select>
+                  </FormControl>
+                  <br />
+                  <TextField
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="text"
+                    label="Sevice Name"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.trans_name}
+                    name="trans_name"
+                    sx={{ gridColumn: "span 3" }}
+                  />
+                  <br />
+                  <TextField
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="number"
+                    label="Service Cost"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.amount}
+                    name="amount"
+                    sx={{ gridColumn: "span 3" }}
+                  />
+                  <br />
+                  <TextField
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="text"
+                    label="Desciption"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.transaction_date}
+                    name="transaction_date"
+                    sx={{ gridColumn: "span 3" }}
+                  />
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Add Project
+                    Add Service
                   </Button>
                 </Box>
               </form>

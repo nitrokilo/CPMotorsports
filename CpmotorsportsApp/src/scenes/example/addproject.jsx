@@ -26,7 +26,7 @@ const style = {
   p: 4,
 };
 
-export default function AddProject(props) {
+export default function AddTransaction(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   // Behaviors and states passed as props and renamed
@@ -37,19 +37,25 @@ export default function AddProject(props) {
   const handleClose = props.handleClose;
   const open = props.open;
   const postsucessful = props.postsucessful;
-  const customerstatusdata = props.customerstatusdata;
+  const categoriesdata = props.categoriesdata;
+  const transactionaccountdata = props.transactionaccountdata;
   const Alert = props.alert;
 
-  const customerstatusoptions = customerstatusdata.map((customer_status) => (
-    <MenuItem value={customer_status.customer_stat_id}>
-      {customer_status.customer_stat_name}
-    </MenuItem>
+  // Mapping for category and transaction account options
+  const categoryoptions = categoriesdata.map((category) => (
+    <MenuItem value={category.category_id}> {category.category_desc} </MenuItem>
   ));
+
+  const transactionaccountoptions = transactionaccountdata.map(
+    (trans_account) => (
+      <MenuItem value={trans_account.acc_id}>{trans_account.acc_name}</MenuItem>
+    )
+  );
 
   return (
     <div>
       <Button onClick={handleOpen} color="secondary">
-        Add Project
+        Add Transaction
       </Button>
       <Modal
         open={open}
@@ -58,7 +64,7 @@ export default function AddProject(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="Add Project" subtitle="Add Project" />
+          <Header title="ADD TRANSACTION" subtitle="ADD TRANSACTION" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -77,32 +83,19 @@ export default function AddProject(props) {
                     required
                     variant="filled"
                     type="text"
-                    label="Car Vin"
+                    label="Transaction Name"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.trans_name}
                     name="trans_name"
                     sx={{ gridColumn: "span 2" }}
                   />
-                  <br />
                   <TextField
                     fullWidth
                     required
                     variant="filled"
-                    type="date"
-                    label="Part or Service Start Date"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.amount}
-                    name="amount"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="date"
-                    label="Part or Service End Date"
+                    type="number"
+                    label="Transaction Amount"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.amount}
@@ -111,7 +104,7 @@ export default function AddProject(props) {
                   />
                   <FormControl required sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-required-label">
-                      Project Status
+                      Category
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-required-label"
@@ -125,13 +118,57 @@ export default function AddProject(props) {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {customerstatusoptions}
+                      {categoryoptions}
+                    </Select>
+                  </FormControl>
+
+                  <TextField
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="date"
+                    label="Transaction Date"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.transaction_date}
+                    name="transaction_date"
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Transaction Description"
+                    multiline
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.description}
+                    name="description"
+                    sx={{ gridColumn: "span 4" }}
+                  />
+                  <FormControl required sx={{ m: 1, minWidth: 200 }}>
+                    <InputLabel id="demo-simple-select-required-label">
+                      Transaction Account
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-required-label"
+                      id="demo-simple-select-required"
+                      value={values.trans_acc}
+                      label="trans_acc"
+                      onChange={handleChange}
+                      name="trans_acc"
+                    >
+                      <FormHelperText>Required</FormHelperText>
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {transactionaccountoptions}
                     </Select>
                   </FormControl>
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Add Project
+                    Add Transaction
                   </Button>
                 </Box>
               </form>

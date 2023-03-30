@@ -6,8 +6,8 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
-import AddProject from "./addproject";
-const Project = () => {
+import AddMechanic from "./addmechanic";
+const Mechanic = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
@@ -120,7 +120,7 @@ const Project = () => {
 
   return (
     <Box m="20px">
-      <AddProject
+      <AddMechanic
         handleOpen={handleOpenadd}
         handleClose={handleCloseadd}
         open={openadd}
@@ -152,7 +152,7 @@ const Project = () => {
         alert={SuccessAlert}
       />  */}
 
-      <Header title="Project" subtitle="List of all Projects" />
+      <Header title="Mechanic" subtitle="List of all Mechanics" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -196,4 +196,4 @@ const Project = () => {
   );
 };
 
-export default Project;
+export default Mechanic;

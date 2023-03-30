@@ -6,8 +6,8 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
-import AddProject from "./addproject";
-const Project = () => {
+import AddCustomer from "./addcustomer";
+const Customer = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
@@ -85,6 +85,7 @@ const Project = () => {
       });
   }, []);
 
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -98,7 +99,7 @@ const Project = () => {
     { field: "customer_id", headerName: "ID", flex: 0.5 },
     { field: "customer_first_name", headerName: "First Name", flex: 1 },
     { field: "customer_last_name", headerName: "Last Name", flex: 1 },
-
+   
     {
       field: "customer_phone_number",
       headerName: "Phone Number",
@@ -120,7 +121,7 @@ const Project = () => {
 
   return (
     <Box m="20px">
-      <AddProject
+       <AddCustomer
         handleOpen={handleOpenadd}
         handleClose={handleCloseadd}
         open={openadd}
@@ -152,7 +153,7 @@ const Project = () => {
         alert={SuccessAlert}
       />  */}
 
-      <Header title="Project" subtitle="List of all Projects" />
+      <Header title="Customer" subtitle="List of all Cusotmers" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -196,4 +197,4 @@ const Project = () => {
   );
 };
 
-export default Project;
+export default Customer;

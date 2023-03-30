@@ -1,33 +1,36 @@
 import { Box } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, GridColTypeDef } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
+import AddTransaction from "./addtransaction";
+import EditTransaction from "./edittransaction";
+import DeleteTransaction from "./edittransaction";
 import { SuccessAlert } from "../../components/alert.jsx";
-import AddProject from "./addproject";
-const Project = () => {
+
+const Projects = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
-  // State definitions for Add Customer
+  // State definitions for Add Transaction
   const [openadd, setOpenadd] = useState(false);
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
-  // Defintions for Add Customer component
+  // Defintions for Add Transaction component
   const handleOpenadd = () => setOpenadd(true);
   const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
-      .post("/Customer", values)
+      .post("/Projects", values)
       .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };
 
-  // Definitions for Edit Customer
+  // Definitions for Edit Transaction
   const [openedit, setOpenedit] = useState(false);
   const handleOpenedit = () => setOpenedit(true);
   const handleCloseedit = () => setOpenedit(false);
@@ -42,7 +45,7 @@ const Project = () => {
       .then(setPostsucessfuledit(true));
   };
 
-  // Definitions for Delete Customer
+  // Definitions for Delete Transaction
   const [opendelete, setOpendelete] = useState(false);
   const handleOpendelete = () => setOpendelete(true);
   const handleClosedelete = () => setOpendelete(false);
@@ -57,12 +60,12 @@ const Project = () => {
       .then(setPostsucessfuldelete(true));
   };
   // Api Call and config
-  const [Customer, setCustomer] = useState("");
+  const [Projects, setProjects] = useState("");
   useEffect(() => {
     client
-      .get("/customer")
+      .get("/Projects")
       .then((res) => {
-        setCustomer(res.data);
+        setProjects(res.data);
       })
       .then(setReRender(false))
       .catch((err) => {
@@ -71,14 +74,27 @@ const Project = () => {
   }, [reRender]);
 
   // Api call and config for Categories and Transaction Accounts
-  const [customer_statusdata, setcustomer_statusdata] = useState([]);
+  const [categoriesdata, setCategoriesdata] = useState([]);
+  const [transactionaccountdata, setTransactionaacountdata] = useState([]);
 
-  // Api call to get customer status for select option
+  // Api call to get categories for select option
   useEffect(() => {
     client
-      .get("/customer_status")
+      .get("/categories")
       .then((res) => {
-        setcustomer_statusdata(res.data);
+        setCategoriesdata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // Api call to get transaction account for select option
+  useEffect(() => {
+    client
+      .get("/transaction_accounts")
+      .then((res) => {
+        setTransactionaacountdata(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -95,42 +111,49 @@ const Project = () => {
 
   // Column Configuration
   const columns = [
-    { field: "customer_id", headerName: "ID", flex: 0.5 },
-    { field: "customer_first_name", headerName: "First Name", flex: 1 },
-    { field: "customer_last_name", headerName: "Last Name", flex: 1 },
-
+    { field: "transaction_id", headerName: "ID", flex: 0.5 },
+    { field: "trans_name", headerName: "Transaction Name", flex: 1 },
     {
-      field: "customer_phone_number",
-      headerName: "Phone Number",
+      field: "amount",
+      headerName: "Amount",
+      type: "number",
+      valueFormatter: ({ value }) => currencyFormatter.format(value),
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "category_desc",
+      headerName: "Category",
       flex: 1,
       cellClassName: "name-column--cell",
     },
 
     {
-      field: "customer_email",
-      headerName: "Customer Email",
+      field: "transaction_date",
+      headerName: "Transaction Date",
       flex: 1,
     },
     {
-      field: "Customer Status",
-      headerName: "Customer Status",
+      field: "acc_name",
+      headerName: "Transaction Account",
       flex: 1,
     },
   ];
 
   return (
     <Box m="20px">
-      <AddProject
+      <AddTransaction
         handleOpen={handleOpenadd}
         handleClose={handleCloseadd}
         open={openadd}
         handleFormSubmit={handleFormSubmitadd}
         postsucessful={postsucessfuladd}
-        customerstatusdata={customer_statusdata}
+        categoriesdata={categoriesdata}
+        transactionaccountdata={transactionaccountdata}
         alert={SuccessAlert}
       />
 
-      {/* <EditTransaction
+      <EditTransaction
         handleOpen={handleOpenedit}
         handleClose={handleCloseedit}
         open={openedit}
@@ -150,9 +173,9 @@ const Project = () => {
         postsucessful={postsucessfuldelete}
         Projects={Projects}
         alert={SuccessAlert}
-      />  */}
+      />
 
-      <Header title="Project" subtitle="List of all Projects" />
+      <Header title="Projects" subtitle="List of all Projects" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -186,9 +209,9 @@ const Project = () => {
         }}
       >
         <DataGrid
-          rows={Customer}
+          rows={Projects}
           columns={columns}
-          getRowId={(row) => row.customer_id}
+          getRowId={(row) => row.transaction_id}
           components={{ Toolbar: GridToolbar }}
         />
       </Box>
@@ -196,4 +219,4 @@ const Project = () => {
   );
 };
 
-export default Project;
+export default Projects;

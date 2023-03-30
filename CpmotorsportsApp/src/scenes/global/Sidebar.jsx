@@ -5,17 +5,17 @@ import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
+import BuildIcon from "@mui/icons-material/Build";
+import HandymanIcon from "@mui/icons-material/Handyman";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import EngineeringIcon from "@mui/icons-material/Engineering";
+import AppsIcon from "@mui/icons-material/Apps";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -135,7 +135,7 @@ const Sidebar = () => {
             <Item
               title="Services"
               to="/services"
-              icon={<PeopleOutlinedIcon />}
+              icon={<BuildIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -149,21 +149,21 @@ const Sidebar = () => {
             <Item
               title="Make and Models"
               to="/make_models"
-              icon={<ReceiptOutlinedIcon />}
+              icon={<DirectionsCarIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Custom Parts"
               to="/custom_parts"
-              icon={<ReceiptOutlinedIcon />}
+              icon={<HandymanIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Mechanics"
               to="/mechanics"
-              icon={<ReceiptOutlinedIcon />}
+              icon={<EngineeringIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -171,7 +171,7 @@ const Sidebar = () => {
             <Item
               title="Projects"
               to="/projects"
-              icon={<ReceiptOutlinedIcon />}
+              icon={<AppsIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -236,7 +236,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-                 
           </Box>
         </Menu>
       </ProSidebar>

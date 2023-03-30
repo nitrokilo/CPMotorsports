@@ -26,7 +26,7 @@ const style = {
   p: 4,
 };
 
-export default function AddProject(props) {
+export default function AddMake(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   // Behaviors and states passed as props and renamed
@@ -49,7 +49,7 @@ export default function AddProject(props) {
   return (
     <div>
       <Button onClick={handleOpen} color="secondary">
-        Add Project
+        Add Make
       </Button>
       <Modal
         open={open}
@@ -58,7 +58,7 @@ export default function AddProject(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="Add Project" subtitle="Add Project" />
+          <Header title="Add Make" subtitle="Add Make" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -77,41 +77,17 @@ export default function AddProject(props) {
                     required
                     variant="filled"
                     type="text"
-                    label="Car Vin"
+                    label="Make Name"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.trans_name}
                     name="trans_name"
                     sx={{ gridColumn: "span 2" }}
                   />
-                  <br />
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="date"
-                    label="Part or Service Start Date"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.amount}
-                    name="amount"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="date"
-                    label="Part or Service End Date"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.amount}
-                    name="amount"
-                    sx={{ gridColumn: "span 2" }}
-                  />
+
                   <FormControl required sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-required-label">
-                      Project Status
+                      Status
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-required-label"
@@ -131,7 +107,7 @@ export default function AddProject(props) {
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Add Project
+                    Add MAKE
                   </Button>
                 </Box>
               </form>

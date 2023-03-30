@@ -26,7 +26,7 @@ const style = {
   p: 4,
 };
 
-export default function AddProject(props) {
+export default function AddCustomer(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   // Behaviors and states passed as props and renamed
@@ -40,16 +40,18 @@ export default function AddProject(props) {
   const customerstatusdata = props.customerstatusdata;
   const Alert = props.alert;
 
-  const customerstatusoptions = customerstatusdata.map((customer_status) => (
-    <MenuItem value={customer_status.customer_stat_id}>
-      {customer_status.customer_stat_name}
-    </MenuItem>
-  ));
+  
+
+  const customerstatusoptions = customerstatusdata.map(
+    (customer_status) => (
+      <MenuItem value={customer_status.customer_stat_id}>{customer_status.customer_stat_name}</MenuItem>
+    )
+  );
 
   return (
     <div>
       <Button onClick={handleOpen} color="secondary">
-        Add Project
+        Add Customer
       </Button>
       <Modal
         open={open}
@@ -58,7 +60,7 @@ export default function AddProject(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="Add Project" subtitle="Add Project" />
+          <Header title="ADD Customer" subtitle="ADD Customer" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -77,32 +79,19 @@ export default function AddProject(props) {
                     required
                     variant="filled"
                     type="text"
-                    label="Car Vin"
+                    label="First Name"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.trans_name}
                     name="trans_name"
                     sx={{ gridColumn: "span 2" }}
                   />
-                  <br />
                   <TextField
                     fullWidth
                     required
                     variant="filled"
-                    type="date"
-                    label="Part or Service Start Date"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.amount}
-                    name="amount"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="date"
-                    label="Part or Service End Date"
+                    type="number"
+                    label="Last Name"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.amount}
@@ -111,7 +100,7 @@ export default function AddProject(props) {
                   />
                   <FormControl required sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-required-label">
-                      Project Status
+                      Status
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-required-label"
@@ -128,10 +117,35 @@ export default function AddProject(props) {
                       {customerstatusoptions}
                     </Select>
                   </FormControl>
+
+                  <TextField
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="number"
+                    label="Phone Number"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.transaction_date}
+                    name="transaction_date"
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Customer Email"
+                    multiline
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.description}
+                    name="description"
+                    sx={{ gridColumn: "span 4" }}
+                  />
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Add Project
+                    Add Customer
                   </Button>
                 </Box>
               </form>
