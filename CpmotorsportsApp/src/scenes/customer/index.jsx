@@ -1,12 +1,11 @@
-import { Box,  Select, MenuItem } from "@mui/material";
+import { Box, Select, MenuItem } from "@mui/material";
 import { tokens } from "../../theme";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
-import AddCustomer from "./addcustomer";
-import MaterialTable from 'material-table'
+import MaterialTable from "material-table";
 import { tableIcons } from "../global/tableicons";
 
 const Customer = () => {
@@ -75,7 +74,6 @@ const Customer = () => {
       });
   }, []);
 
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -84,25 +82,22 @@ const Customer = () => {
     currency: "USD",
   });
 
-
-  // Edit Capabilities 
-  const customerstatusoptions = customer_statusdata.map(
-    (customer_status) => (
-      <MenuItem value={customer_status.customer_stat_id}>{customer_status.customer_stat_name}</MenuItem>
-    )
-  );
+  // Edit Capabilities
+  const customerstatusoptions = customer_statusdata.map((customer_status) => (
+    <MenuItem value={customer_status.customer_stat_id}>
+      {customer_status.customer_stat_name}
+    </MenuItem>
+  ));
 
   // Column Configuration
   const columns = [
-    { field: "customer_id", title: "ID", flex: 0.5,  editable: true },
+    { field: "customer_id", title: "ID", flex: 0.5, editable: false },
     { field: "customer_first_name", title: "First Name", flex: 1 },
     { field: "customer_last_name", title: "Last Name", flex: 1 },
-   
+
     {
       field: "customer_phone_number",
       title: "Phone Number",
-      flex: 1,
-      cellClassName: "name-column--cell",
     },
 
     {
@@ -115,26 +110,23 @@ const Customer = () => {
       title: "Customer Status",
       flex: 1,
       editComponent: ({ value, onChange, rowData }) => (
-
-      <Select
-      value={value}
-      onChange={(event) => {
-        onChange(event.target.value);
-      }}
-    >
-      <MenuItem value="">
-        <em>None</em>
-      </MenuItem>
-      {customerstatusoptions}
-      
-    </Select>
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {customerstatusoptions}
+        </Select>
       ),
     },
   ];
 
   return (
     <Box m="20px">
-       
       <Header title="Customer" subtitle="List of all Cusotmers" />
       <Box
         m="40px 0 0 0"
@@ -168,50 +160,52 @@ const Customer = () => {
           },
         }}
       >
-        
         <MaterialTable
-        icons={tableIcons}
-        title="Customer Data"
-        data={Customer}
-        columns={columns}
-        editable={{
-          onRowAdd: (newRow) => new Promise((resolve, reject) => {
-            console.log(newRow)
-            handleFormSubmitadd(newRow)
-            resolve()
-          }),
-          onRowDelete: selectedRow => new Promise((resolve, reject) => {
-            const index = selectedRow.tableData.id;
-            const updatedRows = [...data]
-            updatedRows.splice(index, 1)
-            setTimeout(() => {
-              setData(updatedRows)
-              resolve()
-            }, 2000)
-          }),
-          onRowUpdate:(updatedRow,oldRow)=>new Promise((resolve,reject)=>{
-            setTimeout(()=>{
-            handleFormSubmitedit(updatedRow)
-            resolve();
-            }, 1000)
-            
-          }),
-
-        }}
-        options={{
-          headerStyle: {
-            backgroundColor: 'white',
-            color: 'black'
-          },
-          actionsColumnIndex: -1, addRowPosition: "first",
-          exportButton: true,
-          filtering: true, 
-          pageSize: 15
-        }}
-      />
+          icons={tableIcons}
+          title="Customer Data"
+          data={Customer}
+          columns={columns}
+          editable={{
+            onRowAdd: (newRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  console.log(newRow);
+                  handleFormSubmitadd(newRow);
+                  resolve();
+                }, 1000);
+              }),
+            onRowDelete: (selectedRow) =>
+              new Promise((resolve, reject) => {
+                const index = selectedRow.tableData.id;
+                const updatedRows = [...data];
+                updatedRows.splice(index, 1);
+                setTimeout(() => {
+                  setData(updatedRows);
+                  resolve();
+                }, 2000);
+              }),
+            onRowUpdate: (updatedRow, oldRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  handleFormSubmitedit(updatedRow);
+                  resolve();
+                }, 1000);
+              }),
+          }}
+          options={{
+            headerStyle: {
+              backgroundColor: "white",
+              color: "black",
+            },
+            actionsColumnIndex: -1,
+            addRowPosition: "first",
+            exportButton: true,
+            filtering: true,
+            pageSize: 15,
+          }}
+        />
       </Box>
     </Box>
-
   );
 };
 
