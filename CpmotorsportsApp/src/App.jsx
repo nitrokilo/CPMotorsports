@@ -6,7 +6,9 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Customer from "./scenes/customer";
 import Service from "./scenes/services";
-import MakeandModel from "./scenes/make_model";
+import CustomerCar from "./scenes/customer_car";
+import Make from "./scenes/make";
+import Model from "./scenes/model";
 import CustomParts from "./scenes/custom_parts";
 import Mechanic from "./scenes/mechanic";
 import Project from "./scenes/project";
@@ -28,7 +30,9 @@ function App() {
             <Routes>
               <Route path="/services" element={<Service />} />
               <Route path="/customers" element={<Customer />} />
-              <Route path="/make_models" element={<MakeandModel />} />
+              <Route path="/customer_car" element={<CustomerCar />} />
+              <Route path="/makes" element={<Make />} />
+              <Route path="/models" element={<Model />} />
               <Route path="/custom_parts" element={<CustomParts />} />
               <Route path="/mechanics" element={<Mechanic />} />
               <Route path="/projects" element={<Project />} />

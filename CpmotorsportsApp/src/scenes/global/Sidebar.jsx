@@ -6,6 +6,8 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import CarRentalIcon from "@mui/icons-material/CarRental";
+import DirectionsCarFilledIcon from "@mui/icons-material/DirectionsCarFilled";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
@@ -147,9 +149,23 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Make and Models"
-              to="/make_models"
+              title="Customer Cars"
+              to="/customer_cars"
+              icon={<CarRentalIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Makes"
+              to="/makes"
               icon={<DirectionsCarIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Models"
+              to="/models"
+              icon={<DirectionsCarFilledIcon />}
               selected={selected}
               setSelected={setSelected}
             />

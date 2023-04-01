@@ -34,7 +34,7 @@ const Make = () => {
       .then(setPostsucessfuledit(true));
   };
 
-  // Definitions for Delete Customer
+  /* Definitions for Delete Customer
   const [postsucessfuldelete, setPostsucessfuldelete] = useState(false);
   const handleFormSubmitdelete = (values) => {
     const idtodelete = values.trans_id;
@@ -43,15 +43,15 @@ const Make = () => {
       .then(setOpendelete(false))
       .then(setReRender(true))
       .then(setPostsucessfuldelete(true));
-  };
+  }; */
 
   // Api Call and config
-  const [Make, setCustomer] = useState([]);
+  const [Make, setMake] = useState([]);
   useEffect(() => {
     client
       .get("/make")
       .then((res) => {
-        setCustomer(res.data);
+        setMake(res.data);
       })
       .then(setReRender(false))
       .catch((err) => {
@@ -62,12 +62,12 @@ const Make = () => {
   // Api call and config for Categories and Transaction Accounts
   const [make_statusdata, setmake_statusdata] = useState([]);
 
-  // Api call to get customer status for select option
+  // Api call to get make status for select option
   useEffect(() => {
     client
       .get("/make_status")
       .then((res) => {
-        setcustomer_statusdata(res.data);
+        setmake_statusdata(res.data);
       })
       .catch((err) => {
         console.log(err);
