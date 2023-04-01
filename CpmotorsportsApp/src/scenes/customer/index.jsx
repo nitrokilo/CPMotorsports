@@ -1,52 +1,41 @@
-import { Box } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Box,  Select, MenuItem } from "@mui/material";
 import { tokens } from "../../theme";
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
 import AddCustomer from "./addcustomer";
+import MaterialTable from 'material-table'
+import { tableIcons } from "../global/tableicons";
+
 const Customer = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
   // State definitions for Add Customer
-  const [openadd, setOpenadd] = useState(false);
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
   // Defintions for Add Customer component
-  const handleOpenadd = () => setOpenadd(true);
-  const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
-      .post("/Customer", values)
-      .then(setOpenadd(false))
+      .post("/customer", values)
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };
 
   // Definitions for Edit Customer
-  const [openedit, setOpenedit] = useState(false);
-  const handleOpenedit = () => setOpenedit(true);
-  const handleCloseedit = () => setOpenedit(false);
-
   const [postsucessfuledit, setPostsucessfuledit] = useState(false);
   const handleFormSubmitedit = (values) => {
     console.log(values);
     client
-      .put("/Projects", values)
-      .then(setOpenedit(false))
+      .put("/customer", values)
       .then(setReRender(true))
       .then(setPostsucessfuledit(true));
   };
 
   // Definitions for Delete Customer
-  const [opendelete, setOpendelete] = useState(false);
-  const handleOpendelete = () => setOpendelete(true);
-  const handleClosedelete = () => setOpendelete(false);
-
   const [postsucessfuldelete, setPostsucessfuldelete] = useState(false);
   const handleFormSubmitdelete = (values) => {
     const idtodelete = values.trans_id;
@@ -56,8 +45,9 @@ const Customer = () => {
       .then(setReRender(true))
       .then(setPostsucessfuldelete(true));
   };
+
   // Api Call and config
-  const [Customer, setCustomer] = useState("");
+  const [Customer, setCustomer] = useState([]);
   useEffect(() => {
     client
       .get("/customer")
@@ -94,65 +84,57 @@ const Customer = () => {
     currency: "USD",
   });
 
+
+  // Edit Capabilities 
+  const customerstatusoptions = customer_statusdata.map(
+    (customer_status) => (
+      <MenuItem value={customer_status.customer_stat_id}>{customer_status.customer_stat_name}</MenuItem>
+    )
+  );
+
   // Column Configuration
   const columns = [
-    { field: "customer_id", headerName: "ID", flex: 0.5 },
-    { field: "customer_first_name", headerName: "First Name", flex: 1 },
-    { field: "customer_last_name", headerName: "Last Name", flex: 1 },
+    { field: "customer_id", title: "ID", flex: 0.5,  editable: true },
+    { field: "customer_first_name", title: "First Name", flex: 1 },
+    { field: "customer_last_name", title: "Last Name", flex: 1 },
    
     {
       field: "customer_phone_number",
-      headerName: "Phone Number",
+      title: "Phone Number",
       flex: 1,
       cellClassName: "name-column--cell",
     },
 
     {
       field: "customer_email",
-      headerName: "Customer Email",
+      title: "Customer Email",
       flex: 1,
     },
     {
-      field: "Customer Status",
-      headerName: "Customer Status",
+      field: "customer_stat_name",
+      title: "Customer Status",
       flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+
+      <Select
+      value={value}
+      onChange={(event) => {
+        onChange(event.target.value);
+      }}
+    >
+      <MenuItem value="">
+        <em>None</em>
+      </MenuItem>
+      {customerstatusoptions}
+      
+    </Select>
+      ),
     },
   ];
 
   return (
     <Box m="20px">
-       <AddCustomer
-        handleOpen={handleOpenadd}
-        handleClose={handleCloseadd}
-        open={openadd}
-        handleFormSubmit={handleFormSubmitadd}
-        postsucessful={postsucessfuladd}
-        customerstatusdata={customer_statusdata}
-        alert={SuccessAlert}
-      />
-
-      {/* <EditTransaction
-        handleOpen={handleOpenedit}
-        handleClose={handleCloseedit}
-        open={openedit}
-        handleFormSubmit={handleFormSubmitedit}
-        postsucessful={postsucessfuledit}
-        Projects={Projects}
-        categoriesdata={categoriesdata}
-        transactionaccountdata={transactionaccountdata}
-        alert={SuccessAlert}
-      />
-
-      <DeleteTransaction
-        handleOpen={handleOpendelete}
-        handleClose={handleClosedelete}
-        open={opendelete}
-        handleFormSubmit={handleFormSubmitdelete}
-        postsucessful={postsucessfuldelete}
-        Projects={Projects}
-        alert={SuccessAlert}
-      />  */}
-
+       
       <Header title="Customer" subtitle="List of all Cusotmers" />
       <Box
         m="40px 0 0 0"
@@ -186,14 +168,50 @@ const Customer = () => {
           },
         }}
       >
-        <DataGrid
-          rows={Customer}
-          columns={columns}
-          getRowId={(row) => row.customer_id}
-          components={{ Toolbar: GridToolbar }}
-        />
+        
+        <MaterialTable
+        icons={tableIcons}
+        title="Customer Data"
+        data={Customer}
+        columns={columns}
+        editable={{
+          onRowAdd: (newRow) => new Promise((resolve, reject) => {
+            console.log(newRow)
+            handleFormSubmitadd(newRow)
+            resolve()
+          }),
+          onRowDelete: selectedRow => new Promise((resolve, reject) => {
+            const index = selectedRow.tableData.id;
+            const updatedRows = [...data]
+            updatedRows.splice(index, 1)
+            setTimeout(() => {
+              setData(updatedRows)
+              resolve()
+            }, 2000)
+          }),
+          onRowUpdate:(updatedRow,oldRow)=>new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+            handleFormSubmitedit(updatedRow)
+            resolve();
+            }, 1000)
+            
+          }),
+
+        }}
+        options={{
+          headerStyle: {
+            backgroundColor: 'white',
+            color: 'black'
+          },
+          actionsColumnIndex: -1, addRowPosition: "first",
+          exportButton: true,
+          filtering: true, 
+          pageSize: 15
+        }}
+      />
       </Box>
     </Box>
+
   );
 };
 
