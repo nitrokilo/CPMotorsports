@@ -1,53 +1,40 @@
-import { Box } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Box, Select, MenuItem } from "@mui/material";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
-import AddMake from "./addmake";
+import MaterialTable from "material-table";
+import { tableIcons } from "../global/tableicons";
 
-const MakeandModel = () => {
+const Make = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
-  // State definitions for Add Customer
-  const [openadd, setOpenadd] = useState(false);
+  // State definitions for Add Make
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
-  // Defintions for Add Customer component
-  const handleOpenadd = () => setOpenadd(true);
-  const handleCloseadd = () => setOpenadd(false);
+  // Defintions for Add Make component
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
-      .post("/Customer", values)
-      .then(setOpenadd(false))
+      .post("/make", values)
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };
 
-  // Definitions for Edit Customer
-  const [openedit, setOpenedit] = useState(false);
-  const handleOpenedit = () => setOpenedit(true);
-  const handleCloseedit = () => setOpenedit(false);
-
+  // Definitions for Edit Make
   const [postsucessfuledit, setPostsucessfuledit] = useState(false);
   const handleFormSubmitedit = (values) => {
     console.log(values);
     client
-      .put("/Projects", values)
-      .then(setOpenedit(false))
+      .put("/make", values)
       .then(setReRender(true))
       .then(setPostsucessfuledit(true));
   };
 
   // Definitions for Delete Customer
-  const [opendelete, setOpendelete] = useState(false);
-  const handleOpendelete = () => setOpendelete(true);
-  const handleClosedelete = () => setOpendelete(false);
-
   const [postsucessfuldelete, setPostsucessfuldelete] = useState(false);
   const handleFormSubmitdelete = (values) => {
     const idtodelete = values.trans_id;
@@ -57,11 +44,12 @@ const MakeandModel = () => {
       .then(setReRender(true))
       .then(setPostsucessfuldelete(true));
   };
+
   // Api Call and config
-  const [Customer, setCustomer] = useState("");
+  const [Make, setCustomer] = useState([]);
   useEffect(() => {
     client
-      .get("/customer")
+      .get("/make")
       .then((res) => {
         setCustomer(res.data);
       })
@@ -72,12 +60,12 @@ const MakeandModel = () => {
   }, [reRender]);
 
   // Api call and config for Categories and Transaction Accounts
-  const [customer_statusdata, setcustomer_statusdata] = useState([]);
+  const [make_statusdata, setmake_statusdata] = useState([]);
 
   // Api call to get customer status for select option
   useEffect(() => {
     client
-      .get("/customer_status")
+      .get("/make_status")
       .then((res) => {
         setcustomer_statusdata(res.data);
       })
@@ -94,66 +82,40 @@ const MakeandModel = () => {
     currency: "USD",
   });
 
+  // Edit Capabilities
+  const MakeStatusOptions = make_statusdata.map((make_status) => (
+    <MenuItem value={make_status.make_stat_id}>
+      {make_status.make_stat_name}
+    </MenuItem>
+  ));
+
   // Column Configuration
   const columns = [
-    { field: "customer_id", headerName: "ID", flex: 0.5 },
-    { field: "customer_first_name", headerName: "First Name", flex: 1 },
-    { field: "customer_last_name", headerName: "Last Name", flex: 1 },
-
+    { field: "make_id", title: "ID", flex: 0.5, editable: false },
+    { field: "make_name", title: "Name", flex: 1 },
     {
-      field: "customer_phone_number",
-      headerName: "Phone Number",
+      field: "make_stat_name",
+      title: "Make Status",
       flex: 1,
-      cellClassName: "name-column--cell",
-    },
-
-    {
-      field: "customer_email",
-      headerName: "Customer Email",
-      flex: 1,
-    },
-    {
-      field: "Customer Status",
-      headerName: "Customer Status",
-      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {MakeStatusOptions}
+        </Select>
+      ),
     },
   ];
 
   return (
     <Box m="20px">
-      <AddMake
-        handleOpen={handleOpenadd}
-        handleClose={handleCloseadd}
-        open={openadd}
-        handleFormSubmit={handleFormSubmitadd}
-        postsucessful={postsucessfuladd}
-        customerstatusdata={customer_statusdata}
-        alert={SuccessAlert}
-      />
-
-      {/* <EditTransaction
-        handleOpen={handleOpenedit}
-        handleClose={handleCloseedit}
-        open={openedit}
-        handleFormSubmit={handleFormSubmitedit}
-        postsucessful={postsucessfuledit}
-        Projects={Projects}
-        categoriesdata={categoriesdata}
-        transactionaccountdata={transactionaccountdata}
-        alert={SuccessAlert}
-      />
-
-      <DeleteTransaction
-        handleOpen={handleOpendelete}
-        handleClose={handleClosedelete}
-        open={opendelete}
-        handleFormSubmit={handleFormSubmitdelete}
-        postsucessful={postsucessfuldelete}
-        Projects={Projects}
-        alert={SuccessAlert}
-      />  */}
-
-      <Header title="Make and models" subtitle="List of all Makes and models" />
+      <Header title="Make" subtitle="List of all Makes" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -186,15 +148,53 @@ const MakeandModel = () => {
           },
         }}
       >
-        <DataGrid
-          rows={Customer}
+        <MaterialTable
+          icons={tableIcons}
+          title="Make Data"
+          data={Make}
           columns={columns}
-          getRowId={(row) => row.customer_id}
-          components={{ Toolbar: GridToolbar }}
+          editable={{
+            onRowAdd: (newRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  console.log(newRow);
+                  handleFormSubmitadd(newRow);
+                  resolve();
+                }, 1000);
+              }),
+            onRowDelete: (selectedRow) =>
+              new Promise((resolve, reject) => {
+                const index = selectedRow.tableData.id;
+                const updatedRows = [...data];
+                updatedRows.splice(index, 1);
+                setTimeout(() => {
+                  setData(updatedRows);
+                  resolve();
+                }, 2000);
+              }),
+            onRowUpdate: (updatedRow, oldRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  handleFormSubmitedit(updatedRow);
+                  resolve();
+                }, 1000);
+              }),
+          }}
+          options={{
+            headerStyle: {
+              backgroundColor: "white",
+              color: "black",
+            },
+            actionsColumnIndex: -1,
+            addRowPosition: "first",
+            exportButton: true,
+            filtering: true,
+            pageSize: 15,
+          }}
         />
       </Box>
     </Box>
   );
 };
 
-export default MakeandModel;
+export default Make;
