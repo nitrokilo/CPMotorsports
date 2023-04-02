@@ -12,6 +12,7 @@ import Model from "./scenes/model";
 import CustomParts from "./scenes/custom_parts";
 import Mechanic from "./scenes/mechanic";
 import Project from "./scenes/project";
+import Project_Job from "./scenes/project/project_job";
 import Completed_projects from "./scenes/reports/completed_projects_per_customer";
 import Completed_projects_per_year from "./scenes/reports/completed_projects_per_year";
 import Project_Job_Status from "./scenes/reports/project_job_status";
@@ -42,6 +43,7 @@ function App() {
               <Route path="/custom_parts" element={<CustomParts />} />
               <Route path="/mechanics" element={<Mechanic />} />
               <Route path="/projects" element={<Project />} />
+              <Route path="/project_job" element={<Project_Job />} />
               <Route
                 path="/completed_projects"
                 element={<Completed_projects />}

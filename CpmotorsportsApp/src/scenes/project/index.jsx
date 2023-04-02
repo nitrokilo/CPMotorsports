@@ -1,12 +1,13 @@
-import { Box } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Box, Button} from "@mui/material"; 
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
+import { Link } from "react-router-dom";
 import { SuccessAlert } from "../../components/alert.jsx";
-import AddProject from "./addproject";
+import MaterialTable from "material-table";
+import { tableIcons } from "../global/tableicons";
 const Project = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -58,7 +59,7 @@ const Project = () => {
       .then(setPostsucessfuldelete(true));
   };  */
   // Api Call and config
-  const [Project, setProject] = useState("");
+  const [Project, setProject] = useState([]);
   useEffect(() => {
     client
       .get("/project")
@@ -96,62 +97,32 @@ const Project = () => {
 
   // Column Configuration
   const columns = [
-    { field: "project_id", headerName: "ID", flex: 0.5 },
-    { field: "vin_num", headerName: "Vin Number", flex: 1 },
-    { field: "project_start", headerName: "Project Start", flex: 1 },
+    { field: "project_id", title: "ID", flex: 0.5 },
+    { field: "vin_num", title: "Vin Number", flex: 1 },
+    { field: "project_start", title: "Project Start", flex: 1 },
 
     {
       field: "project_end",
-      headerName: "Project End",
+      title: "Project End",
       flex: 1,
       cellClassName: "name-column--cell",
     },
 
     {
       field: "total_cost",
-      headerName: "Total Cost",
+      title: "Total Cost",
       flex: 1,
     },
     {
       field: "project_stat_name",
-      headerName: "P Status",
+      title: "Project Status",
       flex: 1,
     },
   ];
 
   return (
     <Box m="20px">
-      <AddProject
-        handleOpen={handleOpenadd}
-        handleClose={handleCloseadd}
-        open={openadd}
-        handleFormSubmit={handleFormSubmitadd}
-        postsucessful={postsucessfuladd}
-        projectstatusdata={project_statusdata}
-        alert={SuccessAlert}
-      />
-
-      {/* <EditTransaction
-        handleOpen={handleOpenedit}
-        handleClose={handleCloseedit}
-        open={openedit}
-        handleFormSubmit={handleFormSubmitedit}
-        postsucessful={postsucessfuledit}
-        Projects={Projects}
-        categoriesdata={categoriesdata}
-        transactionaccountdata={transactionaccountdata}
-        alert={SuccessAlert}
-      />
-
-      <DeleteTransaction
-        handleOpen={handleOpendelete}
-        handleClose={handleClosedelete}
-        open={opendelete}
-        handleFormSubmit={handleFormSubmitdelete}
-        postsucessful={postsucessfuldelete}
-        Projects={Projects}
-        alert={SuccessAlert}
-      />  */}
+      <Button> <Link to="/project_job"></Link>Project Job</Button>
 
       <Header title="Project" subtitle="List of all Projects" />
       <Box
