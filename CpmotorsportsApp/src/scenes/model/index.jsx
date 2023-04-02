@@ -49,7 +49,7 @@ const Make = () => {
   const [Make, setMake] = useState([]);
   useEffect(() => {
     client
-      .get("/make")
+      .get("/model")
       .then((res) => {
         setMake(res.data);
       })
