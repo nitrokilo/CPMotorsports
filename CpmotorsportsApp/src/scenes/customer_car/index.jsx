@@ -19,7 +19,7 @@ const Make = () => {
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
-      .post("/make", values)
+      .post("/cars", values)
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };
@@ -29,7 +29,7 @@ const Make = () => {
   const handleFormSubmitedit = (values) => {
     console.log(values);
     client
-      .put("/make", values)
+      .put("/cars", values)
       .then(setReRender(true))
       .then(setPostsucessfuledit(true));
   };
@@ -49,7 +49,7 @@ const Make = () => {
   const [Make, setMake] = useState([]);
   useEffect(() => {
     client
-      .get("/make")
+      .get("/cars")
       .then((res) => {
         setMake(res.data);
       })
@@ -91,26 +91,13 @@ const Make = () => {
 
   // Column Configuration
   const columns = [
-    { field: "make_id", title: "ID", flex: 0.5, editable: false },
-    { field: "make_name", title: "Name", flex: 1 },
-    {
-      field: "make_stat_name",
-      title: "Make Status",
-      flex: 1,
-      editComponent: ({ value, onChange, rowData }) => (
-        <Select
-          value={value}
-          onChange={(event) => {
-            onChange(event.target.value);
-          }}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {MakeStatusOptions}
-        </Select>
-      ),
-    },
+    { field: "vin_num", title: "VIN No.", flex: 0.5, editable: false },
+    { field: "customer_first_name", title: "First Name", flex: 1 },
+    { field: "customer_last_name", title: "Last Name", flex: 1 },
+    { field: "make_name", title: "Make", flex: 1 },
+    { field: "model_name", title: "Model", flex: 1 },
+    { field: "color", title: "Color", flex: 1 },
+    { field: "ownership_stat_name", title: "Status", flex: 1 },
   ];
 
   return (

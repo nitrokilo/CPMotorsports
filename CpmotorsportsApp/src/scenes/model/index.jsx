@@ -19,7 +19,7 @@ const Make = () => {
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
-      .post("/make", values)
+      .post("/model", values)
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };
@@ -29,7 +29,7 @@ const Make = () => {
   const handleFormSubmitedit = (values) => {
     console.log(values);
     client
-      .put("/make", values)
+      .put("/model", values)
       .then(setReRender(true))
       .then(setPostsucessfuledit(true));
   };
