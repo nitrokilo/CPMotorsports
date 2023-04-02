@@ -51,7 +51,7 @@ const Car = () => {
     client
       .get("/cars")
       .then((res) => {
-        setMake(res.data);
+        setCar(res.data);
       })
       .then(setReRender(false))
       .catch((err) => {
@@ -92,8 +92,7 @@ const Car = () => {
   // Column Configuration
   const columns = [
     { field: "vin_num", title: "VIN No.", flex: 0.5, editable: false },
-    { field: "customer_first_name", title: "First Name", flex: 1 },
-    { field: "customer_last_name", title: "Last Name", flex: 1 },
+    { field: "Customer", title: "Customer", flex: 1 },
     { field: "make_name", title: "Make", flex: 1 },
     { field: "model_name", title: "Model", flex: 1 },
     { field: "color", title: "Color", flex: 1 },
