@@ -8,7 +8,7 @@ import { useTheme } from "@mui/material";
 import MaterialTable from "material-table";
 import { tableIcons } from "../global/tableicons";
 
-const Completed_projects = () => {
+const Customer_time = () => {
 
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -17,7 +17,7 @@ const Completed_projects = () => {
   const [Data, setData] = useState([]);
   useEffect(() => {
     client
-      .get("/reports/completed_projects_per_customer")
+      .get("/reports/total_time_customer")
       .then((res) => {
         setData(res.data);
       })
@@ -40,9 +40,8 @@ const Completed_projects = () => {
 
   // Column Configuration
   const columns = [
-    { field: "Customer", title: "Customer", flex: 0.5 },
-    { field: "Most Recent Job", title: "Most Recent Job", flex: 1, cellClassName: "name-column--cell",},
-    { field: "Num of Projects", title: "Num of Projects", flex: 1 },
+    { field: "year", title: "Year", flex: 0.5 },
+    { field: "hrs_with_customer", title: "Hours With Customer", flex: 1, cellClassName: "name-column--cell",}
    
 
   ];
@@ -51,7 +50,7 @@ const Completed_projects = () => {
     <Box m="20px">
 
 
-      <Header title="Completed Projects" subtitle="List of all Completed Projects" />
+      <Header title="Customer Time" subtitle="List of all Customer Time" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -107,4 +106,4 @@ const Completed_projects = () => {
   );
 };
 
-export default Completed_projects;
+export default Customer_time;

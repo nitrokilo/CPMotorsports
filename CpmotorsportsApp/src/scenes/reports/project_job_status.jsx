@@ -1,22 +1,22 @@
 import { Box } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
+import MaterialTable from "material-table";
+import { tableIcons } from "../global/tableicons";
 
-
-const Custom_Parts_Per_Customer = () => {
+const Project_Job_Status = () => {
 
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
   // Api Call and config
-  const [Data, setData] = useState("");
+  const [Data, setData] = useState([]);
   useEffect(() => {
     client
-      .get("/reports/custom_parts_per_project")
+      .get("/reports/project_job_status")
       .then((res) => {
         setData(res.data);
       })
@@ -39,9 +39,17 @@ const Custom_Parts_Per_Customer = () => {
 
   // Column Configuration
   const columns = [
-    { field: "Customer", headerName: "Customer", flex: 0.5 },
-    { field: "Most Recent Job", headerName: "Most Recent Job", flex: 1, cellClassName: "name-column--cell",},
-    { field: "Num of Projects", headerName: "Num of Projects", flex: 1 },
+    { field: "Customer", title: "Customer"},
+    {field: "Customer Phone", title:"Customer Phone"},
+    {field: "Make", title: "Make"},
+    {field:  "Mechanic", title: "Mechanic"},
+    {field: "Metal", title:"Metal"},
+    {field: "Model", title:"Model"},
+    {field: "Part", title:"Part"},
+    {field: "Part Status", title: "Part Status"},
+    {field: "Project Status", title:"Project Status"},
+    {field: "Service", title:"Service"},
+    {field: "Vin Num", title:"Vin Num"}
    
 
   ];
@@ -83,15 +91,27 @@ const Custom_Parts_Per_Customer = () => {
           },
         }}
       >
-        <DataGrid
-          rows={Data}
+        <MaterialTable
+          icons={tableIcons}
+          title="Customer Data"
+          data={Data}
           columns={columns}
-          getRowId={(row) => row.Customer}
-          components={{ Toolbar: GridToolbar }}
+
+          options={{
+            headerStyle: {
+              backgroundColor: "white",
+              color: "black",
+            },
+            actionsColumnIndex: -1,
+            addRowPosition: "first",
+            exportButton: true,
+            filtering: true,
+            pageSize: 15,
+          }}
         />
       </Box>
     </Box>
   );
 };
 
-export default Custom_Parts_Per_Customer;
+export default Project_Job_Status;

@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
+import MaterialTable from "material-table";
+import { tableIcons } from "../global/tableicons";
 
 
 const Invoice = () => {
@@ -13,7 +14,7 @@ const Invoice = () => {
   const [reRender, setReRender] = useState(false);
 
   // Api Call and config
-  const [Data, setData] = useState("");
+  const [Data, setData] = useState([]);
   useEffect(() => {
     client
       .get("/reports/invoices_with_line_items")
@@ -39,16 +40,16 @@ const Invoice = () => {
 
   // Column Configuration
   const columns = [
-    {field: "Customer", headerName: "Customer", flex: 0.5 },
-    {field: "End Date", headerName: "End Date", flex: 0.5 }, 
-    {field: "Labor", headerName: "Labor", flex: 0.5 },
-    {field: "Mechanic", headerName: "Mechanic", flex: 0.5 },
-    {field: "Total", headerName: "Total", flex: 0.5 },
-    {field: "car_sys_name", headerName: "car_sys_name", flex: 0.5 },
-    {field: "cust_part_cost", headerName: "cust_part_cost", flex: 0.5 },
-    {field: "cust_part_name", headerName: "cust_part_name", flex: 0.5 },
-    {field: "customer_phone_number", headerName: "customer_phone_number", flex: 0.5 },
-    {field: "make_name", headerName: "make_name", flex: 0.5 },
+    {field: "Customer", title: "Customer", flex: 0.5 },
+    {field: "End Date", title: "End Date", type: "date" }, 
+    {field: "Labor", title: "Labor", type: "currency" },
+    {field: "Mechanic", title: "Mechanic", flex: 0.5 },
+    {field: "Total", title: "Total", flex: 0.5 },
+    {field: "car_sys_name", title: "car_sys_name", flex: 0.5 },
+    {field: "cust_part_cost", title: "cust_part_cost", flex: 0.5 },
+    {field: "cust_part_name", title: "cust_part_name", flex: 0.5 },
+    {field: "customer_phone_number", title: "customer_phone_number", flex: 0.5 },
+    {field: "make_name", title: "make_name", flex: 0.5 },
     // {field: "Customer", headerName: "Customer", flex: 0.5 },
     // {field: "metal_name", headerName: "metal_name", flex: 0.5 },
     // {field: "model_name", headerName: "model_name", flex: 0.5 },
@@ -94,11 +95,36 @@ const Invoice = () => {
           },
         }}
       >
-        <DataGrid
-          rows={Data}
+        <MaterialTable
+          icons={tableIcons}
+          title="Customer Data"
+          data={Data}
           columns={columns}
-          getRowId={(row) => row.vin_num}
-          components={{ Toolbar: GridToolbar }}
+          detailPanel={rowData => {
+        return (
+         <div>
+        Labor: {rowData['Labor']} <br/>
+         Metal Name:{rowData ["metal_name"]} <br/>
+         model_name: {rowData ["model_name"]} <br/>
+         service_cost: {rowData ["service_cost"]} <br/>
+         service_name: {rowData ["service_name"]} <br/>
+         total_cost: {rowData ["total_cost"]} <br/>
+         vin_num: {rowData ["vin_num"]} <br/>
+         </div>
+        )
+      }}
+      onRowClick={(event, rowData, togglePanel) => togglePanel()}
+          options={{
+            headerStyle: {
+              backgroundColor: "white",
+              color: "black",
+            },
+            actionsColumnIndex: -1,
+            addRowPosition: "first",
+            exportButton: true,
+            filtering: true,
+            pageSize: 15,
+          }}
         />
       </Box>
     </Box>

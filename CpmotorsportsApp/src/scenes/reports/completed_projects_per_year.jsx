@@ -8,7 +8,7 @@ import { useTheme } from "@mui/material";
 import MaterialTable from "material-table";
 import { tableIcons } from "../global/tableicons";
 
-const Completed_projects = () => {
+const Completed_projects_per_year= () => {
 
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -17,7 +17,7 @@ const Completed_projects = () => {
   const [Data, setData] = useState([]);
   useEffect(() => {
     client
-      .get("/reports/completed_projects_per_customer")
+      .get("/reports/completed_projects_per_year")
       .then((res) => {
         setData(res.data);
       })
@@ -40,9 +40,10 @@ const Completed_projects = () => {
 
   // Column Configuration
   const columns = [
-    { field: "Customer", title: "Customer", flex: 0.5 },
-    { field: "Most Recent Job", title: "Most Recent Job", flex: 1, cellClassName: "name-column--cell",},
-    { field: "Num of Projects", title: "Num of Projects", flex: 1 },
+    { field: "year", title: "Year", flex: 0.5 },
+    { field: "num_projects", title: "Num of Projects", },
+    { field: "num_parts", title: "Num of Parts", flex: 1 },
+    { field: "total_rev", title: "Total Revenue", type:'currency', currencySetting:{ currencyCode:'USD', minimumFractionDigits:0, maximumFractionDigits:2}},
    
 
   ];
@@ -107,4 +108,4 @@ const Completed_projects = () => {
   );
 };
 
-export default Completed_projects;
+export default Completed_projects_per_year;

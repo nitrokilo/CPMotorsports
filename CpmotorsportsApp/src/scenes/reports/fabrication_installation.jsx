@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
@@ -8,7 +7,7 @@ import { useTheme } from "@mui/material";
 import MaterialTable from "material-table";
 import { tableIcons } from "../global/tableicons";
 
-const Completed_projects = () => {
+const Fabrication_Installation = () => {
 
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -17,7 +16,7 @@ const Completed_projects = () => {
   const [Data, setData] = useState([]);
   useEffect(() => {
     client
-      .get("/reports/completed_projects_per_customer")
+      .get("/reports/installation_vs_fabrication")
       .then((res) => {
         setData(res.data);
       })
@@ -40,9 +39,9 @@ const Completed_projects = () => {
 
   // Column Configuration
   const columns = [
-    { field: "Customer", title: "Customer", flex: 0.5 },
-    { field: "Most Recent Job", title: "Most Recent Job", flex: 1, cellClassName: "name-column--cell",},
-    { field: "Num of Projects", title: "Num of Projects", flex: 1 },
+    { field: "year", title: "Year", flex: 0.5 },
+    { field: "service_name", title: "Service Name", flex: 1, cellClassName: "name-column--cell",},
+    { field: "service_count", title: "Service Count", flex: 1 },
    
 
   ];
@@ -51,7 +50,7 @@ const Completed_projects = () => {
     <Box m="20px">
 
 
-      <Header title="Completed Projects" subtitle="List of all Completed Projects" />
+      <Header title="Completed Fabrication and Installation" subtitle="List of all Fabrication and Installation" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -86,7 +85,7 @@ const Completed_projects = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Customer Data"
+          title="Fabrication And Installation"
           data={Data}
           columns={columns}
 
@@ -107,4 +106,4 @@ const Completed_projects = () => {
   );
 };
 
-export default Completed_projects;
+export default Fabrication_Installation;

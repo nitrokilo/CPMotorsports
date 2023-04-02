@@ -13,7 +13,13 @@ import CustomParts from "./scenes/custom_parts";
 import Mechanic from "./scenes/mechanic";
 import Project from "./scenes/project";
 import Completed_projects from "./scenes/reports/completed_projects_per_customer";
+import Completed_projects_per_year from "./scenes/reports/completed_projects_per_year";
+import Project_Job_Status from "./scenes/reports/project_job_status";
+import Fabrication_Installation from "./scenes/reports/fabrication_installation";
+import Customer_time from "./scenes/reports/customer_time";
+import Custom_Parts_Per_Project from "./scenes/reports/custom_parts_per_project";
 import Invoice from "./scenes/reports/invoice";
+
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -41,8 +47,12 @@ function App() {
                 element={<Completed_projects />}
               />
               <Route
+                path="/completed_projects_per_year"
+                element={<Completed_projects_per_year />}
+              />
+              <Route
                 path="/c_parts_projects"
-                element={<Completed_projects />}
+                element={<Custom_Parts_Per_Project />}
               />
               <Route
                 path="/c_parts_customer"
@@ -50,16 +60,16 @@ function App() {
               />
               <Route
                 path="/mech_cutomer_time"
-                element={<Completed_projects />}
+                element={<Customer_time />}
               />
               <Route
                 path="/fabrication_installation"
-                element={<Completed_projects />}
+                element={<Fabrication_Installation />}
               />
               <Route path="/invoice" element={<Invoice />} />
               <Route
                 path="/project_job_status"
-                element={<Completed_projects />}
+                element={<Project_Job_Status />}
               />
             </Routes>
           </main>

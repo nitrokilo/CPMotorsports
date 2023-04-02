@@ -200,8 +200,15 @@ const Sidebar = () => {
               Reports
             </Typography>
             <Item
-              title="Completed Projects"
+              title="Completed Projects Per Customer"
               to="/completed_projects"
+              icon={<PersonOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Completed Projects Per Year"
+              to="/completed_projects_per_year"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -213,13 +220,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Custom Parts Per Customer"
-              to="/c_parts_customer"
-              icon={<HelpOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+
 
             <Item
               title="Mechanics-Customer Time"
