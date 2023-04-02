@@ -96,7 +96,24 @@ const Car = () => {
     { field: "make_name", title: "Make", flex: 1 },
     { field: "model_name", title: "Model", flex: 1 },
     { field: "color", title: "Color", flex: 1 },
-    { field: "ownership_stat_name", title: "Status", flex: 1 },
+    {
+      field: "ownership_stat_name",
+      title: "Ownership Status",
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {OwnershipStatusOptions}
+        </Select>
+      ),
+    },
   ];
 
   return (

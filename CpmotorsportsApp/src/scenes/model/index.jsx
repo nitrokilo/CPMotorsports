@@ -60,14 +60,29 @@ const Make = () => {
   }, [reRender]);
 
   // Api call and config for Categories and Transaction Accounts
-  const [make_statusdata, setmake_statusdata] = useState([]);
+  const [make_data, setmake_data] = useState([]);
 
   // Api call to get make status for select option
   useEffect(() => {
     client
-      .get("/make_status")
+      .get("/make")
       .then((res) => {
-        setmake_statusdata(res.data);
+        setmake_data(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // Api call and config for Categories and Transaction Accounts
+  const [vehicle_type_data, setvehicle_type_data] = useState([]);
+
+  // Api call to get make status for select option
+  useEffect(() => {
+    client
+      .get("/vehicle_type")
+      .then((res) => {
+        setvehicle_type_data(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -83,18 +98,59 @@ const Make = () => {
   });
 
   // Edit Capabilities
-  const MakeStatusOptions = make_statusdata.map((make_status) => (
-    <MenuItem value={make_status.make_stat_id}>
-      {make_status.make_stat_name}
+  const MakeOptions = make_data.map((make) => (
+    <MenuItem value={make.make_id}>
+      {make.make_name}
+    </MenuItem>
+  ));
+
+  // Edit Capabilities
+  const VehicleTypeOptions = vehicle_type_data.map((vehicle_type) => (
+    <MenuItem value={vehicle_type.vic_type_id}>
+      {vehicle_type.vic_type_name}
     </MenuItem>
   ));
 
   // Column Configuration
   const columns = [
     { field: "model_id", title: "ID", flex: 0.5, editable: false },
-    { field: "make_name", title: "Make", flex: 1 },
+    {
+      field: "make_name",
+      title: "Make",
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {MakeOptions}
+        </Select>
+      ),
+    },
     { field: "model_name", title: "Model", flex: 1 },
-    { field: "vic_type_name", title: "Vehicle Type", flex: 1 },
+    {
+      field: "vic_type_name",
+      title: "Vehicle Type",
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {VehicleTypeOptions}
+        </Select>
+      ),
+    },
     { field: "prod_year", title: "Year", flex: 1 },
     
   ];
