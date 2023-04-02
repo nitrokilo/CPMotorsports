@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
+import MaterialTable from "material-table";
+import { tableIcons } from "../global/tableicons";
 import { SuccessAlert } from "../../components/alert.jsx";
-import AddCustom from "./addcustom";
+
 const CustomParts = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -43,7 +45,7 @@ const CustomParts = () => {
   };
 
   // Api Call and config
-  const [CustomPart, setCustomPart] = useState("");
+  const [CustomPart, setCustomPart] = useState([]);
   useEffect(() => {
     client
       .get("/custom_part")
@@ -68,77 +70,48 @@ const CustomParts = () => {
   const columns = [
     { 
       field: "cust_part_id", 
-      headerName: "ID", 
+      title: "ID", 
       flex: 0.5 
     },
 
     { 
       field: "car_sys_id",
-      headerName: "Car System ID", 
+      title: "Car System Name", 
       flex: 1 
     },
 
     { 
-      field: "metal_id", 
-      headerName: "Metal ID", 
+      field: "metal_name", 
+      title: "Metal Name", 
       flex: 1 
     },
 
     {
       field: "cust_part_name",
-      headerName: "Custom Part Name",
+      title: "Custom Part Name",
       flex: 1,
     },
 
     {
       field: "fab_type",
-      headerName: "Fabrication Type",
+      title: "Fabrication Type",
       flex: 1,
     },
     {
       field: "cust_part_desc",
-      headerName: "Part Description",
+      title: "Part Description",
       flex: 1,
     },
     {
       field: "cust_part_cost",
-      headerName: "Part Cost",
+      title: "Part Cost",
       flex: 1,
     },
   ];
 
   return (
     <Box m="20px">
-      <AddCustom
-        handleOpen={handleOpenadd}
-        handleClose={handleCloseadd}
-        open={openadd}
-        handleFormSubmit={handleFormSubmitadd}
-        postsucessful={postsucessfuladd}
-        alert={SuccessAlert}
-      />
 
-      {/* <EditTransaction
-        handleOpen={handleOpenedit}
-        handleClose={handleCloseedit}
-        open={openedit}
-        handleFormSubmit={handleFormSubmitedit}
-        postsucessful={postsucessfuledit}
-        Projects={Projects}
-        categoriesdata={categoriesdata}
-        transactionaccountdata={transactionaccountdata}
-        alert={SuccessAlert}
-      />
-
-      <DeleteTransaction
-        handleOpen={handleOpendelete}
-        handleClose={handleClosedelete}
-        open={opendelete}
-        handleFormSubmit={handleFormSubmitdelete}
-        postsucessful={postsucessfuldelete}
-        Projects={Projects}
-        alert={SuccessAlert}
-      />  */}
 
       <Header title="Custom Parts" subtitle="List of all Custom Parts" />
       <Box
@@ -173,11 +146,49 @@ const CustomParts = () => {
           },
         }}
       >
-        <DataGrid
-          rows={CustomPart}
+        <MaterialTable
+          icons={tableIcons}
+          title="Project Data"
+          data={CustomPart}
           columns={columns}
-          getRowId={(row) => row.custom_part_id}
-          components={{ Toolbar: GridToolbar }}
+          editable={{
+            onRowAdd: (newRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  console.log(newRow);
+                  handleFormSubmitadd(newRow);
+                  resolve();
+                }, 1000);
+              }),
+            onRowDelete: (selectedRow) =>
+              new Promise((resolve, reject) => {
+                const index = selectedRow.tableData.id;
+                const updatedRows = [...data];
+                updatedRows.splice(index, 1);
+                setTimeout(() => {
+                  setData(updatedRows);
+                  resolve();
+                }, 2000);
+              }),
+            onRowUpdate: (updatedRow, oldRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  handleFormSubmitedit(updatedRow);
+                  resolve();
+                }, 1000);
+              }),
+          }}
+          options={{
+            headerStyle: {
+              backgroundColor: "white",
+              color: "black",
+            },
+            actionsColumnIndex: -1,
+            addRowPosition: "first",
+            exportButton: true,
+            filtering: true,
+            pageSize: 15,
+          }}
         />
       </Box>
     </Box>

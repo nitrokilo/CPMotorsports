@@ -6,7 +6,8 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
-import AddService from "./addservice";
+import MaterialTable from "material-table";
+import { tableIcons } from "../global/tableicons";
 const Service = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -21,7 +22,7 @@ const Service = () => {
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
-      .post("/service", values)
+      .post("/service_type", values)
       .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
@@ -36,17 +37,17 @@ const Service = () => {
   const handleFormSubmitedit = (values) => {
     console.log(values);
     client
-      .put("/service", values)
+      .put("/service_type", values)
       .then(setOpenedit(false))
       .then(setReRender(true))
       .then(setPostsucessfuledit(true));
   };
 
   // Api Call and config
-  const [Service, setService] = useState("");
+  const [Service, setService] = useState([]);
   useEffect(() => {
     client
-      .get("/service")
+      .get("/service_type")
       .then((res) => {
         setService(res.data);
       })
@@ -83,52 +84,40 @@ const Service = () => {
   const columns = [
     { 
       field: "service_id",
-      headerName: "ID",
+      title: "ID",
       flex: 0.5 
     },
 
     { 
       field: "service_name",
-      headerName: "Service Name", 
+      title: "Service Name", 
       flex: 1 
     },
 
     { 
       field: "service_desc",
-      headerName: "Service Description",
+      title: "Service Description",
       flex: 1 
     },
 
     {
       field: "service_cost",
-      headerName: "Service Cost",
+      title: "Service Cost",
       flex: 1,
       cellClassName: "name-column--cell",
     },
 
+  
     {
-      field: "customer_email",
-      headerName: "Customer Email",
-      flex: 1,
-    },
-    {
-      field: "serv_type_stat_id",
-      headerName: "Service Status",
+      field: "serv_type_stat_name",
+      title: "Service Status",
       flex: 1,
     },
   ];
 
   return (
     <Box m="20px">
-      <AddService
-        handleOpen={handleOpenadd}
-        handleClose={handleCloseadd}
-        open={openadd}
-        handleFormSubmit={handleFormSubmitadd}
-        postsucessful={postsucessfuladd}
-        service_status_data={service_status_data}
-        alert={SuccessAlert}
-      />
+
 
       {/* <EditTransaction
         handleOpen={handleOpenedit}
@@ -185,11 +174,49 @@ const Service = () => {
           },
         }}
       >
-        <DataGrid
-          rows={Service}
+        <MaterialTable
+          icons={tableIcons}
+          title="Mechanic Data"
+          data={Service}
           columns={columns}
-          getRowId={(row) => row.service_id}
-          components={{ Toolbar: GridToolbar }}
+          editable={{
+            onRowAdd: (newRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  console.log(newRow);
+                  handleFormSubmitadd(newRow);
+                  resolve();
+                }, 1000);
+              }),
+            onRowDelete: (selectedRow) =>
+              new Promise((resolve, reject) => {
+                const index = selectedRow.tableData.id;
+                const updatedRows = [...data];
+                updatedRows.splice(index, 1);
+                setTimeout(() => {
+                  setData(updatedRows);
+                  resolve();
+                }, 2000);
+              }),
+            onRowUpdate: (updatedRow, oldRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  handleFormSubmitedit(updatedRow);
+                  resolve();
+                }, 1000);
+              }),
+          }}
+          options={{
+            headerStyle: {
+              backgroundColor: "white",
+              color: "black",
+            },
+            actionsColumnIndex: -1,
+            addRowPosition: "first",
+            exportButton: true,
+            filtering: true,
+            pageSize: 15,
+          }}
         />
       </Box>
     </Box>

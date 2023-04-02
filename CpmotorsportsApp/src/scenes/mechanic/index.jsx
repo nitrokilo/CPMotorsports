@@ -22,7 +22,7 @@ const Mechanic = () => {
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
-      .post("/add_mechanic", values)
+      .post("/mechanic", values)
       .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
@@ -37,7 +37,7 @@ const Mechanic = () => {
   const handleFormSubmitedit = (values) => {
     console.log(values);
     client
-      .put("/edit_mechanic", values)
+      .put("/mechanic", values)
       .then(setOpenedit(false))
       .then(setReRender(true))
       .then(setPostsucessfuledit(true));
@@ -84,14 +84,14 @@ const Mechanic = () => {
 
   // Edit Capabilities
   const mechanicstatusoptions = mechanic_statusdata.map((mechanic_status) => (
-    <MenuItem value={mechanic_status.mechanic_stat_id}>
-      {mechanic_status.mechanic_stat_name}
+    <MenuItem value={mechanic_status.mech_stat_id}>
+      {mechanic_status.mech_stat_name}
     </MenuItem>
   ));
 
   // Column Configuration
   const columns = [
-    { field: "mech_id", title: "ID" },
+    { field: "mech_id", title: "ID", editable: false},
     { field: "mech_first_name", title: "First Name" },
     { field: "mech_last_name", title: "Last Name" },
 
@@ -110,10 +110,24 @@ const Mechanic = () => {
     {
       field: "mech_hourly_pay",
       title: "Mechanic Hourly Pay",
-      
+    },
+      {
 
       field: "mech_stat_name",
       title: "Mechanic Status",
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {mechanicstatusoptions}
+        </Select>
+      ),
       
 
     },

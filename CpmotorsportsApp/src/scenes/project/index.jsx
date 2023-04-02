@@ -1,4 +1,4 @@
-import { Box, Button} from "@mui/material"; 
+import { Box, Button, MenuItem, Select} from "@mui/material"; 
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
@@ -22,7 +22,7 @@ const Project = () => {
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
-      .post("/add_project", values)
+      .post("/project", values)
       .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
@@ -37,7 +37,7 @@ const Project = () => {
   const handleFormSubmitedit = (values) => {
     console.log(values);
     client
-      .put("/edit_project", values)
+      .put("/project", values)
       .then(setOpenedit(false))
       .then(setReRender(true))
       .then(setPostsucessfuledit(true));
@@ -64,6 +64,7 @@ const Project = () => {
     client
       .get("/project")
       .then((res) => {
+        console.log(res.data)
         setProject(res.data);
       })
       .then(setReRender(false))
@@ -87,6 +88,36 @@ const Project = () => {
       });
   }, []);
 
+
+  // Api call and config for Categories and Transaction Accounts
+  const [vin_nums, setvin_nums] = useState([]);
+
+  // Api call to get project status for select option
+  useEffect(() => {
+    client
+      .get("/car_vins")
+      .then((res) => {
+        setvin_nums(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+
+  const project_statusoptions = project_statusdata.map((project_status) => (
+    <MenuItem value={project_status.project_stat_id}>
+      {project_status.project_stat_name}
+    </MenuItem>
+  ));
+
+
+  const vinnumberoptions = vin_nums.map((number) => (
+    <MenuItem value={number.vin_num}>
+      {number.vin_num}
+    </MenuItem>
+  ));
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -97,9 +128,21 @@ const Project = () => {
 
   // Column Configuration
   const columns = [
-    { field: "project_id", title: "ID", flex: 0.5 },
-    { field: "vin_num", title: "Vin Number", flex: 1 },
-    { field: "project_start", title: "Project Start", flex: 1 },
+    { field: "project_id", title: "ID", editable: false },
+    { field: "vin_num", title: "Vin Number", flex: 1 , editComponent: ({ value, onChange, rowData }) => (
+      <Select
+        value={value}
+        onChange={(event) => {
+          onChange(event.target.value);
+        }}
+      >
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
+        {vinnumberoptions}
+      </Select>
+    ),},
+    { title: "Project Start", field: "project_start", type:"date"},
 
     {
       field: "project_end",
@@ -117,12 +160,25 @@ const Project = () => {
       field: "project_stat_name",
       title: "Project Status",
       flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {project_statusoptions}
+        </Select>
+      ),
     },
   ];
 
   return (
     <Box m="20px">
-      <Button> <Link to="/project_job"></Link>Project Job</Button>
+       <Button><Link to="/project_job">Project Job </Link></Button>
 
       <Header title="Project" subtitle="List of all Projects" />
       <Box

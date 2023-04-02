@@ -5,6 +5,9 @@ import client from "../../../Api/apiconfig.js";
 import Header from "../../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../../components/alert.jsx";
+import MaterialTable from "material-table";
+import { tableIcons } from "../../global/tableicons.jsx";
+import Project from "../index.jsx";
 const Project_Job = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -56,7 +59,7 @@ const Project_Job = () => {
       .then(setPostsucessfuldelete(true));
   };*/
   // Api Call and config
-  const [Project_Job, setProject_Job] = useState("");
+  const [Project_Job, setProject_Job] = useState([]);
   useEffect(() => {
     client
       .get("/project_jobs")
@@ -95,7 +98,7 @@ const Project_Job = () => {
 
   // Column Configuration
   const columns = [
-    { field: "project_id", headerName: "Project ID", flex: 0.5 },
+    { field: "vin_num", headerName: "Project ID", flex: 0.5 },
     { field: "part_job_id", headerName: "Part Job ID", flex: 1 },
     { field: "project_job_stat_id", headerName: "Project Job Status ID", flex: 1 },
    
@@ -103,38 +106,6 @@ const Project_Job = () => {
 
   return (
     <Box m="20px">
-       <AddProjectJob
-        handleOpen={handleOpenadd}
-        handleClose={handleCloseadd}
-        open={openadd}
-        handleFormSubmit={handleFormSubmitadd}
-        postsucessful={postsucessfuladd}
-        projectjobstatusdata={project_job_statusdata}
-        alert={SuccessAlert}
-      />
-
-      {/* <EditTransaction
-        handleOpen={handleOpenedit}
-        handleClose={handleCloseedit}
-        open={openedit}
-        handleFormSubmit={handleFormSubmitedit}
-        postsucessful={postsucessfuledit}
-        Projects={Projects}
-        categoriesdata={categoriesdata}
-        transactionaccountdata={transactionaccountdata}
-        alert={SuccessAlert}
-      />
-
-      <DeleteTransaction
-        handleOpen={handleOpendelete}
-        handleClose={handleClosedelete}
-        open={opendelete}
-        handleFormSubmit={handleFormSubmitdelete}
-        postsucessful={postsucessfuldelete}
-        Projects={Projects}
-        alert={SuccessAlert}
-      />  */}
-
       <Header title="ProjectJob" subtitle="List of all Projects" />
       <Box
         m="40px 0 0 0"
@@ -171,35 +142,8 @@ const Project_Job = () => {
         <MaterialTable
           icons={tableIcons}
           title="Project Job Data"
-          data={Project}
+          data={Project_Job}
           columns={columns}
-          editable={{
-            onRowAdd: (newRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  console.log(newRow);
-                  handleFormSubmitadd(newRow);
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: (selectedRow) =>
-              new Promise((resolve, reject) => {
-                const index = selectedRow.tableData.id;
-                const updatedRows = [...data];
-                updatedRows.splice(index, 1);
-                setTimeout(() => {
-                  setData(updatedRows);
-                  resolve();
-                }, 2000);
-              }),
-            onRowUpdate: (updatedRow, oldRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  handleFormSubmitedit(updatedRow);
-                  resolve();
-                }, 1000);
-              }),
-          }}
           options={{
             headerStyle: {
               backgroundColor: "white",
