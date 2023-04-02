@@ -21,7 +21,7 @@ const Service = () => {
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
-      .post("/Customer", values)
+      .post("/service", values)
       .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
@@ -36,33 +36,19 @@ const Service = () => {
   const handleFormSubmitedit = (values) => {
     console.log(values);
     client
-      .put("/Projects", values)
+      .put("/service", values)
       .then(setOpenedit(false))
       .then(setReRender(true))
       .then(setPostsucessfuledit(true));
   };
 
-  // Definitions for Delete Customer
-  const [opendelete, setOpendelete] = useState(false);
-  const handleOpendelete = () => setOpendelete(true);
-  const handleClosedelete = () => setOpendelete(false);
-
-  const [postsucessfuldelete, setPostsucessfuldelete] = useState(false);
-  const handleFormSubmitdelete = (values) => {
-    const idtodelete = values.trans_id;
-    client
-      .delete(`/Projects/${idtodelete}`)
-      .then(setOpendelete(false))
-      .then(setReRender(true))
-      .then(setPostsucessfuldelete(true));
-  };
   // Api Call and config
-  const [Customer, setCustomer] = useState("");
+  const [Service, setService] = useState("");
   useEffect(() => {
     client
-      .get("/customer")
+      .get("/service")
       .then((res) => {
-        setCustomer(res.data);
+        setService(res.data);
       })
       .then(setReRender(false))
       .catch((err) => {
@@ -71,14 +57,14 @@ const Service = () => {
   }, [reRender]);
 
   // Api call and config for Categories and Transaction Accounts
-  const [customer_statusdata, setcustomer_statusdata] = useState([]);
+  const [service_status_data, setservice_statusdata] = useState([]);
 
-  // Api call to get customer status for select option
+  // Api call to get service status for select option
   useEffect(() => {
     client
-      .get("/customer_status")
+      .get("/service_type_status")
       .then((res) => {
-        setcustomer_statusdata(res.data);
+        setservice_statusdata(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -95,13 +81,27 @@ const Service = () => {
 
   // Column Configuration
   const columns = [
-    { field: "customer_id", headerName: "ID", flex: 0.5 },
-    { field: "customer_first_name", headerName: "First Name", flex: 1 },
-    { field: "customer_last_name", headerName: "Last Name", flex: 1 },
+    { 
+      field: "service_id",
+      headerName: "ID",
+      flex: 0.5 
+    },
+
+    { 
+      field: "service_name",
+      headerName: "Service Name", 
+      flex: 1 
+    },
+
+    { 
+      field: "service_desc",
+      headerName: "Service Description",
+      flex: 1 
+    },
 
     {
-      field: "customer_phone_number",
-      headerName: "Phone Number",
+      field: "service_cost",
+      headerName: "Service Cost",
       flex: 1,
       cellClassName: "name-column--cell",
     },
@@ -112,8 +112,8 @@ const Service = () => {
       flex: 1,
     },
     {
-      field: "Customer Status",
-      headerName: "Customer Status",
+      field: "serv_type_stat_id",
+      headerName: "Service Status",
       flex: 1,
     },
   ];
@@ -126,7 +126,7 @@ const Service = () => {
         open={openadd}
         handleFormSubmit={handleFormSubmitadd}
         postsucessful={postsucessfuladd}
-        customerstatusdata={customer_statusdata}
+        service_status_data={service_status_data}
         alert={SuccessAlert}
       />
 
@@ -186,9 +186,9 @@ const Service = () => {
         }}
       >
         <DataGrid
-          rows={Customer}
+          rows={Service}
           columns={columns}
-          getRowId={(row) => row.customer_id}
+          getRowId={(row) => row.service_id}
           components={{ Toolbar: GridToolbar }}
         />
       </Box>
