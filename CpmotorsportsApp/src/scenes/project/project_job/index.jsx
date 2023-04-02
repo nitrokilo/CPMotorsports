@@ -1,12 +1,10 @@
 import { Box } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
+import { tokens } from "../../../theme.js";
 import { useEffect, useState } from "react";
-import client from "../../Api/apiconfig.js";
-import Header from "../../components/Header";
+import client from "../../../Api/apiconfig.js";
+import Header from "../../../components/Header";
 import { useTheme } from "@mui/material";
-import { SuccessAlert } from "../../components/alert.jsx";
-import AddCustomer from "./addcustomer";
+import { SuccessAlert } from "../../../components/alert.jsx";
 const Project_Job = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);

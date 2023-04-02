@@ -1,12 +1,13 @@
-import { Box } from "@mui/material";
+import { Box, Select, MenuItem} from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
+import MaterialTable from "material-table";
+import { tableIcons } from "../global/tableicons";
 import { SuccessAlert } from "../../components/alert.jsx";
-import AddMechanic from "./addmechanic";
 const Mechanic = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -42,23 +43,9 @@ const Mechanic = () => {
       .then(setPostsucessfuledit(true));
   };
 
-  // Definitions for Delete Customer
-  /*const [opendelete, setOpendelete] = useState(false);
-  const handleOpendelete = () => setOpendelete(true);
-  const handleClosedelete = () => setOpendelete(false);
-
-  const [postsucessfuldelete, setPostsucessfuldelete] = useState(false);
-  const handleFormSubmitdelete = (values) => {
-    const idtodelete = values.trans_id;
-    client
-      .delete(`/Projects/${idtodelete}`)
-      .then(setOpendelete(false))
-      .then(setReRender(true))
-      .then(setPostsucessfuldelete(true));
-  }; */
-
+ 
   // Api Call and config
-  const [Mechanic, setMechanic] = useState("");
+  const [Mechanic, setMechanic] = useState([]);
   useEffect(() => {
     client
       .get("/mechanic")
@@ -77,7 +64,7 @@ const Mechanic = () => {
   // Api call to get mechanic status for select option
   useEffect(() => {
     client
-      .get("/mechanic_status")
+      .get("/mech_status")
       .then((res) => {
         setmechanic_statusdata(res.data);
       })
@@ -104,67 +91,36 @@ const Mechanic = () => {
 
   // Column Configuration
   const columns = [
-    { field: "mechanic_id", headerName: "ID", flex: 0.5 },
-    { field: "mechanic_first_name", headerName: "First Name", flex: 1 },
-    { field: "mechanic_last_name", headerName: "Last Name", flex: 1 },
+    { field: "mech_id", title: "ID" },
+    { field: "mech_first_name", title: "First Name" },
+    { field: "mech_last_name", title: "Last Name" },
 
     {
-      field: "mechanic_phone_number",
-      headerName: "Phone Number",
-      flex: 1,
+      field: "mech_phone_number",
+      title: "Phone Number",
+      
       cellClassName: "name-column--cell",
     },
 
     {
-      field: "mechanic_email",
-      headerName: "Mechanic Email",
-      flex: 1,
+      field: "mech_email",
+      title: "Mechanic Email",
+      
     },
     {
       field: "mech_hourly_pay",
-      headerName: "Mechanic Hourly Pay",
-      flex: 1,
+      title: "Mechanic Hourly Pay",
+      
 
-      field: "mech_stat_id",
-      headerName: "Mechanic Static Id",
-      flex: 1,
+      field: "mech_stat_name",
+      title: "Mechanic Status",
+      
 
     },
   ];
 
   return (
     <Box m="20px">
-      <AddMechanic
-        handleOpen={handleOpenadd}
-        handleClose={handleCloseadd}
-        open={openadd}
-        handleFormSubmit={handleFormSubmitadd}
-        postsucessful={postsucessfuladd}
-        Mechanicstatusdata={mechanic_statusdata}
-        alert={SuccessAlert}
-      />
-
-      {/* <EditTransaction
-        handleOpen={handleOpenedit}
-        handleClose={handleCloseedit}
-        open={openedit}
-        handleFormSubmit={handleFormSubmitedit}
-        postsucessful={postsucessfuledit}
-        Projects={Projects}
-        categoriesdata={categoriesdata}
-        transactionaccountdata={transactionaccountdata}
-        alert={SuccessAlert}
-      />
-
-      <DeleteTransaction
-        handleOpen={handleOpendelete}
-        handleClose={handleClosedelete}
-        open={opendelete}
-        handleFormSubmit={handleFormSubmitdelete}
-        postsucessful={postsucessfuldelete}
-        Projects={Projects}
-        alert={SuccessAlert}
-      />  */}
 
       <Header title="Mechanic" subtitle="List of all Mechanics" />
       <Box

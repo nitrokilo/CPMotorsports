@@ -8,7 +8,7 @@ import { SuccessAlert } from "../../components/alert.jsx";
 import MaterialTable from "material-table";
 import { tableIcons } from "../global/tableicons";
 
-const Make = () => {
+const Car = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
@@ -46,7 +46,7 @@ const Make = () => {
   }; */
 
   // Api Call and config
-  const [Make, setMake] = useState([]);
+  const [Car, setCar] = useState([]);
   useEffect(() => {
     client
       .get("/cars")
@@ -60,14 +60,14 @@ const Make = () => {
   }, [reRender]);
 
   // Api call and config for Categories and Transaction Accounts
-  const [make_statusdata, setmake_statusdata] = useState([]);
+  const [ownership_statusdata, setownership_statusdata] = useState([]);
 
   // Api call to get make status for select option
   useEffect(() => {
     client
-      .get("/make_status")
+      .get("/ownership_status")
       .then((res) => {
-        setmake_statusdata(res.data);
+        setownership_statusdata(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -83,9 +83,9 @@ const Make = () => {
   });
 
   // Edit Capabilities
-  const MakeStatusOptions = make_statusdata.map((make_status) => (
-    <MenuItem value={make_status.make_stat_id}>
-      {make_status.make_stat_name}
+  const OwnershipStatusOptions = ownership_statusdata.map((ownership_status) => (
+    <MenuItem value={ownership_status.ownership_stat_id}>
+      {ownership_status.ownership_stat_name}
     </MenuItem>
   ));
 
@@ -102,7 +102,7 @@ const Make = () => {
 
   return (
     <Box m="20px">
-      <Header title="Make" subtitle="List of all Makes" />
+      <Header title="Customer Cars" subtitle="List of all Customer Cars" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -137,8 +137,8 @@ const Make = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Make Data"
-          data={Make}
+          title="Customer Car Data"
+          data={Car}
           columns={columns}
           editable={{
             onRowAdd: (newRow) =>
@@ -184,4 +184,4 @@ const Make = () => {
   );
 };
 
-export default Make;
+export default Car;
