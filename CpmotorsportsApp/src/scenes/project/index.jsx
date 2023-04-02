@@ -11,23 +11,23 @@ const Project = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
-  // State definitions for Add Customer
+  // State definitions for Add Project
   const [openadd, setOpenadd] = useState(false);
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
-  // Defintions for Add Customer component
+  // Defintions for Add Project component
   const handleOpenadd = () => setOpenadd(true);
   const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
-      .post("/Customer", values)
+      .post("/add_project", values)
       .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };
 
-  // Definitions for Edit Customer
+  // Definitions for Edit Project
   const [openedit, setOpenedit] = useState(false);
   const handleOpenedit = () => setOpenedit(true);
   const handleCloseedit = () => setOpenedit(false);
@@ -36,13 +36,14 @@ const Project = () => {
   const handleFormSubmitedit = (values) => {
     console.log(values);
     client
-      .put("/Projects", values)
+      .put("/edit_project", values)
       .then(setOpenedit(false))
       .then(setReRender(true))
       .then(setPostsucessfuledit(true));
   };
 
-  // Definitions for Delete Customer
+/*
+  // Definitions for Delete Project
   const [opendelete, setOpendelete] = useState(false);
   const handleOpendelete = () => setOpendelete(true);
   const handleClosedelete = () => setOpendelete(false);
@@ -51,18 +52,18 @@ const Project = () => {
   const handleFormSubmitdelete = (values) => {
     const idtodelete = values.trans_id;
     client
-      .delete(`/Projects/${idtodelete}`)
+      .delete(`/projects/${idtodelete}`)
       .then(setOpendelete(false))
       .then(setReRender(true))
       .then(setPostsucessfuldelete(true));
-  };
+  };  */
   // Api Call and config
-  const [Customer, setCustomer] = useState("");
+  const [Project, setProject] = useState("");
   useEffect(() => {
     client
-      .get("/customer")
+      .get("/project")
       .then((res) => {
-        setCustomer(res.data);
+        setProject(res.data);
       })
       .then(setReRender(false))
       .catch((err) => {
@@ -71,14 +72,14 @@ const Project = () => {
   }, [reRender]);
 
   // Api call and config for Categories and Transaction Accounts
-  const [customer_statusdata, setcustomer_statusdata] = useState([]);
+  const [project_statusdata, setproject_statusdata] = useState([]);
 
-  // Api call to get customer status for select option
+  // Api call to get project status for select option
   useEffect(() => {
     client
-      .get("/customer_status")
+      .get("/project_status")
       .then((res) => {
-        setcustomer_statusdata(res.data);
+        setproject_statusdata(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -95,25 +96,25 @@ const Project = () => {
 
   // Column Configuration
   const columns = [
-    { field: "customer_id", headerName: "ID", flex: 0.5 },
-    { field: "customer_first_name", headerName: "First Name", flex: 1 },
-    { field: "customer_last_name", headerName: "Last Name", flex: 1 },
+    { field: "project_id", headerName: "ID", flex: 0.5 },
+    { field: "vin_num", headerName: "Vin Number", flex: 1 },
+    { field: "project_start", headerName: "Project Start", flex: 1 },
 
     {
-      field: "customer_phone_number",
-      headerName: "Phone Number",
+      field: "project_end",
+      headerName: "Project End",
       flex: 1,
       cellClassName: "name-column--cell",
     },
 
     {
-      field: "customer_email",
-      headerName: "Customer Email",
+      field: "total_cost",
+      headerName: "Total Cost",
       flex: 1,
     },
     {
-      field: "Customer Status",
-      headerName: "Customer Status",
+      field: "project_stat_name",
+      headerName: "P Status",
       flex: 1,
     },
   ];
@@ -126,7 +127,7 @@ const Project = () => {
         open={openadd}
         handleFormSubmit={handleFormSubmitadd}
         postsucessful={postsucessfuladd}
-        customerstatusdata={customer_statusdata}
+        projectstatusdata={project_statusdata}
         alert={SuccessAlert}
       />
 
@@ -185,11 +186,49 @@ const Project = () => {
           },
         }}
       >
-        <DataGrid
-          rows={Customer}
+        <MaterialTable
+          icons={tableIcons}
+          title="Project Data"
+          data={Project}
           columns={columns}
-          getRowId={(row) => row.customer_id}
-          components={{ Toolbar: GridToolbar }}
+          editable={{
+            onRowAdd: (newRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  console.log(newRow);
+                  handleFormSubmitadd(newRow);
+                  resolve();
+                }, 1000);
+              }),
+            onRowDelete: (selectedRow) =>
+              new Promise((resolve, reject) => {
+                const index = selectedRow.tableData.id;
+                const updatedRows = [...data];
+                updatedRows.splice(index, 1);
+                setTimeout(() => {
+                  setData(updatedRows);
+                  resolve();
+                }, 2000);
+              }),
+            onRowUpdate: (updatedRow, oldRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  handleFormSubmitedit(updatedRow);
+                  resolve();
+                }, 1000);
+              }),
+          }}
+          options={{
+            headerStyle: {
+              backgroundColor: "white",
+              color: "black",
+            },
+            actionsColumnIndex: -1,
+            addRowPosition: "first",
+            exportButton: true,
+            filtering: true,
+            pageSize: 15,
+          }}
         />
       </Box>
     </Box>

@@ -7,27 +7,27 @@ import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
 import AddCustomer from "./addcustomer";
-const Customer = () => {
+const Project_Job = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
-  // State definitions for Add Customer
+  // State definitions for Add Project Job
   const [openadd, setOpenadd] = useState(false);
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
-  // Defintions for Add Customer component
+  // Defintions for Add Project Job component
   const handleOpenadd = () => setOpenadd(true);
   const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
-      .post("/Customer", values)
+      .post("/project_job", values)
       .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };
 
-  // Definitions for Edit Customer
+  // Definitions for Edit Project Job
   const [openedit, setOpenedit] = useState(false);
   const handleOpenedit = () => setOpenedit(true);
   const handleCloseedit = () => setOpenedit(false);
@@ -36,12 +36,13 @@ const Customer = () => {
   const handleFormSubmitedit = (values) => {
     console.log(values);
     client
-      .put("/Projects", values)
+      .put("/add_project_job", values)
       .then(setOpenedit(false))
       .then(setReRender(true))
       .then(setPostsucessfuledit(true));
   };
 
+  /*
   // Definitions for Delete Customer
   const [opendelete, setOpendelete] = useState(false);
   const handleOpendelete = () => setOpendelete(true);
@@ -55,14 +56,14 @@ const Customer = () => {
       .then(setOpendelete(false))
       .then(setReRender(true))
       .then(setPostsucessfuldelete(true));
-  };
+  };*/
   // Api Call and config
-  const [Customer, setCustomer] = useState("");
+  const [Project_Job, setProject_Job] = useState("");
   useEffect(() => {
     client
-      .get("/customer")
+      .get("/project_jobs")
       .then((res) => {
-        setCustomer(res.data);
+        setProject_Job(res.data);
       })
       .then(setReRender(false))
       .catch((err) => {
@@ -71,14 +72,14 @@ const Customer = () => {
   }, [reRender]);
 
   // Api call and config for Categories and Transaction Accounts
-  const [customer_statusdata, setcustomer_statusdata] = useState([]);
+  const [project_job_statusdata, setproject_job_statusdata] = useState([]);
 
-  // Api call to get customer status for select option
+  // Api call to get Project Job status for select option
   useEffect(() => {
     client
-      .get("/customer_status")
+      .get("/project_job_stat_id")
       .then((res) => {
-        setcustomer_statusdata(res.data);
+        setproject_job_statusdata(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -96,38 +97,21 @@ const Customer = () => {
 
   // Column Configuration
   const columns = [
-    { field: "customer_id", headerName: "ID", flex: 0.5 },
-    { field: "customer_first_name", headerName: "First Name", flex: 1 },
-    { field: "customer_last_name", headerName: "Last Name", flex: 1 },
+    { field: "project_id", headerName: "Project ID", flex: 0.5 },
+    { field: "part_job_id", headerName: "Part Job ID", flex: 1 },
+    { field: "project_job_stat_id", headerName: "Project Job Status ID", flex: 1 },
    
-    {
-      field: "customer_phone_number",
-      headerName: "Phone Number",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-
-    {
-      field: "customer_email",
-      headerName: "Customer Email",
-      flex: 1,
-    },
-    {
-      field: "Customer Status",
-      headerName: "Customer Status",
-      flex: 1,
-    },
   ];
 
   return (
     <Box m="20px">
-       <AddCustomer
+       <AddProjectJob
         handleOpen={handleOpenadd}
         handleClose={handleCloseadd}
         open={openadd}
         handleFormSubmit={handleFormSubmitadd}
         postsucessful={postsucessfuladd}
-        customerstatusdata={customer_statusdata}
+        projectjobstatusdata={project_job_statusdata}
         alert={SuccessAlert}
       />
 
@@ -153,7 +137,7 @@ const Customer = () => {
         alert={SuccessAlert}
       />  */}
 
-      <Header title="Customer" subtitle="List of all Cusotmers" />
+      <Header title="ProjectJob" subtitle="List of all Projects" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -186,15 +170,54 @@ const Customer = () => {
           },
         }}
       >
-        <DataGrid
-          rows={Customer}
+        <MaterialTable
+          icons={tableIcons}
+          title="Project Job Data"
+          data={Project}
           columns={columns}
-          getRowId={(row) => row.customer_id}
-          components={{ Toolbar: GridToolbar }}
+          editable={{
+            onRowAdd: (newRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  console.log(newRow);
+                  handleFormSubmitadd(newRow);
+                  resolve();
+                }, 1000);
+              }),
+            onRowDelete: (selectedRow) =>
+              new Promise((resolve, reject) => {
+                const index = selectedRow.tableData.id;
+                const updatedRows = [...data];
+                updatedRows.splice(index, 1);
+                setTimeout(() => {
+                  setData(updatedRows);
+                  resolve();
+                }, 2000);
+              }),
+            onRowUpdate: (updatedRow, oldRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  handleFormSubmitedit(updatedRow);
+                  resolve();
+                }, 1000);
+              }),
+          }}
+          options={{
+            headerStyle: {
+              backgroundColor: "white",
+              color: "black",
+            },
+            actionsColumnIndex: -1,
+            addRowPosition: "first",
+            exportButton: true,
+            filtering: true,
+            pageSize: 15,
+          }}
         />
       </Box>
     </Box>
   );
 };
 
-export default Customer;
+
+export default Project_Job;

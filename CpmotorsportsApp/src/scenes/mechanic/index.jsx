@@ -11,23 +11,23 @@ const Mechanic = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
-  // State definitions for Add Customer
+  // State definitions for Add Mechanic
   const [openadd, setOpenadd] = useState(false);
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
-  // Defintions for Add Customer component
+  // Defintions for Add Mechanic component
   const handleOpenadd = () => setOpenadd(true);
   const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
-      .post("/Customer", values)
+      .post("/add_mechanic", values)
       .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };
 
-  // Definitions for Edit Customer
+  // Definitions for Edit Mechanic
   const [openedit, setOpenedit] = useState(false);
   const handleOpenedit = () => setOpenedit(true);
   const handleCloseedit = () => setOpenedit(false);
@@ -36,14 +36,14 @@ const Mechanic = () => {
   const handleFormSubmitedit = (values) => {
     console.log(values);
     client
-      .put("/Projects", values)
+      .put("/edit_mechanic", values)
       .then(setOpenedit(false))
       .then(setReRender(true))
       .then(setPostsucessfuledit(true));
   };
 
   // Definitions for Delete Customer
-  const [opendelete, setOpendelete] = useState(false);
+  /*const [opendelete, setOpendelete] = useState(false);
   const handleOpendelete = () => setOpendelete(true);
   const handleClosedelete = () => setOpendelete(false);
 
@@ -55,14 +55,15 @@ const Mechanic = () => {
       .then(setOpendelete(false))
       .then(setReRender(true))
       .then(setPostsucessfuldelete(true));
-  };
+  }; */
+
   // Api Call and config
-  const [Customer, setCustomer] = useState("");
+  const [Mechanic, setMechanic] = useState("");
   useEffect(() => {
     client
-      .get("/customer")
+      .get("/mechanic")
       .then((res) => {
-        setCustomer(res.data);
+        setMechanic(res.data);
       })
       .then(setReRender(false))
       .catch((err) => {
@@ -71,14 +72,14 @@ const Mechanic = () => {
   }, [reRender]);
 
   // Api call and config for Categories and Transaction Accounts
-  const [customer_statusdata, setcustomer_statusdata] = useState([]);
+  const [mechanic_statusdata, setmechanic_statusdata] = useState([]);
 
-  // Api call to get customer status for select option
+  // Api call to get mechanic status for select option
   useEffect(() => {
     client
-      .get("/customer_status")
+      .get("/mechanic_status")
       .then((res) => {
-        setcustomer_statusdata(res.data);
+        setmechanic_statusdata(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -93,28 +94,41 @@ const Mechanic = () => {
     currency: "USD",
   });
 
+
+  // Edit Capabilities
+  const mechanicstatusoptions = mechanic_statusdata.map((mechanic_status) => (
+    <MenuItem value={mechanic_status.mechanic_stat_id}>
+      {mechanic_status.mechanic_stat_name}
+    </MenuItem>
+  ));
+
   // Column Configuration
   const columns = [
-    { field: "customer_id", headerName: "ID", flex: 0.5 },
-    { field: "customer_first_name", headerName: "First Name", flex: 1 },
-    { field: "customer_last_name", headerName: "Last Name", flex: 1 },
+    { field: "mechanic_id", headerName: "ID", flex: 0.5 },
+    { field: "mechanic_first_name", headerName: "First Name", flex: 1 },
+    { field: "mechanic_last_name", headerName: "Last Name", flex: 1 },
 
     {
-      field: "customer_phone_number",
+      field: "mechanic_phone_number",
       headerName: "Phone Number",
       flex: 1,
       cellClassName: "name-column--cell",
     },
 
     {
-      field: "customer_email",
-      headerName: "Customer Email",
+      field: "mechanic_email",
+      headerName: "Mechanic Email",
       flex: 1,
     },
     {
-      field: "Customer Status",
-      headerName: "Customer Status",
+      field: "mech_hourly_pay",
+      headerName: "Mechanic Hourly Pay",
       flex: 1,
+
+      field: "mech_stat_id",
+      headerName: "Mechanic Static Id",
+      flex: 1,
+
     },
   ];
 
@@ -126,7 +140,7 @@ const Mechanic = () => {
         open={openadd}
         handleFormSubmit={handleFormSubmitadd}
         postsucessful={postsucessfuladd}
-        customerstatusdata={customer_statusdata}
+        Mechanicstatusdata={mechanic_statusdata}
         alert={SuccessAlert}
       />
 
@@ -185,11 +199,49 @@ const Mechanic = () => {
           },
         }}
       >
-        <DataGrid
-          rows={Customer}
+        <MaterialTable
+          icons={tableIcons}
+          title="Mechanic Data"
+          data={Mechanic}
           columns={columns}
-          getRowId={(row) => row.customer_id}
-          components={{ Toolbar: GridToolbar }}
+          editable={{
+            onRowAdd: (newRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  console.log(newRow);
+                  handleFormSubmitadd(newRow);
+                  resolve();
+                }, 1000);
+              }),
+            onRowDelete: (selectedRow) =>
+              new Promise((resolve, reject) => {
+                const index = selectedRow.tableData.id;
+                const updatedRows = [...data];
+                updatedRows.splice(index, 1);
+                setTimeout(() => {
+                  setData(updatedRows);
+                  resolve();
+                }, 2000);
+              }),
+            onRowUpdate: (updatedRow, oldRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  handleFormSubmitedit(updatedRow);
+                  resolve();
+                }, 1000);
+              }),
+          }}
+          options={{
+            headerStyle: {
+              backgroundColor: "white",
+              color: "black",
+            },
+            actionsColumnIndex: -1,
+            addRowPosition: "first",
+            exportButton: true,
+            filtering: true,
+            pageSize: 15,
+          }}
         />
       </Box>
     </Box>
