@@ -239,4 +239,4 @@ const Make = () => {
   );
 };
 
-export default Make;
+export default Model;
