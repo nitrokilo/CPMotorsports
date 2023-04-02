@@ -6,29 +6,28 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
-import AddCustomer from "./addcustomer";
-import AddCustom from "./addcustomer";
+import AddCustom from "./addcustom";
 const CustomParts = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
-  // State definitions for Add Customer
+  // State definitions for Add Custom part
   const [openadd, setOpenadd] = useState(false);
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
-  // Defintions for Add Customer component
+  // Defintions for Add custom part
   const handleOpenadd = () => setOpenadd(true);
   const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
-      .post("/Customer", values)
+      .post("/custom_part", values)
       .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };
 
-  // Definitions for Edit Customer
+  // Definitions for Edit Custom part
   const [openedit, setOpenedit] = useState(false);
   const handleOpenedit = () => setOpenedit(true);
   const handleCloseedit = () => setOpenedit(false);
@@ -37,54 +36,25 @@ const CustomParts = () => {
   const handleFormSubmitedit = (values) => {
     console.log(values);
     client
-      .put("/Projects", values)
+      .put("/custom_part", values)
       .then(setOpenedit(false))
       .then(setReRender(true))
       .then(setPostsucessfuledit(true));
   };
 
-  // Definitions for Delete Customer
-  const [opendelete, setOpendelete] = useState(false);
-  const handleOpendelete = () => setOpendelete(true);
-  const handleClosedelete = () => setOpendelete(false);
-
-  const [postsucessfuldelete, setPostsucessfuldelete] = useState(false);
-  const handleFormSubmitdelete = (values) => {
-    const idtodelete = values.trans_id;
-    client
-      .delete(`/Projects/${idtodelete}`)
-      .then(setOpendelete(false))
-      .then(setReRender(true))
-      .then(setPostsucessfuldelete(true));
-  };
   // Api Call and config
-  const [Customer, setCustomer] = useState("");
+  const [CustomPart, setCustomPart] = useState("");
   useEffect(() => {
     client
-      .get("/customer")
+      .get("/custom_part")
       .then((res) => {
-        setCustomer(res.data);
+        setCustomPart(res.data);
       })
       .then(setReRender(false))
       .catch((err) => {
         console.log(err);
       });
   }, [reRender]);
-
-  // Api call and config for Categories and Transaction Accounts
-  const [customer_statusdata, setcustomer_statusdata] = useState([]);
-
-  // Api call to get customer status for select option
-  useEffect(() => {
-    client
-      .get("/customer_status")
-      .then((res) => {
-        setcustomer_statusdata(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -96,25 +66,43 @@ const CustomParts = () => {
 
   // Column Configuration
   const columns = [
-    { field: "customer_id", headerName: "ID", flex: 0.5 },
-    { field: "customer_first_name", headerName: "First Name", flex: 1 },
-    { field: "customer_last_name", headerName: "Last Name", flex: 1 },
+    { 
+      field: "cust_part_id", 
+      headerName: "ID", 
+      flex: 0.5 
+    },
 
-    {
-      field: "customer_phone_number",
-      headerName: "Phone Number",
-      flex: 1,
-      cellClassName: "name-column--cell",
+    { 
+      field: "car_sys_id",
+      headerName: "Car System ID", 
+      flex: 1 
+    },
+
+    { 
+      field: "metal_id", 
+      headerName: "Metal ID", 
+      flex: 1 
     },
 
     {
-      field: "customer_email",
-      headerName: "Customer Email",
+      field: "cust_part_name",
+      headerName: "Custom Part Name",
+      flex: 1,
+    },
+
+    {
+      field: "fab_type",
+      headerName: "Fabrication Type",
       flex: 1,
     },
     {
-      field: "Customer Status",
-      headerName: "Customer Status",
+      field: "cust_part_desc",
+      headerName: "Part Description",
+      flex: 1,
+    },
+    {
+      field: "cust_part_cost",
+      headerName: "Part Cost",
       flex: 1,
     },
   ];
@@ -127,7 +115,6 @@ const CustomParts = () => {
         open={openadd}
         handleFormSubmit={handleFormSubmitadd}
         postsucessful={postsucessfuladd}
-        customerstatusdata={customer_statusdata}
         alert={SuccessAlert}
       />
 
@@ -187,9 +174,9 @@ const CustomParts = () => {
         }}
       >
         <DataGrid
-          rows={Customer}
+          rows={CustomPart}
           columns={columns}
-          getRowId={(row) => row.customer_id}
+          getRowId={(row) => row.custom_part_id}
           components={{ Toolbar: GridToolbar }}
         />
       </Box>
