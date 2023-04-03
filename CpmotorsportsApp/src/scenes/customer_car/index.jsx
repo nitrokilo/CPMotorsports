@@ -131,7 +131,7 @@ const Car = () => {
   // Edit Customer Capabilities
   const CustomerOptions = customer_data.map((customer) => (
     <MenuItem value={customer.customer_id}>
-      ({customer.customer_id}) {customer.customer}
+      ({customer.customer_id}) {customer.Customer}
     </MenuItem>
   ));
 
