@@ -6,7 +6,7 @@ import Header from "../../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../../components/alert.jsx";
 import MaterialTable from "material-table";
-import { tableIcons } from "../global/tableicons";
+import { tableIcons } from "../../global/tableicons.jsx";
 import Project from "../index.jsx";
 const Project_Job = () => {
   // State intialization for rerender to control page render

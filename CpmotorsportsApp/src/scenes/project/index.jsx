@@ -1,4 +1,4 @@
-import { Box, Button, MenuItem, Select} from "@mui/material"; 
+import { Box, Button, MenuItem, Select, Autocomplete, TextField} from "@mui/material"; 
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
@@ -135,17 +135,12 @@ const Project = () => {
   const columns = [
     { field: "project_id", title: "ID", editable: false },
     { field: "vin_num", title: "Vin Number", flex: 1 , editComponent: ({ value, onChange, rowData }) => (
-      <Select
-        value={value}
-        onChange={(event) => {
-          onChange(event.target.value);
-        }}
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        {vinnumberoptions}
-      </Select>
+      <Autocomplete
+      id="free-solo-demo"
+      freeSolo
+      options={vinnumberoptions}
+      renderInput={(params) => <TextField {...params} label="freeSolo" />}
+    />
     ),},
     { title: 'Project Start', field: "project_start", type:"datetime"},
 

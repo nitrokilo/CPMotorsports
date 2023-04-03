@@ -6,7 +6,7 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import MaterialTable from '@material-table/core';
-import { tableIcons } from "../../global/tableicons.jsx";
+import { tableIcons	 } from "../global/tableicons";
 
 const Completed_projects_per_year= () => {
 
