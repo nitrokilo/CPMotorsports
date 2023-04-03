@@ -145,7 +145,7 @@ const Car = () => {
   // Edit Model Capabilities
   const ModelOptions = model_data.map((model) => (
     <MenuItem value={model.model_id}>
-      {model.model_name}
+      ({model.make_name}) {model.model_name}
     </MenuItem>
   ));
 
