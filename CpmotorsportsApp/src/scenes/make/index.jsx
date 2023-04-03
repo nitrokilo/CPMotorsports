@@ -5,7 +5,7 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
-import MaterialTable from "material-table";
+import MaterialTable from '@material-table/core';
 import { tableIcons } from "../global/tableicons";
 
 const Make = () => {
@@ -187,7 +187,16 @@ const Make = () => {
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",
-            exportButton: true,
+            exportMenu: [
+              {
+                label: "Export PDF",
+                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Make"),
+              },
+              {
+                label: "Export CSV",
+                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Make"),
+              },
+            ],
             filtering: true,
             pageSize: 15,
           }}
