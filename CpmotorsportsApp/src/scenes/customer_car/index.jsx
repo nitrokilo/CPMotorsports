@@ -60,6 +60,22 @@ const Car = () => {
   }, [reRender]);
 
   // Api call and config for Categories and Transaction Accounts
+  const [make_data, set_makedata] = useState([]);
+
+  // Api call to get make status for select option
+  useEffect(() => {
+    client
+      .get("/make")
+      .then((res) => {
+        setownership_statusdata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+
+  // Api call and config for Categories and Transaction Accounts
   const [ownership_statusdata, setownership_statusdata] = useState([]);
 
   // Api call to get make status for select option
@@ -82,6 +98,13 @@ const Car = () => {
     currency: "USD",
   });
 
+   // Edit Capabilities
+   const MakeOptions = make_data.map((make) => (
+    <MenuItem value={make.make_id}>
+      {make._name}
+    </MenuItem>
+  ));
+
   // Edit Capabilities
   const OwnershipStatusOptions = ownership_statusdata.map((ownership_status) => (
     <MenuItem value={ownership_status.ownership_stat_id}>
@@ -93,7 +116,24 @@ const Car = () => {
   const columns = [
     { field: "vin_num", title: "VIN No.", flex: 0.5, editable: false },
     { field: "Customer", title: "Customer", flex: 1 },
-    { field: "make_name", title: "Make", flex: 1 },
+    {
+      field: "make_name",
+      title: "Make",
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {MakeOptions}
+        </Select>
+      ),
+    },
     { field: "model_name", title: "Model", flex: 1 },
     { field: "color", title: "Color", flex: 1 },
     {
