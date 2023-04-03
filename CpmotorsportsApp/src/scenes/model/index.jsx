@@ -8,7 +8,7 @@ import { SuccessAlert } from "../../components/alert.jsx";
 import MaterialTable from "material-table";
 import { tableIcons } from "../global/tableicons";
 
-const Make = () => {
+const Model = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
@@ -46,12 +46,12 @@ const Make = () => {
   }; */
 
   // Api Call and config
-  const [Make, setMake] = useState([]);
+  const [Model, setModel] = useState([]);
   useEffect(() => {
     client
       .get("/model")
       .then((res) => {
-        setMake(res.data);
+        setModel(res.data);
       })
       .then(setReRender(false))
       .catch((err) => {
@@ -193,7 +193,7 @@ const Make = () => {
         <MaterialTable
           icons={tableIcons}
           title="Make Data"
-          data={Make}
+          data={Model}
           columns={columns}
           editable={{
             onRowAdd: (newRow) =>

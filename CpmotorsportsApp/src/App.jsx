@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { Routes, Route } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
@@ -27,6 +29,7 @@ function App() {
   const [isSidebar, setIsSidebar] = useState(true);
 
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -78,6 +81,7 @@ function App() {
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
+    </LocalizationProvider>
   );
 }
 

@@ -6,8 +6,15 @@ import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { SuccessAlert } from "../../components/alert.jsx";
-import MaterialTable from "material-table";
+import MaterialTable from '@material-table/core';
 import { tableIcons } from "../global/tableicons";
+import { ExportCsv, ExportPdf } from "@material-table/exporters";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DatePicker } from "@mui/x-date-pickers";
+import CustomDatePicker from "../global/customdatepicker";
+
 const Project = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -126,6 +133,7 @@ const Project = () => {
     currency: "USD",
   });
 
+
   // Column Configuration
   const columns = [
     { field: "project_id", title: "ID", editable: false },
@@ -142,19 +150,19 @@ const Project = () => {
         {vinnumberoptions}
       </Select>
     ),},
-    { title: "Project Start", field: "project_start", type:"date"},
+    { title: 'Project Start', field: "project_start", type:"datetime"},
 
     {
       field: "project_end",
       title: "Project End",
-      flex: 1,
-      cellClassName: "name-column--cell",
+      type: "datetime",
+      dateSetting: { locale: "en-US", timeZone: "America/New_York"}
     },
 
     {
       field: "total_cost",
       title: "Total Cost",
-      flex: 1,
+      type: "currency",
     },
     {
       field: "project_stat_name",
@@ -167,9 +175,7 @@ const Project = () => {
             onChange(event.target.value);
           }}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
+
           {project_statusoptions}
         </Select>
       ),
@@ -252,7 +258,16 @@ const Project = () => {
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",
-            exportButton: true,
+            exportMenu: [
+              {
+                label: "Export PDF",
+                exportFunc: (cols, datas) => ExportPdf(cols, datas, "myPdfFileName"),
+              },
+              {
+                label: "Export CSV",
+                exportFunc: (cols, datas) => ExportCsv(cols, datas, "myCsvFileName"),
+              },
+            ],
             filtering: true,
             pageSize: 15,
           }}
