@@ -6,7 +6,7 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import MaterialTable from "material-table";
-import { tableIcons } from "../global/tableicons";
+import { tableIcons } from "../../global/tableicons.jsx";
 
 const Completed_projects = () => {
 
@@ -87,7 +87,7 @@ const Completed_projects = () => {
         <MaterialTable
           icons={tableIcons}
           title="Completed Projects Per Customer"
-          data={Project_Job}
+          data={Data}
           columns={columns}
           options={{
             headerStyle: {
