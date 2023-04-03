@@ -101,7 +101,7 @@ const Car = () => {
    // Edit Capabilities
    const MakeOptions = make_data.map((make) => (
     <MenuItem value={make.make_id}>
-      {make._name}
+      {make.make_name}
     </MenuItem>
   ));
 
