@@ -67,7 +67,7 @@ const Car = () => {
     client
       .get("/make")
       .then((res) => {
-        setownership_statusdata(res.data);
+        set_makedata(res.data);
       })
       .catch((err) => {
         console.log(err);
