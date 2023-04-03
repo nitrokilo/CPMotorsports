@@ -15,6 +15,7 @@ import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
+import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
@@ -255,7 +256,7 @@ const Sidebar = () => {
             <Item
               title="Project Job Status"
               to="/project_job_status"
-              icon={<HelpOutlineOutlinedIcon />}
+              icon={<WorkOutlineIcon />}
               selected={selected}
               setSelected={setSelected}
             />
