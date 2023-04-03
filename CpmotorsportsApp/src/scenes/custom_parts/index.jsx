@@ -6,7 +6,7 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import MaterialTable from "material-table";
-import { tableIcons } from "../global/tableicons";
+import { tableIcons } from "../../global/tableicons.jsx";
 import { SuccessAlert } from "../../components/alert.jsx";
 
 const CustomParts = () => {
@@ -149,7 +149,7 @@ const CustomParts = () => {
         <MaterialTable
           icons={tableIcons}
           title="Custom Part Data"
-          data={Project_Job}
+          data={CustomPart}
           columns={columns}
           options={{
             headerStyle: {

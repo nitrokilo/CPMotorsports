@@ -6,7 +6,7 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import MaterialTable from "material-table";
-import { tableIcons } from "../global/tableicons";
+import { tableIcons } from "../../global/tableicons.jsx";
 import { SuccessAlert } from "../../components/alert.jsx";
 const Mechanic = () => {
   // State intialization for rerender to control page render
@@ -172,8 +172,35 @@ const Mechanic = () => {
          <MaterialTable
           icons={tableIcons}
           title="Mechanic Data"
-          data={Project_Job}
+          data={Mechanic}
           columns={columns}
+          editable={{
+            onRowAdd: (newRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  console.log(newRow);
+                  handleFormSubmitadd(newRow);
+                  resolve();
+                }, 1000);
+              }),
+            onRowDelete: (selectedRow) =>
+              new Promise((resolve, reject) => {
+                const index = selectedRow.tableData.id;
+                const updatedRows = [...data];
+                updatedRows.splice(index, 1);
+                setTimeout(() => {
+                  setData(updatedRows);
+                  resolve();
+                }, 2000);
+              }),
+            onRowUpdate: (updatedRow, oldRow) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  handleFormSubmitedit(updatedRow);
+                  resolve();
+                }, 1000);
+              }),
+          }}
           options={{
             headerStyle: {
               backgroundColor: "white",

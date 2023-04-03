@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import MaterialTable from '@material-table/core';
-import { tableIcons } from "../global/tableicons";
+import MaterialTable from "material-table";
+import { tableIcons } from "../../global/tableicons.jsx";
 
 const Completed_projects_per_year= () => {
 
@@ -88,7 +88,7 @@ const Completed_projects_per_year= () => {
         <MaterialTable
           icons={tableIcons}
           title="Completed Projects Per Year"
-          data={Project_Job}
+          data={Data}
           columns={columns}
           options={{
             headerStyle: {
