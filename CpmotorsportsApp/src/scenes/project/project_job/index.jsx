@@ -6,7 +6,7 @@ import Header from "../../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../../components/alert.jsx";
 import MaterialTable from "material-table";
-import { tableIcons } from "../../global/tableicons.jsx";
+import { tableIcons } from "../global/tableicons";
 import Project from "../index.jsx";
 const Project_Job = () => {
   // State intialization for rerender to control page render
@@ -151,7 +151,16 @@ const Project_Job = () => {
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",
-            exportButton: true,
+            exportMenu: [
+              {
+                label: "Export PDF",
+                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Customer"),
+              },
+              {
+                label: "Export CSV",
+                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Customer"),
+              },
+            ],
             filtering: true,
             pageSize: 15,
           }}

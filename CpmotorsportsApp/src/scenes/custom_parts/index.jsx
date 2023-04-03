@@ -6,7 +6,7 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import MaterialTable from "material-table";
-import { tableIcons } from "../../global/tableicons.jsx";
+import { tableIcons } from "../global/tableicons";
 import { SuccessAlert } from "../../components/alert.jsx";
 
 const CustomParts = () => {
@@ -158,7 +158,16 @@ const CustomParts = () => {
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",
-            exportButton: true,
+            exportMenu: [
+              {
+                label: "Export PDF",
+                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Customer"),
+              },
+              {
+                label: "Export CSV",
+                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Customer"),
+              },
+            ],
             filtering: true,
             pageSize: 15,
           }}
