@@ -60,14 +60,14 @@ const Car = () => {
   }, [reRender]);
 
   // Api call and config for Categories and Transaction Accounts
-  const [car_data, set_cardata] = useState([]);
+  const [customer_data, set_customerdata] = useState([]);
 
   // Api call to get make status for select option
   useEffect(() => {
     client
-      .get("/cars")
+      .get("/customer_id")
       .then((res) => {
-        set_cardata(res.data);
+        set_customerdata(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -128,10 +128,10 @@ const Car = () => {
     currency: "USD",
   });
 
-  // Edit Car Capabilities
-  const CarOptions = car_data.map((car) => (
-    <MenuItem value={car.vin_num}>
-      {car.Customer}
+  // Edit Customer Capabilities
+  const CustomerOptions = customer_data.map((customer) => (
+    <MenuItem value={customer.customer_id}>
+      ({customer.customer_id}) {customer.customer}
     </MenuItem>
   ));
 
@@ -142,7 +142,7 @@ const Car = () => {
     </MenuItem>
   ));
 
-  // Edit Make Capabilities
+  // Edit Model Capabilities
   const ModelOptions = model_data.map((model) => (
     <MenuItem value={model.model_id}>
       {model.model_name}
@@ -173,7 +173,7 @@ const Car = () => {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          {CarOptions}
+          {CustomerOptions}
         </Select>
       ),
     },
