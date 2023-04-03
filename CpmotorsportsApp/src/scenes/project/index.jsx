@@ -9,11 +9,8 @@ import { SuccessAlert } from "../../components/alert.jsx";
 import MaterialTable from '@material-table/core';
 import { tableIcons } from "../global/tableicons";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { DatePicker } from "@mui/x-date-pickers";
-import CustomDatePicker from "../global/customdatepicker";
+
+
 
 const Project = () => {
   // State intialization for rerender to control page render
@@ -261,11 +258,11 @@ const Project = () => {
             exportMenu: [
               {
                 label: "Export PDF",
-                exportFunc: (cols, datas) => ExportPdf(cols, datas, "myPdfFileName"),
+                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Project"),
               },
               {
                 label: "Export CSV",
-                exportFunc: (cols, datas) => ExportCsv(cols, datas, "myCsvFileName"),
+                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Project"),
               },
             ],
             filtering: true,
