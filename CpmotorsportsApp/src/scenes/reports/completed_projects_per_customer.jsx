@@ -86,10 +86,9 @@ const Completed_projects = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Customer Data"
-          data={Data}
+          title="Completed Projects Per Customer"
+          data={Project_Job}
           columns={columns}
-
           options={{
             headerStyle: {
               backgroundColor: "white",

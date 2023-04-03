@@ -87,10 +87,9 @@ const Completed_projects_per_year= () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Customer Data"
-          data={Data}
+          title="Completed Projects Per Year"
+          data={Project_Job}
           columns={columns}
-
           options={{
             headerStyle: {
               backgroundColor: "white",
