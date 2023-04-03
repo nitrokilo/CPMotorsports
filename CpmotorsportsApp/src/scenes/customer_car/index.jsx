@@ -60,6 +60,21 @@ const Car = () => {
   }, [reRender]);
 
   // Api call and config for Categories and Transaction Accounts
+  const [car_data, set_cardata] = useState([]);
+
+  // Api call to get make status for select option
+  useEffect(() => {
+    client
+      .get("/cars")
+      .then((res) => {
+        set_cardata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // Api call and config for Categories and Transaction Accounts
   const [make_data, set_makedata] = useState([]);
 
   // Api call to get make status for select option
@@ -73,6 +88,21 @@ const Car = () => {
         console.log(err);
       });
   }, []);
+
+   // Api call and config for Categories and Transaction Accounts
+   const [model_data, set_modeldata] = useState([]);
+
+   // Api call to get Model Names for select option
+   useEffect(() => {
+     client
+       .get("/model")
+       .then((res) => {
+         set_modeldata(res.data);
+       })
+       .catch((err) => {
+         console.log(err);
+       });
+   }, []);
 
 
   // Api call and config for Categories and Transaction Accounts
@@ -98,14 +128,28 @@ const Car = () => {
     currency: "USD",
   });
 
-   // Edit Capabilities
+  // Edit Car Capabilities
+  const CarOptions = car_data.map((car) => (
+    <MenuItem value={car.vin_num}>
+      {car.Customer}
+    </MenuItem>
+  ));
+
+   // Edit Make Capabilities
    const MakeOptions = make_data.map((make) => (
     <MenuItem value={make.make_id}>
       {make.make_name}
     </MenuItem>
   ));
 
-  // Edit Capabilities
+  // Edit Make Capabilities
+  const ModelOptions = model_data.map((model) => (
+    <MenuItem value={model.model_id}>
+      {model.model_name}
+    </MenuItem>
+  ));
+
+  // Edit Ownership StatusCapabilities
   const OwnershipStatusOptions = ownership_statusdata.map((ownership_status) => (
     <MenuItem value={ownership_status.ownership_stat_id}>
       {ownership_status.ownership_stat_name}
@@ -115,7 +159,24 @@ const Car = () => {
   // Column Configuration
   const columns = [
     { field: "vin_num", title: "VIN No.", flex: 0.5, editable: false },
-    { field: "Customer", title: "Customer", flex: 1 },
+    {
+      field: "Customer",
+      title: "Customer",
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {CarOptions}
+        </Select>
+      ),
+    },
     {
       field: "make_name",
       title: "Make",
@@ -134,7 +195,24 @@ const Car = () => {
         </Select>
       ),
     },
-    { field: "model_name", title: "Model", flex: 1 },
+    {
+      field: "model_name",
+      title: "Model",
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {ModelOptions}
+        </Select>
+      ),
+    },
     { field: "color", title: "Color", flex: 1 },
     {
       field: "ownership_stat_name",
