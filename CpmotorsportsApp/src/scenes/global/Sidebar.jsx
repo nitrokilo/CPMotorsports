@@ -9,6 +9,12 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import CarRentalIcon from "@mui/icons-material/CarRental";
 import DirectionsCarFilledIcon from "@mui/icons-material/DirectionsCarFilled";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
+import NoCrashIcon from "@mui/icons-material/NoCrash";
+import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
+import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
+import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
@@ -187,7 +193,7 @@ const Sidebar = () => {
             <Item
               title="Projects"
               to="/projects"
-              icon={<AppsIcon />}
+              icon={<NoCrashIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -209,14 +215,14 @@ const Sidebar = () => {
             <Item
               title="Completed Projects Per Year"
               to="/completed_projects_per_year"
-              icon={<PersonOutlinedIcon />}
+              icon={<WorkHistoryIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Custom Parts Per Project"
               to="/c_parts_projects"
-              icon={<CalendarTodayOutlinedIcon />}
+              icon={<HomeRepairServiceIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -225,7 +231,7 @@ const Sidebar = () => {
             <Item
               title="Mechanics-Customer Time"
               to="/mech_cutomer_time"
-              icon={<HelpOutlineOutlinedIcon />}
+              icon={<AccessTimeFilledIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -233,7 +239,7 @@ const Sidebar = () => {
             <Item
               title="Fabrication and Installation"
               to="/fabrication_installation"
-              icon={<HelpOutlineOutlinedIcon />}
+              icon={<ConstructionIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -241,7 +247,7 @@ const Sidebar = () => {
             <Item
               title="Invoice"
               to="/invoice"
-              icon={<HelpOutlineOutlinedIcon />}
+              icon={<RequestQuoteIcon />}
               selected={selected}
               setSelected={setSelected}
             />
