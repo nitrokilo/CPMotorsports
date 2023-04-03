@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import MaterialTable from '@material-table/core';
+import MaterialTable from "material-table";
 import { tableIcons } from "../global/tableicons";
 
 
@@ -103,7 +103,7 @@ const Invoice = () => {
           detailPanel={rowData => {
         return (
          <div>
-        Labor: {rowData['Labor']} <br/>
+         Labor: {rowData['Labor']} <br/>
          Metal Name:{rowData ["metal_name"]} <br/>
          model_name: {rowData ["model_name"]} <br/>
          service_cost: {rowData ["service_cost"]} <br/>

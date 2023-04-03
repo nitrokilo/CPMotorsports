@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import MaterialTable from "material-table";
+import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 import { SuccessAlert } from "../../components/alert.jsx";
 
@@ -89,7 +89,7 @@ const CustomParts = () => {
     {
       field: "cust_part_name",
       title: "Custom Part Name",
-      flex: 1,
+      
     },
 
     {
@@ -105,7 +105,7 @@ const CustomParts = () => {
     {
       field: "cust_part_cost",
       title: "Part Cost",
-      flex: 1,
+      type: "currency",
     },
   ];
 

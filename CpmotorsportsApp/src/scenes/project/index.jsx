@@ -1,4 +1,4 @@
-import { Box, Button, MenuItem, Select, Autocomplete, TextField} from "@mui/material"; 
+import { Box, Button, MenuItem, Select} from "@mui/material"; 
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
@@ -9,7 +9,6 @@ import { SuccessAlert } from "../../components/alert.jsx";
 import MaterialTable from '@material-table/core';
 import { tableIcons } from "../global/tableicons";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-
 
 
 const Project = () => {
@@ -118,7 +117,7 @@ const Project = () => {
 
   const vinnumberoptions = vin_nums.map((number) => (
     <MenuItem value={number.vin_num}>
-      {number.vin_num}
+      ({number.customer}) {number.vin_num}
     </MenuItem>
   ));
 
@@ -135,12 +134,14 @@ const Project = () => {
   const columns = [
     { field: "project_id", title: "ID", editable: false },
     { field: "vin_num", title: "Vin Number", flex: 1 , editComponent: ({ value, onChange, rowData }) => (
-      <Autocomplete
-      id="free-solo-demo"
-      freeSolo
-      options={vinnumberoptions}
-      renderInput={(params) => <TextField {...params} label="freeSolo" />}
-    />
+      <Select
+        value={value}
+        onChange={(event) => {
+          onChange(event.target.value);
+        }}
+      >
+        {vinnumberoptions}
+      </Select>
     ),},
     { title: 'Project Start', field: "project_start", type:"datetime"},
 
@@ -167,7 +168,6 @@ const Project = () => {
             onChange(event.target.value);
           }}
         >
-
           {project_statusoptions}
         </Select>
       ),

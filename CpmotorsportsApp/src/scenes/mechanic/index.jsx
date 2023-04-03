@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import MaterialTable from "material-table";
+import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 import { SuccessAlert } from "../../components/alert.jsx";
 const Mechanic = () => {
@@ -110,6 +110,7 @@ const Mechanic = () => {
     {
       field: "mech_hourly_pay",
       title: "Mechanic Hourly Pay",
+      type: "currency",
     },
       {
 

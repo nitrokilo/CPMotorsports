@@ -103,7 +103,7 @@ const Service = () => {
     {
       field: "service_cost",
       title: "Service Cost",
-      flex: 1,
+      type: "currency",
       cellClassName: "name-column--cell",
     },
 
