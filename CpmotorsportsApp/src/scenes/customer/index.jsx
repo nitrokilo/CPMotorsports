@@ -7,19 +7,24 @@ import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
 import MaterialTable from '@material-table/core';
 import { tableIcons } from "../global/tableicons";
+import AddCustomer from "./addcustomer";
 
 const Customer = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
   // State definitions for Add Customer
+  const [openadd, setOpenadd] = useState(false);
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
   // Defintions for Add Customer component
+  const handleOpenadd = () => setOpenadd(true);
+  const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
       .post("/customer", values)
+      .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };
@@ -60,14 +65,14 @@ const Customer = () => {
   }, [reRender]);
 
   // Api call and config for Categories and Transaction Accounts
-  const [customer_statusdata, setcustomer_statusdata] = useState([]);
+  const [customer_status_data, setcustomer_status_data] = useState([]);
 
   // Api call to get customer status for select option
   useEffect(() => {
     client
       .get("/customer_status")
       .then((res) => {
-        setcustomer_statusdata(res.data);
+        setcustomer_status_data(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -83,7 +88,7 @@ const Customer = () => {
   });
 
   // Edit Capabilities
-  const customerstatusoptions = customer_statusdata.map((customer_status) => (
+  const customerstatusoptions = customer_status_data.map((customer_status) => (
     <MenuItem value={customer_status.customer_stat_id}>
       {customer_status.customer_stat_name}
     </MenuItem>
@@ -127,7 +132,16 @@ const Customer = () => {
 
   return (
     <Box m="20px">
-      <Header title="Customer" subtitle="List of all Cusotmers" />
+      <AddCustomer
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        customerstatusdata={customer_status_data}
+        alert={SuccessAlert}
+      />
+      <Header title="Customer" subtitle="List of all Customers" />
       <Box
         m="40px 0 0 0"
         height="75vh"
