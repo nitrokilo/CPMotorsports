@@ -1,4 +1,4 @@
-import { Box, Button, MenuItem, Select} from "@mui/material"; 
+import { Box, Button, MenuItem, Select } from "@mui/material";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
@@ -6,10 +6,10 @@ import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { SuccessAlert } from "../../components/alert.jsx";
-import MaterialTable from '@material-table/core';
+import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-
+import PartJob from "./partjob";
 
 const Project = () => {
   // State intialization for rerender to control page render
@@ -46,7 +46,7 @@ const Project = () => {
       .then(setPostsucessfuledit(true));
   };
 
-/*
+  /*
   // Definitions for Delete Project
   const [opendelete, setOpendelete] = useState(false);
   const handleOpendelete = () => setOpendelete(true);
@@ -67,7 +67,7 @@ const Project = () => {
     client
       .get("/project")
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         setProject(res.data);
       })
       .then(setReRender(false))
@@ -91,7 +91,6 @@ const Project = () => {
       });
   }, []);
 
-
   // Api call and config for Categories and Transaction Accounts
   const [vin_nums, setvin_nums] = useState([]);
 
@@ -107,13 +106,11 @@ const Project = () => {
       });
   }, []);
 
-
   const project_statusoptions = project_statusdata.map((project_status) => (
     <MenuItem value={project_status.project_stat_id}>
       {project_status.project_stat_name}
     </MenuItem>
   ));
-
 
   const vinnumberoptions = vin_nums.map((number) => (
     <MenuItem value={number.vin_num}>
@@ -129,27 +126,43 @@ const Project = () => {
     currency: "USD",
   });
 
+  const [showProjects, setshowProjects] = useState(true);
+  const [selectedProject, setselectedProject] = useState([]);
+
+  function handlePartjob(projectselected){
+    setselectedProject(projectselected)
+    setshowProjects(false)
+  }
+
+  function backbutton(){
+    setshowProjects(true)
+  }
 
   // Column Configuration
   const columns = [
     { field: "project_id", title: "ID", editable: false },
-    { field: "vin_num", title: "Vin Number", flex: 1 , editComponent: ({ value, onChange, rowData }) => (
-      <Select
-        value={value}
-        onChange={(event) => {
-          onChange(event.target.value);
-        }}
-      >
-        {vinnumberoptions}
-      </Select>
-    ),},
-    { title: 'Project Start', field: "project_start", type:"datetime"},
+    {
+      field: "vin_num",
+      title: "Vin Number",
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          {vinnumberoptions}
+        </Select>
+      ),
+    },
+    { title: "Project Start", field: "project_start", type: "datetime" },
 
     {
       field: "project_end",
       title: "Project End",
       type: "datetime",
-      dateSetting: { locale: "en-US", timeZone: "America/New_York"}
+      dateSetting: { locale: "en-US", timeZone: "America/New_York" },
     },
     {
       field: "total_cost",
@@ -171,118 +184,98 @@ const Project = () => {
         </Select>
       ),
     },
-    { title: 'Mechanic', field: "mechanic_name", editable:false},
-    { title: 'Custom Part Name', field: "cust_part_name", editable:false},
-    { title: 'Service Name', field: "service_name", editable:false}
   ];
 
-  return (
-    <Box m="20px">
-       <Button><Link to="/project_job">Project Job </Link></Button>
+ 
 
-      <Header title="Project" subtitle="List of all Projects" />
-      <Box
-        m="40px 0 0 0"
-        height="75vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .name-column--cell": {
-            color: colors.greenAccent[300],
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.blueAccent[700],
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
-          },
-          "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
-          },
-          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${colors.grey[100]} !important`,
-          },
-        }}
-      >
-        <MaterialTable
-          icons={tableIcons}
-          title="Project Data"
-          data={Project}
-          columns={columns}
-          editable={{
-            onRowAdd: (newRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  console.log(newRow);
-                  handleFormSubmitadd(newRow);
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: (selectedRow) =>
-              new Promise((resolve, reject) => {
-                const index = selectedRow.tableData.id;
-                const updatedRows = [...data];
-                updatedRows.splice(index, 1);
-                setTimeout(() => {
-                  setData(updatedRows);
-                  resolve();
-                }, 2000);
-              }),
-            onRowUpdate: (updatedRow, oldRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  if (updatedRow['project_end'] === oldRow['project_end']){
-                    console.log('here')
-                    updatedRow['project_end'] = ''
-                  }
+  if (showProjects) {
+    return (
+      <Box m="20px">
+        <Header title="Project" subtitle="List of all Projects" />
+        <Box m="40px 0 0 0" height="75vh">
+          <MaterialTable
+            icons={tableIcons}
+            title="Project Data"
+            data={Project}
+            columns={columns}
+            actions={[
+              {
+                icon: "save",
+                tooltip: "Part Job",
+                onClick: (event, rowData) => handlePartjob(rowData),
+              },
+            ]}
+            editable={{
+              onRowAdd: (newRow) =>
+                new Promise((resolve, reject) => {
+                  setTimeout(() => {
+                    console.log(newRow);
+                    handleFormSubmitadd(newRow);
+                    resolve();
+                  }, 1000);
+                }),
+              onRowDelete: (selectedRow) =>
+                new Promise((resolve, reject) => {
+                  const index = selectedRow.tableData.id;
+                  const updatedRows = [...data];
+                  updatedRows.splice(index, 1);
+                  setTimeout(() => {
+                    setData(updatedRows);
+                    resolve();
+                  }, 2000);
+                }),
+              onRowUpdate: (updatedRow, oldRow) =>
+                new Promise((resolve, reject) => {
+                  setTimeout(() => {
+                    if (updatedRow["project_end"] === oldRow["project_end"]) {
+                      console.log("here");
+                      updatedRow["project_end"] = "";
+                    }
 
-                  if (updatedRow['project_start'] === oldRow['project_start']){
-                    console.log('here')
-                    console.log(oldRow['project_start'])
-                    updatedRow['project_start'] = ''
-                    console.log(updatedRow['project_start'])
-                  }
-                  console.log(updatedRow)
-                  console.log(updatedRow['project_end'])
-                  console.log(oldRow['project_end'])
-                  handleFormSubmitedit(updatedRow);
-                  resolve();
-                }, 1000);
-              }),
-          }}
-          options={{
-            headerStyle: {
-              backgroundColor: "white",
-              color: "black",
-            },
-            actionsColumnIndex: -1,
-            addRowPosition: "first",
-            exportMenu: [
-              {
-                label: "Export PDF",
-                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Project"),
+                    if (
+                      updatedRow["project_start"] === oldRow["project_start"]
+                    ) {
+                      console.log("here");
+                      console.log(oldRow["project_start"]);
+                      updatedRow["project_start"] = "";
+                      console.log(updatedRow["project_start"]);
+                    }
+                    console.log(updatedRow);
+                    console.log(updatedRow["project_end"]);
+                    console.log(oldRow["project_end"]);
+                    handleFormSubmitedit(updatedRow);
+                    resolve();
+                  }, 1000);
+                }),
+            }}
+            options={{
+              headerStyle: {
+                backgroundColor: "white",
+                color: "black",
               },
-              {
-                label: "Export CSV",
-                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Project"),
-              },
-            ],
-            filtering: true,
-            pageSize: 15,
-          }}
-        />
+              actionsColumnIndex: -1,
+              addRowPosition: "first",
+              exportMenu: [
+                {
+                  label: "Export PDF",
+                  exportFunc: (cols, datas) =>
+                    ExportPdf(cols, datas, "Project"),
+                },
+                {
+                  label: "Export CSV",
+                  exportFunc: (cols, datas) =>
+                    ExportCsv(cols, datas, "Project"),
+                },
+              ],
+              filtering: true,
+              pageSize: 15,
+            }}
+          />
+        </Box>
       </Box>
-    </Box>
-  );
+    );
+  }
+  return <PartJob project={selectedProject} backbutton={backbutton}/>
 };
 
 export default Project;

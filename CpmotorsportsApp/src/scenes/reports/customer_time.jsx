@@ -41,7 +41,7 @@ const Customer_time = () => {
   // Column Configuration
   const columns = [
     { field: "year", title: "Year", flex: 0.5 },
-    { field: "hrs_with_customer", title: "Hours With Customer", flex: 1, cellClassName: "name-column--cell",}
+    { field: "hrs_with_customer", title: "Hours With Customer", flex: 1, type: "numeric",}
    
 
   ];
