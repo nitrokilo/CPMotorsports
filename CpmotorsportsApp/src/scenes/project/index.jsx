@@ -151,7 +151,6 @@ const Project = () => {
       type: "datetime",
       dateSetting: { locale: "en-US", timeZone: "America/New_York"}
     },
-
     {
       field: "total_cost",
       title: "Total Cost",
@@ -172,6 +171,9 @@ const Project = () => {
         </Select>
       ),
     },
+    { title: 'Mechanic', field: "mechanic_name", editable:false},
+    { title: 'Custom Part Name', field: "cust_part_name", editable:false},
+    { title: 'Service Name', field: "service_name", editable:false}
   ];
 
   return (
@@ -238,6 +240,20 @@ const Project = () => {
             onRowUpdate: (updatedRow, oldRow) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
+                  if (updatedRow['project_end'] === oldRow['project_end']){
+                    console.log('here')
+                    updatedRow['project_end'] = ''
+                  }
+
+                  if (updatedRow['project_start'] === oldRow['project_start']){
+                    console.log('here')
+                    console.log(oldRow['project_start'])
+                    updatedRow['project_start'] = ''
+                    console.log(updatedRow['project_start'])
+                  }
+                  console.log(updatedRow)
+                  console.log(updatedRow['project_end'])
+                  console.log(oldRow['project_end'])
                   handleFormSubmitedit(updatedRow);
                   resolve();
                 }, 1000);
