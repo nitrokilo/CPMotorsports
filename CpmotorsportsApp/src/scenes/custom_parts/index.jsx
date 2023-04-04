@@ -58,6 +58,52 @@ const CustomParts = () => {
       });
   }, [reRender]);
 
+  // Api call and config for Categories and Transaction Accounts
+  const [metal_data, setmetal_data] = useState([]);
+
+  // Api call to get metal status for select option
+  useEffect(() => {
+    client
+      .get("/metal_type")
+      .then((res) => {
+        setmetal_data(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+// Api call and config for Categories and Transaction Accounts
+const [car_system_data, setcar_system_data] = useState([]);
+
+// Api call to get car system status for select option
+useEffect(() => {
+  client
+    .get("/car_system")
+    .then((res) => {
+      setcar_system_data(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}, []);
+
+// Api call and config for Categories and Transaction Accounts
+const [fabrication_data, setpart_fabrication_data] = useState([]);
+
+// Api call to get car system status for select option
+useEffect(() => {
+  client
+    .get("/custom_part")
+    .then((res) => {
+      setpart_fabrication_data(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}, []);
+
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -66,24 +112,72 @@ const CustomParts = () => {
     currency: "USD",
   });
 
+  // Edit Capabilities
+  const MetalOptions = metal_data.map((metal) => (
+    <MenuItem value={metal_type.metal_id}>
+      {metal_type.metal_name}
+    </MenuItem>
+  ));
+
+  // Edit Capabilities
+  const CarSystemOptions = car_system_data.map((car_system) => (
+    <MenuItem value={car_system.car_sys_id}>
+      {car_system.car_sys_name}
+    </MenuItem>
+  ));
+
+  const FabricationOptions = fabrication_data.map((fabrication) => (
+    <MenuItem value={custom_part.cust_part_id}>
+      {custom_part.fab_type}
+    </MenuItem>
+  ));
+
+
   // Column Configuration
   const columns = [
     { 
       field: "cust_part_id", 
       title: "ID", 
+      editable: false,
       flex: 0.5 
     },
 
     { 
-      field: "car_sys_id",
+      field: "car_sys_name",
       title: "Car System Name", 
-      flex: 1 
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {CarSystemOptions}
+        </Select>
+      ),
     },
 
     { 
       field: "metal_name", 
       title: "Metal Name", 
-      flex: 1 
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {MetalOptions}
+        </Select>
+      ),
     },
 
     {
@@ -96,6 +190,19 @@ const CustomParts = () => {
       field: "fab_type",
       title: "Fabrication Type",
       flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {FabricationOptions}
+        </Select>
+      ),
     },
     {
       field: "cust_part_desc",
@@ -106,6 +213,8 @@ const CustomParts = () => {
       field: "cust_part_cost",
       title: "Part Cost",
       type: "currency",
+
+      
     },
   ];
 
