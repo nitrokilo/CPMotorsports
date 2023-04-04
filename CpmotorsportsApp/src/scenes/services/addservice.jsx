@@ -26,7 +26,7 @@ const style = {
   p: 4,
 };
 
-export default function AddTransaction(props) {
+export default function AddService(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   // Behaviors and states passed as props and renamed
@@ -37,25 +37,21 @@ export default function AddTransaction(props) {
   const handleClose = props.handleClose;
   const open = props.open;
   const postsucessful = props.postsucessful;
-  const categoriesdata = props.categoriesdata;
-  const transactionaccountdata = props.transactionaccountdata;
+  const servicvestatusdata = props.servicvestatusdata;
   const Alert = props.alert;
 
   // Mapping for category and transaction account options
-  const categoryoptions = categoriesdata.map((category) => (
-    <MenuItem value={category.category_id}> {category.category_desc} </MenuItem>
+  const servicestatusoptions = servicvestatusdata.map((service_status) => (
+    <MenuItem value={service_status.service_id}>
+      {" "}
+      {service_status.service_desc}{" "}
+    </MenuItem>
   ));
-
-  const transactionaccountoptions = transactionaccountdata.map(
-    (trans_account) => (
-      <MenuItem value={trans_account.acc_id}>{trans_account.acc_name}</MenuItem>
-    )
-  );
 
   return (
     <div>
       <Button onClick={handleOpen} color="secondary">
-        Add Transaction
+        Add Service
       </Button>
       <Modal
         open={open}
@@ -64,7 +60,7 @@ export default function AddTransaction(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="ADD TRANSACTION" subtitle="ADD TRANSACTION" />
+          <Header title="ADD Service" subtitle="ADD Service" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -83,23 +79,23 @@ export default function AddTransaction(props) {
                     required
                     variant="filled"
                     type="text"
-                    label="Transaction Name"
+                    label="Service Name"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.trans_name}
-                    name="trans_name"
+                    value={values.service_name}
+                    name="service_name"
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
                     fullWidth
                     required
                     variant="filled"
-                    type="number"
-                    label="Transaction Amount"
+                    type="text"
+                    label="Service Description"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.amount}
-                    name="amount"
+                    value={values.service_desc}
+                    name="service_desc"
                     sx={{ gridColumn: "span 2" }}
                   />
                   <FormControl required sx={{ m: 1, minWidth: 120 }}>
@@ -118,7 +114,7 @@ export default function AddTransaction(props) {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {categoryoptions}
+                      {}
                     </Select>
                   </FormControl>
 
@@ -163,13 +159,13 @@ export default function AddTransaction(props) {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {transactionaccountoptions}
+                      {}
                     </Select>
                   </FormControl>
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Add Transaction
+                    Add Service
                   </Button>
                 </Box>
               </form>
@@ -178,9 +174,7 @@ export default function AddTransaction(props) {
         </Box>
       </Modal>
 
-      {postsucessful && (
-        <Alert is_on={true} text="Transaction added Sucessfully" />
-      )}
+      {postsucessful && <Alert is_on={true} text="Service added Sucessfully" />}
     </div>
   );
 }

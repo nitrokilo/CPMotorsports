@@ -6,8 +6,9 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
-import MaterialTable from '@material-table/core';
+import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
+import AddService from "./addservice";
 const Service = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -82,22 +83,22 @@ const Service = () => {
 
   // Column Configuration
   const columns = [
-    { 
+    {
       field: "service_id",
       title: "ID",
-      flex: 0.5 
+      flex: 0.5,
     },
 
-    { 
+    {
       field: "service_name",
-      title: "Service Name", 
-      flex: 1 
+      title: "Service Name",
+      flex: 1,
     },
 
-    { 
+    {
       field: "service_desc",
       title: "Service Description",
-      flex: 1 
+      flex: 1,
     },
 
     {
@@ -107,7 +108,6 @@ const Service = () => {
       cellClassName: "name-column--cell",
     },
 
-  
     {
       field: "serv_type_stat_name",
       title: "Service Status",
@@ -117,8 +117,15 @@ const Service = () => {
 
   return (
     <Box m="20px">
-
-
+      <AddService
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        servicvestatusdata={service_status_data}
+        alert={SuccessAlert}
+      />
       {/* <EditTransaction
         handleOpen={handleOpenedit}
         handleClose={handleCloseedit}
