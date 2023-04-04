@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import {Select, Box, MenuItem } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
@@ -113,7 +113,7 @@ useEffect(() => {
   });
 
   // Edit Capabilities
-  const MetalOptions = metal_data.map((metal) => (
+  const MetalOptions = metal_data.map((metal_type) => (
     <MenuItem value={metal_type.metal_id}>
       {metal_type.metal_name}
     </MenuItem>
@@ -126,7 +126,7 @@ useEffect(() => {
     </MenuItem>
   ));
 
-  const FabricationOptions = fabrication_data.map((fabrication) => (
+  const FabricationOptions = fabrication_data.map((custom_part) => (
     <MenuItem value={custom_part.cust_part_id}>
       {custom_part.fab_type}
     </MenuItem>
@@ -282,6 +282,7 @@ useEffect(() => {
             onRowUpdate: (updatedRow, oldRow) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
+                  console.log(updatedRow)
                   handleFormSubmitedit(updatedRow);
                   resolve();
                 }, 1000);
