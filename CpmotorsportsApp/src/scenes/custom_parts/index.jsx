@@ -8,6 +8,7 @@ import { useTheme } from "@mui/material";
 import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 import { SuccessAlert } from "../../components/alert.jsx";
+import AddCustomPart from "./addcustom_part";
 
 const CustomParts = () => {
   // State intialization for rerender to control page render
@@ -220,8 +221,16 @@ useEffect(() => {
 
   return (
     <Box m="20px">
-
-
+      <AddCustomPart
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        carsystemdata={car_system_data}
+        metaldata={metal_data}
+        alert={SuccessAlert}
+      />
       <Header title="Custom Parts" subtitle="List of all Custom Parts" />
       <Box
         m="40px 0 0 0"
