@@ -7,20 +7,25 @@ import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
 import MaterialTable from '@material-table/core';
 import { tableIcons } from "../global/tableicons";
+import AddMake from "./addmake";
 
 const Make = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
   // State definitions for Add Make
+  const [openadd, setOpenadd] = useState(false);
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
   // Defintions for Add Make component
+  const handleOpenadd = () => setOpenadd(true);
+  const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
       .post("/make", values)
       .then(setReRender(true))
+      .then(setOpenadd(false))
       .then(setPostsucessfuladd(true));
   };
 
@@ -115,6 +120,15 @@ const Make = () => {
 
   return (
     <Box m="20px">
+      <AddMake
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        makestatusdata={make_statusdata}
+        alert={SuccessAlert}
+      />
       <Header title="Make" subtitle="List of all Makes" />
       <Box
         m="40px 0 0 0"

@@ -7,15 +7,19 @@ import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
 import MaterialTable from '@material-table/core';
 import { tableIcons } from "../global/tableicons";
+import AddModel from "./addmodel";
 
 const Model = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
   // State definitions for Add Make
+  const [openadd, setOpenadd] = useState(false);
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
   // Defintions for Add Make component
+  const handleOpenadd = () => setOpenadd(true);
+  const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
@@ -157,6 +161,16 @@ const Model = () => {
 
   return (
     <Box m="20px">
+      <AddModel
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        makedata={make_data}
+        vehicletypedata={vehicle_type_data}
+        alert={SuccessAlert}
+      />
       <Header title="Model" subtitle="List of all Models" />
       <Box
         m="40px 0 0 0"

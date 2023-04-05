@@ -26,7 +26,7 @@ const style = {
   p: 4,
 };
 
-export default function AddCustomer(props) {
+export default function AddModel(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   // Behaviors and states passed as props and renamed
@@ -37,18 +37,23 @@ export default function AddCustomer(props) {
   const handleClose = props.handleClose;
   const open = props.open;
   const postsucessful = props.postsucessful;
-  const customerstatusdata = props.customerstatusdata;
+  const makedata = props.makedata;
+  const vehicletypedata = props.vehicletypedata;
   const Alert = props.alert;
 
   // Mapping for category and transaction account options
-  const CustomerStatusOptions = customerstatusdata.map((customer_status) => (
-    <MenuItem value={customer_status.customer_stat_id}> {customer_status.customer_stat_name} </MenuItem>
+  const MakeOptions = makedata.map((make) => (
+    <MenuItem value={make.make_id}> {make.make_name} </MenuItem>
+  ));
+
+  const VehicleTypeOptions = vehicletypedata.map((vehicle_type) => (
+    <MenuItem value={vehicle_type.vic_type_id}> {vic.vic_type_name} </MenuItem>
   ));
 
   return (
     <div>
       <Button onClick={handleOpen} color="secondary">
-        Add Customer
+        Add Model
       </Button>
       <Modal
         open={open}
@@ -57,7 +62,7 @@ export default function AddCustomer(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="Add Customer"/>
+          <Header title="Add Model"/>
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -71,77 +76,76 @@ export default function AddCustomer(props) {
                     },
                   }}
                 >
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="text"
-                    label="First Name"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.customer_first_name}
-                    name="customer_first_name"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="text"
-                    label="Last Name"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.customer_last_name}
-                    name="customer_last_name"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="text"
-                    label="Phone Number - (XXX-XXX-XXXX)"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.customer_phone_num}
-                    name="customer_phone_num"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="text"
-                    label="Email - (example@gmail.com)"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.customer_email}
-                    name="customer_email"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <FormControl required sx={{ m: 1, minWidth: 200 }}>
+                  <FormControl required sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-required-label">
-                      Customer Status
+                      Make
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-required-label"
                       id="demo-simple-select-required"
-                      value={values.customer_stat_name}
-                      label="Customer Status"
+                      value={values.make_name}
+                      label="Make"
                       onChange={handleChange}
-                      name="customer_stat_name"
+                      name="make_name"
                     >
                       <FormHelperText>Required</FormHelperText>
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {CustomerStatusOptions}
+                      {MakeOptions}
                     </Select>
                   </FormControl>
+
+                  <TextField
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="text"
+                    label="Model"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.model_name}
+                    name="model_name"
+                    sx={{ gridColumn: "span 2" }}
+                  />
+
+                  <FormControl required sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-required-label">
+                      Vehicle Type
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-required-label"
+                      id="demo-simple-select-required"
+                      value={values.vic_type_name}
+                      label="Vehicle Type"
+                      onChange={handleChange}
+                      name="vic_type_name"
+                    >
+                      <FormHelperText>Required</FormHelperText>
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {VehicleTypeOptions}
+                    </Select>
+                  </FormControl>
+
+                  <TextField
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="text"
+                    label="Year"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.prod_year}
+                    name="prod_year"
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Add Customer
+                    Add Model
                   </Button>
                 </Box>
               </form>
@@ -151,7 +155,7 @@ export default function AddCustomer(props) {
       </Modal>
 
       {postsucessful && (
-        <Alert is_on={true} text="Customer added Sucessfully" />
+        <Alert is_on={true} text="Make added Sucessfully" />
       )}
     </div>
   );
