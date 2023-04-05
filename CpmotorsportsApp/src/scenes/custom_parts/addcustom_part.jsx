@@ -48,7 +48,7 @@ export default function AddCustomPart(props) {
 
   // Mapping for category and transaction account options
   const MetalOptions = metaldata.map((metal_type) => (
-    <MenuItem value={metal_type.metal_id}> {metal.metal_name} </MenuItem>
+    <MenuItem value={metal_type.metal_id}> {metal_type.metal_name} </MenuItem>
   ));
 
   return (

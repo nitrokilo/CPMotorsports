@@ -103,8 +103,8 @@ export default function AddCustomer(props) {
                     label="Phone Number - (XXX-XXX-XXXX)"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.customer_phone_num}
-                    name="customer_phone_num"
+                    value={values.customer_phone_number}
+                    name="customer_phone_number"
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
