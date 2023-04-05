@@ -7,15 +7,19 @@ import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
 import MaterialTable from '@material-table/core';
 import { tableIcons } from "../global/tableicons";
+import AddCustomerCar from "./addcustomer_car";
 
 const Car = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
-  // State definitions for Add Make
+  // State definitions for Add Car
+  const [openadd, setOpenadd] = useState(false);
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
-  // Defintions for Add Make component
+  // Defintions for Add Car component
+  const handleOpenadd = () => setOpenadd(true);
+  const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
@@ -236,6 +240,18 @@ const Car = () => {
 
   return (
     <Box m="20px">
+      <AddCustomerCar
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        customerdata={customer_data}
+        makedata={make_data}
+        modeldata={model_data}
+        ownershipstatusdata={ownership_statusdata}
+        alert={SuccessAlert}
+      />
       <Header title="Customer Cars" subtitle="List of all Customer Cars" />
       <Box
         m="40px 0 0 0"
