@@ -8,6 +8,8 @@ import { useTheme } from "@mui/material";
 import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 import { SuccessAlert } from "../../components/alert.jsx";
+import AddMechanic from "./addmechanic";
+
 const Mechanic = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -136,7 +138,15 @@ const Mechanic = () => {
 
   return (
     <Box m="20px">
-
+      <AddMechanic
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        mechstatusdata={mechanic_statusdata}
+        alert={SuccessAlert}
+      />
       <Header title="Mechanic" subtitle="List of all Mechanics" />
       <Box
         m="40px 0 0 0"
