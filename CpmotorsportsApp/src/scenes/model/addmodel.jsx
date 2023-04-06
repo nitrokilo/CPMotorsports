@@ -47,7 +47,7 @@ export default function AddModel(props) {
   ));
 
   const VehicleTypeOptions = vehicletypedata.map((vehicle_type) => (
-    <MenuItem value={vehicle_type.vic_type_id}> {vic.vic_type_name} </MenuItem>
+    <MenuItem value={vehicle_type.vic_type_id}> {vehicle_type.vic_type_name} </MenuItem>
   ));
 
   return (
