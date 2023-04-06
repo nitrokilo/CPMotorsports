@@ -89,20 +89,6 @@ useEffect(() => {
     });
 }, []);
 
-// Api call and config for Categories and Transaction Accounts
-const [fabrication_data, setpart_fabrication_data] = useState([]);
-
-// Api call to get car system status for select option
-useEffect(() => {
-  client
-    .get("/custom_part")
-    .then((res) => {
-      setpart_fabrication_data(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}, []);
 
 
   const theme = useTheme();
@@ -127,11 +113,6 @@ useEffect(() => {
     </MenuItem>
   ));
 
-  const FabricationOptions = fabrication_data.map((custom_part) => (
-    <MenuItem value={custom_part.cust_part_id}>
-      {custom_part.fab_type}
-    </MenuItem>
-  ));
 
 
   // Column Configuration
@@ -187,24 +168,6 @@ useEffect(() => {
       
     },
 
-    {
-      field: "fab_type",
-      title: "Fabrication Type",
-      flex: 1,
-      editComponent: ({ value, onChange, rowData }) => (
-        <Select
-          value={value}
-          onChange={(event) => {
-            onChange(event.target.value);
-          }}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {FabricationOptions}
-        </Select>
-      ),
-    },
     {
       field: "cust_part_desc",
       title: "Part Description",
