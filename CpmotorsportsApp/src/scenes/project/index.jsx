@@ -10,6 +10,7 @@ import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import PartJob from "./partjob";
+import AddProject from "./addproject";
 
 const Project = () => {
   // State intialization for rerender to control page render
@@ -191,6 +192,16 @@ const Project = () => {
   if (showProjects) {
     return (
       <Box m="20px">
+        <AddProject
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        vinnumdata={vin_nums}
+        projectstatusdata={project_statusdata}
+        alert={SuccessAlert}
+      />
         <Header title="Project" subtitle="List of all Projects" />
         <Box m="40px 0 0 0" height="75vh">
           <MaterialTable

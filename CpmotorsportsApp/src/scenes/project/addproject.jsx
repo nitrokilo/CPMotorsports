@@ -26,7 +26,7 @@ const style = {
   p: 4,
 };
 
-export default function AddService(props) {
+export default function AddProject(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   // Behaviors and states passed as props and renamed
@@ -37,21 +37,27 @@ export default function AddService(props) {
   const handleClose = props.handleClose;
   const open = props.open;
   const postsucessful = props.postsucessful;
-  const servicvestatusdata = props.servicvestatusdata;
+  const vin_nums = props.vinnumdata;
+  const project_statusdata = props.projectstatusdata;
   const Alert = props.alert;
 
   // Mapping for category and transaction account options
-  const servicestatusoptions = servicvestatusdata.map((service_status) => (
-    <MenuItem value={service_status.service_id}>
-      {" "}
-      {service_status.service_desc}{" "}
+  const vinnumberoptions = vin_nums.map((number) => (
+    <MenuItem value={number.vin_num}>
+      ({number.customer}) {number.vin_num}
+    </MenuItem>
+  ));
+
+  const project_statusoptions = project_statusdata.map((project_status) => (
+    <MenuItem value={project_status.project_stat_id}>
+      {project_status.project_stat_name}
     </MenuItem>
   ));
 
   return (
     <div>
       <Button onClick={handleOpen} color="secondary">
-        Add Service
+        Add Project
       </Button>
       <Modal
         open={open}
@@ -60,7 +66,7 @@ export default function AddService(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="ADD Service" subtitle="ADD Service" />
+          <Header title="Add Project" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -74,28 +80,47 @@ export default function AddService(props) {
                     },
                   }}
                 >
+                  <FormControl required sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-required-label">
+                      VIN Number
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-required-label"
+                      id="demo-simple-select-required"
+                      value={values.vin_num}
+                      label="VIN Number"
+                      name="vin_num"
+                      onChange={handleChange}
+                    >
+                      <FormHelperText>Required</FormHelperText>
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {vinnumberoptions}
+                    </Select>
+                  </FormControl>
                   <TextField
                     fullWidth
                     required
                     variant="filled"
-                    type="text"
-                    label="Service Name"
+                    type="date"
+                    label="Project Start"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.service_name}
-                    name="service_name"
+                    value={values.project_start}
+                    name="project_start"
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
                     fullWidth
                     required
                     variant="filled"
-                    type="text"
-                    label="Service Description"
+                    type="date"
+                    label="Project End"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.service_desc}
-                    name="service_desc"
+                    value={values.project_end}
+                    name="project_end"
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -103,36 +128,36 @@ export default function AddService(props) {
                     required
                     variant="filled"
                     type="amount"
-                    label="Service Cost"
+                    label="Total Cost"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.service_cost}
-                    name="service_cost"
+                    value={values.total_cost}
+                    name="total_cost"
                     sx={{ gridColumn: "span 2" }}
                   />
                   <FormControl required sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-required-label">
-                      Service Status
+                      Project Status
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-required-label"
                       id="demo-simple-select-required"
-                      value={values.service_stat_name}
-                      label="Service Status"
-                      name="service_stat_name"
+                      value={values.project_stat_name}
+                      label="Project Status"
+                      name="project_stat_name"
                       onChange={handleChange}
                     >
                       <FormHelperText>Required</FormHelperText>
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {servicestatusoptions}
+                      {project_statusoptions}
                     </Select>
                   </FormControl>
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Add Service
+                    Add Project
                   </Button>
                 </Box>
               </form>
