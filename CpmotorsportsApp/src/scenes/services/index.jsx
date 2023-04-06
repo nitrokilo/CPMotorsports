@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Select, Box, MenuItem} from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
@@ -61,6 +61,13 @@ const Service = () => {
   // Api call and config for Categories and Transaction Accounts
   const [service_status_data, setservice_statusdata] = useState([]);
 
+  // Edit Capabilities
+  const servicestatusoptions = service_status_data.map((service_type_status) => (
+    <MenuItem value={service_type_status.serv_type_stat_id}>
+      {service_type_status.serv_type_stat_name}
+    </MenuItem>
+  ));
+
   // Api call to get service status for select option
   useEffect(() => {
     client
@@ -112,6 +119,19 @@ const Service = () => {
       field: "serv_type_stat_name",
       title: "Service Status",
       flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {servicestatusoptions}
+        </Select>
+      ),
     },
   ];
 
@@ -123,7 +143,7 @@ const Service = () => {
         open={openadd}
         handleFormSubmit={handleFormSubmitadd}
         postsucessful={postsucessfuladd}
-        servicvestatusdata={service_status_data}
+        servicestatusdata={service_status_data}
         alert={SuccessAlert}
       />
       {/* <EditTransaction

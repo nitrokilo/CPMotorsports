@@ -92,7 +92,7 @@ export default function AddMechanic(props) {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.mech_last_name}
-                    name="customer_last_name"
+                    name="mech_last_name"
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -103,8 +103,8 @@ export default function AddMechanic(props) {
                     label="Phone Number - (XXX-XXX-XXXX)"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.mech_phone_num}
-                    name="mech_phone_num"
+                    value={values.mech_phone_number}
+                    name="mech_phone_number"
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -141,7 +141,7 @@ export default function AddMechanic(props) {
                       value={values.mech_stat_name}
                       label="Mechanic Status"
                       onChange={handleChange}
-                      name="customer_stat_name"
+                      name="mech_stat_name"
                     >
                       <FormHelperText>Required</FormHelperText>
                       <MenuItem value="">

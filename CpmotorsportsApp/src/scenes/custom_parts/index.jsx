@@ -270,11 +270,11 @@ useEffect(() => {
             exportMenu: [
               {
                 label: "Export PDF",
-                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Customer"),
+                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Custom Parts"),
               },
               {
                 label: "Export CSV",
-                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Customer"),
+                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Custom Parts"),
               },
             ],
             filtering: true,

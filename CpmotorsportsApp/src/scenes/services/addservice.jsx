@@ -37,14 +37,13 @@ export default function AddService(props) {
   const handleClose = props.handleClose;
   const open = props.open;
   const postsucessful = props.postsucessful;
-  const servicvestatusdata = props.servicvestatusdata;
+  const servicestatusdata = props.servicestatusdata;
   const Alert = props.alert;
 
   // Mapping for category and transaction account options
-  const servicestatusoptions = servicvestatusdata.map((service_status) => (
-    <MenuItem value={service_status.service_id}>
-      {" "}
-      {service_status.service_desc}{" "}
+  const servicestatusoptions = servicestatusdata.map((service_type_status) => (
+    <MenuItem value={service_type_status.serv_type_stat_id}>
+      {service_type_status.serv_type_stat_name}
     </MenuItem>
   ));
 
@@ -60,7 +59,7 @@ export default function AddService(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="ADD Service" subtitle="ADD Service" />
+          <Header title="Add a Service Type" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -117,9 +116,9 @@ export default function AddService(props) {
                     <Select
                       labelId="demo-simple-select-required-label"
                       id="demo-simple-select-required"
-                      value={values.service_stat_name}
+                      value={values.serv_type_stat_name}
                       label="Service Status"
-                      name="service_stat_name"
+                      name="serv_type_stat_name"
                       onChange={handleChange}
                     >
                       <FormHelperText>Required</FormHelperText>
