@@ -39,7 +39,8 @@ const Project_Job_Status = () => {
 
   // Column Configuration
   const columns = [
-    { field: "Customer", title: "Customer"},
+    {field: "Car System", title: "Car System"},
+    {field: "Customer", title: "Customer"},
     {field: "Customer Phone", title:"Customer Phone"},
     {field: "Make", title: "Make"},
     {field:  "Mechanic", title: "Mechanic"},

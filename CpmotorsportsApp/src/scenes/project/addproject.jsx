@@ -80,13 +80,11 @@ export default function AddProject(props) {
                     },
                   }}
                 >
-                  <FormControl required sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="demo-simple-select-required-label">
+                  <FormControl required >
+                    <InputLabel >
                       VIN Number
                     </InputLabel>
                     <Select
-                      labelId="demo-simple-select-required-label"
-                      id="demo-simple-select-required"
                       value={values.vin_num}
                       label="VIN Number"
                       name="vin_num"
@@ -100,10 +98,11 @@ export default function AddProject(props) {
                     </Select>
                   </FormControl>
                   <TextField
+                  InputLabelProps={{ shrink: true }} 
                     fullWidth
                     required
                     variant="filled"
-                    type="date"
+                    type="datetime-local"
                     label="Project Start"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -112,27 +111,16 @@ export default function AddProject(props) {
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
+                  InputLabelProps={{ shrink: true }} 
                     fullWidth
                     required
                     variant="filled"
-                    type="date"
+                    type="datetime-local"
                     label="Project End"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.project_end}
                     name="project_end"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="amount"
-                    label="Total Cost"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.total_cost}
-                    name="total_cost"
                     sx={{ gridColumn: "span 2" }}
                   />
                   <FormControl required sx={{ m: 1, minWidth: 120 }}>

@@ -40,9 +40,9 @@ const Completed_projects_per_year= () => {
 
   // Column Configuration
   const columns = [
-    { field: "year", title: "Year", flex: 0.5 },
-    { field: "num_projects", title: "Num of Projects", },
-    { field: "num_parts", title: "Num of Parts", flex: 1 },
+    { field: "year", title: "Year", type:"numeric" },
+    { field: "num_projects", title: "Num of Projects", type:"numeric" },
+    { field: "num_parts", title: "Num of Parts", flex: 1, type:"numeric"},
     { field: "total_rev", title: "Total Revenue", type:'currency', currencySetting:{ currencyCode:'USD', minimumFractionDigits:0, maximumFractionDigits:2}},
    
 

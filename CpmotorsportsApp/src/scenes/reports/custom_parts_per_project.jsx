@@ -39,11 +39,11 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 
 // Column Configuration
 const columns = [
+  { field: "Num_of_Custom_Parts", title: "Number of Custom Parts", type:"numeric" },
   { field: "vin_num", title: "VIn Number", flex: 0.5 },
   { field: "make_name", title: "Make Name", flex: 1, },
   { field: "model_name", title: "Model Name", flex: 1 },
   { field: "project_date", title: "Project Date", flex: 1 },
-  { field: "count", title: "Count", flex: 1 },
   { field: "color", title: "Color", flex: 1 },
  
  

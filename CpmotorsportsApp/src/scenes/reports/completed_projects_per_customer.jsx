@@ -40,9 +40,10 @@ const Completed_projects = () => {
 
   // Column Configuration
   const columns = [
-    { field: "Customer", title: "Customer", flex: 0.5 },
-    { field: "Most Recent Job", title: "Most Recent Job", flex: 1, cellClassName: "name-column--cell",},
-    { field: "Num of Projects", title: "Num of Projects", flex: 1 },
+    { field: "Num_of_Customer", title: "Number of Customers", type: "numeric" },
+    { field: "Num_of_Project", title: "Number of Projects", type: "numeric"},
+    { field: "Year", title: "Year", type: "numeric" },
+    { field: "average", title: "Average", type: "numeric" },
    
 
   ];

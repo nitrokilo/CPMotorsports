@@ -144,9 +144,6 @@ export default function AddMechanic(props) {
                       name="mech_stat_name"
                     >
                       <FormHelperText>Required</FormHelperText>
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
                       {MechStatusOptions}
                     </Select>
                   </FormControl>

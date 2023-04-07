@@ -1,5 +1,5 @@
 import { Box, Select, MenuItem} from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
@@ -103,7 +103,6 @@ const Mechanic = () => {
       
       cellClassName: "name-column--cell",
     },
-
     {
       field: "mech_email",
       title: "Mechanic Email",
@@ -125,9 +124,6 @@ const Mechanic = () => {
             onChange(event.target.value);
           }}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
           {mechanicstatusoptions}
         </Select>
       ),

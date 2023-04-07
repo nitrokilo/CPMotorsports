@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
 import MaterialTable from '@material-table/core';
+import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { tableIcons } from "../global/tableicons";
 import AddCustomer from "./addcustomer";
 
@@ -121,9 +122,7 @@ const Customer = () => {
             onChange(event.target.value);
           }}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
+
           {customerstatusoptions}
         </Select>
       ),

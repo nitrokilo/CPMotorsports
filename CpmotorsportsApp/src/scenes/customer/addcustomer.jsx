@@ -132,9 +132,6 @@ export default function AddCustomer(props) {
                       name="customer_stat_name"
                     >
                       <FormHelperText>Required</FormHelperText>
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
                       {CustomerStatusOptions}
                     </Select>
                   </FormControl>

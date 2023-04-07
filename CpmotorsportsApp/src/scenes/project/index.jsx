@@ -169,6 +169,7 @@ const Project = () => {
       field: "total_cost",
       title: "Total Cost",
       type: "currency",
+      editable: false
     },
     {
       field: "project_stat_name",
@@ -211,7 +212,7 @@ const Project = () => {
             columns={columns}
             actions={[
               {
-                icon: "save",
+                icon: tableIcons["More"],
                 tooltip: "Part Job",
                 onClick: (event, rowData) => handlePartjob(rowData),
               },

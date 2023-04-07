@@ -41,15 +41,21 @@ const Invoice = () => {
   // Column Configuration
   const columns = [
     {field: "Customer", title: "Customer", flex: 0.5 },
-    {field: "End Date", title: "End Date", type: "date" }, 
-    {field: "Labor", title: "Labor", type: "currency" },
-    {field: "Mechanic", title: "Mechanic", flex: 0.5 },
+    {field: "customer_phone_number", title: "customer_phone_number", flex: 0.5 },
+    {field: "make_name", title: "make_name", flex: 0.5 },
+    {field: "model_name", headerName: "model_name", flex: 0.5 },
+    {field: "vin_num", headerName: "vin_num", flex: 0.5 },
+    {field: "End Date", title: "End Date", type: "date" },
     {field: "Total", title: "Total", flex: 0.5 },
+    {field: "Mechanic", title: "Mechanic", flex: 0.5 }, 
+    {field: "Labor", title: "Labor", type: "currency" },
+    
+    
     {field: "car_sys_name", title: "car_sys_name", flex: 0.5 },
     {field: "cust_part_cost", title: "cust_part_cost", flex: 0.5 },
     {field: "cust_part_name", title: "cust_part_name", flex: 0.5 },
-    {field: "customer_phone_number", title: "customer_phone_number", flex: 0.5 },
-    {field: "make_name", title: "make_name", flex: 0.5 },
+    
+    
     // {field: "Customer", headerName: "Customer", flex: 0.5 },
     // {field: "metal_name", headerName: "metal_name", flex: 0.5 },
     // {field: "model_name", headerName: "model_name", flex: 0.5 },

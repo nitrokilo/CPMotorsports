@@ -55,19 +55,19 @@ export default function PartJob(props){
   }, [reRender]);
 
 //   // Api call and config for Categories and Transaction Accounts
-//   const [project_statusdata, setproject_statusdata] = useState([]);
+  const [partjob_statusdata, setpartjob_statusdata] = useState([]);
 
 //   // Api call to get project status for select option
-//   useEffect(() => {
-//     client
-//       .get("/project_status")
-//       .then((res) => {
-//         setproject_statusdata(res.data);
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   }, []);
+  useEffect(() => {
+    client
+      .get("/part_job_status")
+      .then((res) => {
+        setpartjob_statusdata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
 
 //   // Api call and config for Categories and Transaction Accounts
@@ -86,11 +86,11 @@ export default function PartJob(props){
 //   }, []);
 
 
-//   const project_statusoptions = project_statusdata.map((project_status) => (
-//     <MenuItem value={project_status.project_stat_id}>
-//       {project_status.project_stat_name}
-//     </MenuItem>
-//   ));
+  const part_job_stat_options = partjob_statusdata.map((part_job) => (
+    <MenuItem value={part_job.part_job_stat_id}>
+      {part_job.project_stat_name}
+    </MenuItem>
+  ));
 
 
 //   const vinnumberoptions = vin_nums.map((number) => (
@@ -114,7 +114,7 @@ export default function PartJob(props){
           onChange(event.target.value);
         }}
       >
-        {}
+        {part_job_stat_options}
       </Select>
     ),},
     { field: "mechanic_name", title: "Mechanic Name", editable: false },
@@ -145,13 +145,14 @@ export default function PartJob(props){
     <Box m="20px">
        <Button onClick={BackButton} style={{color:"white"}}> Back</Button>
 
-      <Header title="Project" subtitle="List of all Projects" />
+      <Header title="Part Jobs for "{...Project['project_id']}  subtitle={"Project " + Project['project_id']} />
+      <h1>Customer Name: {Project["Customer"]}</h1>
       <Box
         m="40px 0 0 0"
         height="75vh"
         
       >
-        {Project['project_id']}
+
         <MaterialTable
           icons={tableIcons}
           title="Project Data"

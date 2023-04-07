@@ -41,7 +41,8 @@ const Customer_time = () => {
   // Column Configuration
   const columns = [
     { field: "year", title: "Year", flex: 0.5 },
-    { field: "hrs_with_customer", title: "Hours With Customer", flex: 1, type: "numeric",}
+    { field: "Avg_Time_w/Customer", title: "Average time With Customer in ??", flex: 1, type: "numeric",},
+    { field: "Num_of_Projects", title: "Number of Projects", flex: 1, type: "numeric",}
    
 
   ];
