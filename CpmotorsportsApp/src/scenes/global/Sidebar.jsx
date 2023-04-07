@@ -16,6 +16,7 @@ import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
@@ -209,7 +210,7 @@ const Sidebar = () => {
             <Item
               title="Completed Projects Per Customer"
               to="/completed_projects"
-              icon={<PersonOutlinedIcon />}
+              icon={<HowToRegIcon />}
               selected={selected}
               setSelected={setSelected}
             />
