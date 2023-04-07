@@ -192,7 +192,7 @@ const Model = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Make Data"
+          title="Model Data"
           data={Model}
           columns={columns}
           style={{ backgroundColor: colors.primary[400] }}
