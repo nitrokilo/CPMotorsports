@@ -5,7 +5,7 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
-import MaterialTable from '@material-table/core';
+import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 import AddCustomerCar from "./addcustomer_car";
 
@@ -93,21 +93,20 @@ const Car = () => {
       });
   }, []);
 
-   // Api call and config for Categories and Transaction Accounts
-   const [model_data, set_modeldata] = useState([]);
+  // Api call and config for Categories and Transaction Accounts
+  const [model_data, set_modeldata] = useState([]);
 
-   // Api call to get Model Names for select option
-   useEffect(() => {
-     client
-       .get("/model")
-       .then((res) => {
-         set_modeldata(res.data);
-       })
-       .catch((err) => {
-         console.log(err);
-       });
-   }, []);
-
+  // Api call to get Model Names for select option
+  useEffect(() => {
+    client
+      .get("/model")
+      .then((res) => {
+        set_modeldata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   // Api call and config for Categories and Transaction Accounts
   const [ownership_statusdata, setownership_statusdata] = useState([]);
@@ -139,11 +138,9 @@ const Car = () => {
     </MenuItem>
   ));
 
-   // Edit Make Capabilities
-   const MakeOptions = make_data.map((make) => (
-    <MenuItem value={make.make_id}>
-      {make.make_name}
-    </MenuItem>
+  // Edit Make Capabilities
+  const MakeOptions = make_data.map((make) => (
+    <MenuItem value={make.make_id}>{make.make_name}</MenuItem>
   ));
 
   // Edit Model Capabilities
@@ -154,11 +151,13 @@ const Car = () => {
   ));
 
   // Edit Ownership StatusCapabilities
-  const OwnershipStatusOptions = ownership_statusdata.map((ownership_status) => (
-    <MenuItem value={ownership_status.ownership_stat_id}>
-      {ownership_status.ownership_stat_name}
-    </MenuItem>
-  ));
+  const OwnershipStatusOptions = ownership_statusdata.map(
+    (ownership_status) => (
+      <MenuItem value={ownership_status.ownership_stat_id}>
+        {ownership_status.ownership_stat_name}
+      </MenuItem>
+    )
+  );
 
   // Column Configuration
   const columns = [
@@ -290,25 +289,8 @@ const Car = () => {
           title="Customer Car Data"
           data={Car}
           columns={columns}
+          style={{ backgroundColor: colors.primary[400] }}
           editable={{
-            onRowAdd: (newRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  console.log(newRow);
-                  handleFormSubmitadd(newRow);
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: (selectedRow) =>
-              new Promise((resolve, reject) => {
-                const index = selectedRow.tableData.id;
-                const updatedRows = [...data];
-                updatedRows.splice(index, 1);
-                setTimeout(() => {
-                  setData(updatedRows);
-                  resolve();
-                }, 2000);
-              }),
             onRowUpdate: (updatedRow, oldRow) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -319,8 +301,8 @@ const Car = () => {
           }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",

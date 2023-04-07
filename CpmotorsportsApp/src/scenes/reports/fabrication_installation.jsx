@@ -4,11 +4,10 @@ import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import MaterialTable from '@material-table/core';
+import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 
 const Fabrication_Installation = () => {
-
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
@@ -26,9 +25,6 @@ const Fabrication_Installation = () => {
       });
   }, [reRender]);
 
-
-
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -40,17 +36,21 @@ const Fabrication_Installation = () => {
   // Column Configuration
   const columns = [
     { field: "year", title: "Year", flex: 0.5 },
-    { field: "service_name", title: "Service Name", flex: 1, cellClassName: "name-column--cell",},
+    {
+      field: "service_name",
+      title: "Service Name",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
     { field: "service_count", title: "Service Count", flex: 1 },
-   
-
   ];
 
   return (
     <Box m="20px">
-
-
-      <Header title="Completed Fabrication and Installation" subtitle="List of all Fabrication and Installation" />
+      <Header
+        title="Completed Fabrication and Installation"
+        subtitle="List of all Fabrication and Installation"
+      />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -88,22 +88,24 @@ const Fabrication_Installation = () => {
           title="Fabrication And Installation"
           data={Data}
           columns={columns}
-
+          style={{ backgroundColor: colors.primary[400] }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",
             exportMenu: [
               {
                 label: "Export PDF",
-                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Fabrication_Installation"),
+                exportFunc: (cols, datas) =>
+                  ExportPdf(cols, datas, "Fabrication_Installation"),
               },
               {
                 label: "Export CSV",
-                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Fabrication_Installation"),
+                exportFunc: (cols, datas) =>
+                  ExportCsv(cols, datas, "Fabrication_Installation"),
               },
             ],
             filtering: true,

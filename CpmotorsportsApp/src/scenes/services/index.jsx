@@ -1,4 +1,4 @@
-import { Select, Box, MenuItem} from "@mui/material";
+import { Select, Box, MenuItem } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { SuccessAlert } from "../../components/alert.jsx";
 import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 import AddService from "./addservice";
+import { ThemeProvider } from "@mui/material/styles";
 const Service = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -62,11 +63,13 @@ const Service = () => {
   const [service_status_data, setservice_statusdata] = useState([]);
 
   // Edit Capabilities
-  const servicestatusoptions = service_status_data.map((service_type_status) => (
-    <MenuItem value={service_type_status.serv_type_stat_id}>
-      {service_type_status.serv_type_stat_name}
-    </MenuItem>
-  ));
+  const servicestatusoptions = service_status_data.map(
+    (service_type_status) => (
+      <MenuItem value={service_type_status.serv_type_stat_id}>
+        {service_type_status.serv_type_stat_name}
+      </MenuItem>
+    )
+  );
 
   // Api call to get service status for select option
   useEffect(() => {
@@ -146,27 +149,6 @@ const Service = () => {
         servicestatusdata={service_status_data}
         alert={SuccessAlert}
       />
-      {/* <EditTransaction
-        handleOpen={handleOpenedit}
-        handleClose={handleCloseedit}
-        open={openedit}
-        handleFormSubmit={handleFormSubmitedit}
-        postsucessful={postsucessfuledit}
-        Projects={Projects}
-        categoriesdata={categoriesdata}
-        transactionaccountdata={transactionaccountdata}
-        alert={SuccessAlert}
-      />
-
-      <DeleteTransaction
-        handleOpen={handleOpendelete}
-        handleClose={handleClosedelete}
-        open={opendelete}
-        handleFormSubmit={handleFormSubmitdelete}
-        postsucessful={postsucessfuldelete}
-        Projects={Projects}
-        alert={SuccessAlert}
-      />  */}
 
       <Header title="Service Types" subtitle="List of all Service Types" />
       <Box
@@ -201,41 +183,46 @@ const Service = () => {
           },
         }}
       >
-        <MaterialTable
-          icons={tableIcons}
-          title="Mechanic Data"
-          data={Service}
-          columns={columns}
-          editable={{
-            onRowUpdate: (updatedRow, oldRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  handleFormSubmitedit(updatedRow);
-                  resolve();
-                }, 1000);
-              }),
-          }}
-          options={{
-            headerStyle: {
-              backgroundColor: "white",
-              color: "black",
-            },
-            actionsColumnIndex: -1,
-            addRowPosition: "first",
-            exportMenu: [
-              {
-                label: "Export PDF",
-                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Service"),
+        <ThemeProvider theme={theme}>
+          <MaterialTable
+            icons={tableIcons}
+            title="Service Type Data"
+            data={Service}
+            columns={columns}
+            editable={{
+              onRowUpdate: (updatedRow, oldRow) =>
+                new Promise((resolve, reject) => {
+                  setTimeout(() => {
+                    handleFormSubmitedit(updatedRow);
+                    resolve();
+                  }, 1000);
+                }),
+            }}
+            style={{ backgroundColor: colors.primary[400] }}
+            options={{
+              headerStyle: {
+                fontWeight: "bold",
+                backgroundColor: colors.primary[500],
               },
-              {
-                label: "Export CSV",
-                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Service"),
-              },
-            ],
-            filtering: true,
-            pageSize: 15,
-          }}
-        />
+              actionsColumnIndex: -1,
+              addRowPosition: "first",
+              exportMenu: [
+                {
+                  label: "Export PDF",
+                  exportFunc: (cols, datas) =>
+                    ExportPdf(cols, datas, "Service"),
+                },
+                {
+                  label: "Export CSV",
+                  exportFunc: (cols, datas) =>
+                    ExportCsv(cols, datas, "Service"),
+                },
+              ],
+              filtering: true,
+              pageSize: 15,
+            }}
+          />
+        </ThemeProvider>
       </Box>
     </Box>
   );

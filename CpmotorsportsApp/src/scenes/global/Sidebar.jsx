@@ -11,11 +11,11 @@ import DirectionsCarFilledIcon from "@mui/icons-material/DirectionsCarFilled";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import NoCrashIcon from "@mui/icons-material/NoCrash";
 import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
-import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
-import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
-import ConstructionIcon from '@mui/icons-material/Construction';
-import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
-import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
+import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
@@ -227,7 +227,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
 
             <Item
               title="Mechanics-Customer Time"

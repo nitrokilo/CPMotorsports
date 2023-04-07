@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import MaterialTable from '@material-table/core';
+import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 
 const Customer_time = () => {
-
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
@@ -27,9 +26,6 @@ const Customer_time = () => {
       });
   }, [reRender]);
 
-
-
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -41,16 +37,22 @@ const Customer_time = () => {
   // Column Configuration
   const columns = [
     { field: "year", title: "Year", flex: 0.5 },
-    { field: "Avg_Time_w/Customer", title: "Average time With Customer in ??", flex: 1, type: "numeric",},
-    { field: "Num_of_Projects", title: "Number of Projects", flex: 1, type: "numeric",}
-   
-
+    {
+      field: "Avg_Time_w/Customer",
+      title: "Average time With Customer in ??",
+      flex: 1,
+      type: "numeric",
+    },
+    {
+      field: "Num_of_Projects",
+      title: "Number of Projects",
+      flex: 1,
+      type: "numeric",
+    },
   ];
 
   return (
     <Box m="20px">
-
-
       <Header title="Customer Time" subtitle="List of all Customer Time" />
       <Box
         m="40px 0 0 0"
@@ -89,22 +91,24 @@ const Customer_time = () => {
           title="Customer Data"
           data={Data}
           columns={columns}
-
+          style={{ backgroundColor: colors.primary[400] }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",
             exportMenu: [
               {
                 label: "Export PDF",
-                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Customer_Time"),
+                exportFunc: (cols, datas) =>
+                  ExportPdf(cols, datas, "Customer_Time"),
               },
               {
                 label: "Export CSV",
-                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Customer_Time"),
+                exportFunc: (cols, datas) =>
+                  ExportCsv(cols, datas, "Customer_Time"),
               },
             ],
             filtering: true,

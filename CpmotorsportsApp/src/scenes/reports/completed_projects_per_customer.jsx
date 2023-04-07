@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import MaterialTable from '@material-table/core';
+import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 
 const Completed_projects = () => {
-
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
@@ -27,9 +26,6 @@ const Completed_projects = () => {
       });
   }, [reRender]);
 
-
-
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -41,18 +37,17 @@ const Completed_projects = () => {
   // Column Configuration
   const columns = [
     { field: "Num_of_Customer", title: "Number of Customers", type: "numeric" },
-    { field: "Num_of_Project", title: "Number of Projects", type: "numeric"},
+    { field: "Num_of_Project", title: "Number of Projects", type: "numeric" },
     { field: "Year", title: "Year", type: "numeric" },
     { field: "average", title: "Average", type: "numeric" },
-   
-
   ];
 
   return (
     <Box m="20px">
-
-
-      <Header title="Completed Projects" subtitle="List of all Completed Projects" />
+      <Header
+        title="Completed Projects"
+        subtitle="List of all Completed Projects"
+      />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -90,21 +85,24 @@ const Completed_projects = () => {
           title="Completed Projects Per Customer"
           data={Data}
           columns={columns}
+          style={{ backgroundColor: colors.primary[400] }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",
             exportMenu: [
               {
                 label: "Export PDF",
-                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Completed_Projects_Per_Year"),
+                exportFunc: (cols, datas) =>
+                  ExportPdf(cols, datas, "Completed_Projects_Per_Year"),
               },
               {
                 label: "Export CSV",
-                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Completed_Projects_Per_Year"),
+                exportFunc: (cols, datas) =>
+                  ExportCsv(cols, datas, "Completed_Projects_Per_Year"),
               },
             ],
             filtering: true,

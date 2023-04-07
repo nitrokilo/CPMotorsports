@@ -47,21 +47,6 @@ const Project = () => {
       .then(setPostsucessfuledit(true));
   };
 
-  /*
-  // Definitions for Delete Project
-  const [opendelete, setOpendelete] = useState(false);
-  const handleOpendelete = () => setOpendelete(true);
-  const handleClosedelete = () => setOpendelete(false);
-
-  const [postsucessfuldelete, setPostsucessfuldelete] = useState(false);
-  const handleFormSubmitdelete = (values) => {
-    const idtodelete = values.trans_id;
-    client
-      .delete(`/projects/${idtodelete}`)
-      .then(setOpendelete(false))
-      .then(setReRender(true))
-      .then(setPostsucessfuldelete(true));
-  };  */
   // Api Call and config
   const [Project, setProject] = useState([]);
   useEffect(() => {
@@ -130,13 +115,13 @@ const Project = () => {
   const [showProjects, setshowProjects] = useState(true);
   const [selectedProject, setselectedProject] = useState([]);
 
-  function handlePartjob(projectselected){
-    setselectedProject(projectselected)
-    setshowProjects(false)
+  function handlePartjob(projectselected) {
+    setselectedProject(projectselected);
+    setshowProjects(false);
   }
 
-  function backbutton(){
-    setshowProjects(true)
+  function backbutton() {
+    setshowProjects(true);
   }
 
   // Column Configuration
@@ -169,7 +154,7 @@ const Project = () => {
       field: "total_cost",
       title: "Total Cost",
       type: "currency",
-      editable: false
+      editable: false,
     },
     {
       field: "project_stat_name",
@@ -188,21 +173,19 @@ const Project = () => {
     },
   ];
 
- 
-
   if (showProjects) {
     return (
       <Box m="20px">
         <AddProject
-        handleOpen={handleOpenadd}
-        handleClose={handleCloseadd}
-        open={openadd}
-        handleFormSubmit={handleFormSubmitadd}
-        postsucessful={postsucessfuladd}
-        vinnumdata={vin_nums}
-        projectstatusdata={project_statusdata}
-        alert={SuccessAlert}
-      />
+          handleOpen={handleOpenadd}
+          handleClose={handleCloseadd}
+          open={openadd}
+          handleFormSubmit={handleFormSubmitadd}
+          postsucessful={postsucessfuladd}
+          vinnumdata={vin_nums}
+          projectstatusdata={project_statusdata}
+          alert={SuccessAlert}
+        />
         <Header title="Project" subtitle="List of all Projects" />
         <Box m="40px 0 0 0" height="75vh">
           <MaterialTable
@@ -210,6 +193,7 @@ const Project = () => {
             title="Project Data"
             data={Project}
             columns={columns}
+            style={{ backgroundColor: colors.primary[400] }}
             actions={[
               {
                 icon: tableIcons["More"],
@@ -218,24 +202,6 @@ const Project = () => {
               },
             ]}
             editable={{
-              onRowAdd: (newRow) =>
-                new Promise((resolve, reject) => {
-                  setTimeout(() => {
-                    console.log(newRow);
-                    handleFormSubmitadd(newRow);
-                    resolve();
-                  }, 1000);
-                }),
-              onRowDelete: (selectedRow) =>
-                new Promise((resolve, reject) => {
-                  const index = selectedRow.tableData.id;
-                  const updatedRows = [...data];
-                  updatedRows.splice(index, 1);
-                  setTimeout(() => {
-                    setData(updatedRows);
-                    resolve();
-                  }, 2000);
-                }),
               onRowUpdate: (updatedRow, oldRow) =>
                 new Promise((resolve, reject) => {
                   setTimeout(() => {
@@ -262,8 +228,8 @@ const Project = () => {
             }}
             options={{
               headerStyle: {
-                backgroundColor: "white",
-                color: "black",
+                fontWeight: "bold",
+                backgroundColor: colors.primary[500],
               },
               actionsColumnIndex: -1,
               addRowPosition: "first",
@@ -287,7 +253,7 @@ const Project = () => {
       </Box>
     );
   }
-  return <PartJob project={selectedProject} backbutton={backbutton}/>
+  return <PartJob project={selectedProject} backbutton={backbutton} />;
 };
 
 export default Project;

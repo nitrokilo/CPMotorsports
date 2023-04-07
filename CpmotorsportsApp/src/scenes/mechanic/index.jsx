@@ -1,4 +1,4 @@
-import { Box, Select, MenuItem} from "@mui/material";
+import { Box, Select, MenuItem } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
@@ -45,7 +45,6 @@ const Mechanic = () => {
       .then(setPostsucessfuledit(true));
   };
 
- 
   // Api Call and config
   const [Mechanic, setMechanic] = useState([]);
   useEffect(() => {
@@ -83,7 +82,6 @@ const Mechanic = () => {
     currency: "USD",
   });
 
-
   // Edit Capabilities
   const mechanicstatusoptions = mechanic_statusdata.map((mechanic_status) => (
     <MenuItem value={mechanic_status.mech_stat_id}>
@@ -93,28 +91,26 @@ const Mechanic = () => {
 
   // Column Configuration
   const columns = [
-    { field: "mech_id", title: "ID", editable: false},
+    { field: "mech_id", title: "ID", editable: false },
     { field: "mech_first_name", title: "First Name" },
     { field: "mech_last_name", title: "Last Name" },
 
     {
       field: "mech_phone_number",
       title: "Phone Number",
-      
+
       cellClassName: "name-column--cell",
     },
     {
       field: "mech_email",
       title: "Mechanic Email",
-      
     },
     {
       field: "mech_hourly_pay",
       title: "Mechanic Hourly Pay",
       type: "currency",
     },
-      {
-
+    {
       field: "mech_stat_name",
       title: "Mechanic Status",
       editComponent: ({ value, onChange, rowData }) => (
@@ -127,8 +123,6 @@ const Mechanic = () => {
           {mechanicstatusoptions}
         </Select>
       ),
-      
-
     },
   ];
 
@@ -176,30 +170,13 @@ const Mechanic = () => {
           },
         }}
       >
-         <MaterialTable
+        <MaterialTable
           icons={tableIcons}
           title="Mechanic Data"
           data={Mechanic}
           columns={columns}
+          style={{ backgroundColor: colors.primary[400] }}
           editable={{
-            onRowAdd: (newRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  console.log(newRow);
-                  handleFormSubmitadd(newRow);
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: (selectedRow) =>
-              new Promise((resolve, reject) => {
-                const index = selectedRow.tableData.id;
-                const updatedRows = [...data];
-                updatedRows.splice(index, 1);
-                setTimeout(() => {
-                  setData(updatedRows);
-                  resolve();
-                }, 2000);
-              }),
             onRowUpdate: (updatedRow, oldRow) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -210,8 +187,8 @@ const Mechanic = () => {
           }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",

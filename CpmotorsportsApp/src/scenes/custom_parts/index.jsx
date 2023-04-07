@@ -1,4 +1,4 @@
-import {Select, Box, MenuItem } from "@mui/material";
+import { Select, Box, MenuItem } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
@@ -74,22 +74,20 @@ const CustomParts = () => {
       });
   }, []);
 
-// Api call and config for Categories and Transaction Accounts
-const [car_system_data, setcar_system_data] = useState([]);
+  // Api call and config for Categories and Transaction Accounts
+  const [car_system_data, setcar_system_data] = useState([]);
 
-// Api call to get car system status for select option
-useEffect(() => {
-  client
-    .get("/car_system")
-    .then((res) => {
-      setcar_system_data(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}, []);
-
-
+  // Api call to get car system status for select option
+  useEffect(() => {
+    client
+      .get("/car_system")
+      .then((res) => {
+        setcar_system_data(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -101,32 +99,26 @@ useEffect(() => {
 
   // Edit Capabilities
   const MetalOptions = metal_data.map((metal_type) => (
-    <MenuItem value={metal_type.metal_id}>
-      {metal_type.metal_name}
-    </MenuItem>
+    <MenuItem value={metal_type.metal_id}>{metal_type.metal_name}</MenuItem>
   ));
 
   // Edit Capabilities
   const CarSystemOptions = car_system_data.map((car_system) => (
-    <MenuItem value={car_system.car_sys_id}>
-      {car_system.car_sys_name}
-    </MenuItem>
+    <MenuItem value={car_system.car_sys_id}>{car_system.car_sys_name}</MenuItem>
   ));
-
-
 
   // Column Configuration
   const columns = [
-    { 
-      field: "cust_part_id", 
-      title: "ID", 
+    {
+      field: "cust_part_id",
+      title: "ID",
       editable: false,
-      flex: 0.5 
+      flex: 0.5,
     },
 
-    { 
+    {
       field: "car_sys_name",
-      title: "Car System Name", 
+      title: "Car System Name",
       flex: 1,
       editComponent: ({ value, onChange, rowData }) => (
         <Select
@@ -143,9 +135,9 @@ useEffect(() => {
       ),
     },
 
-    { 
-      field: "metal_name", 
-      title: "Metal Name", 
+    {
+      field: "metal_name",
+      title: "Metal Name",
       flex: 1,
       editComponent: ({ value, onChange, rowData }) => (
         <Select
@@ -165,7 +157,6 @@ useEffect(() => {
     {
       field: "cust_part_name",
       title: "Custom Part Name",
-      
     },
 
     {
@@ -177,8 +168,6 @@ useEffect(() => {
       field: "cust_part_cost",
       title: "Part Cost",
       type: "currency",
-
-      
     },
   ];
 
@@ -232,29 +221,12 @@ useEffect(() => {
           title="Custom Part Data"
           data={CustomPart}
           columns={columns}
+          style={{ backgroundColor: colors.primary[400] }}
           editable={{
-            onRowAdd: (newRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  console.log(newRow);
-                  handleFormSubmitadd(newRow);
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: (selectedRow) =>
-              new Promise((resolve, reject) => {
-                const index = selectedRow.tableData.id;
-                const updatedRows = [...data];
-                updatedRows.splice(index, 1);
-                setTimeout(() => {
-                  setData(updatedRows);
-                  resolve();
-                }, 2000);
-              }),
             onRowUpdate: (updatedRow, oldRow) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
-                  console.log(updatedRow)
+                  console.log(updatedRow);
                   handleFormSubmitedit(updatedRow);
                   resolve();
                 }, 1000);
@@ -262,19 +234,21 @@ useEffect(() => {
           }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",
             exportMenu: [
               {
                 label: "Export PDF",
-                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Custom Parts"),
+                exportFunc: (cols, datas) =>
+                  ExportPdf(cols, datas, "Custom Parts"),
               },
               {
                 label: "Export CSV",
-                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Custom Parts"),
+                exportFunc: (cols, datas) =>
+                  ExportCsv(cols, datas, "Custom Parts"),
               },
             ],
             filtering: true,

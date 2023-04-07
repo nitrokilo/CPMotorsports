@@ -4,11 +4,10 @@ import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import MaterialTable from '@material-table/core';
+import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 
 const Project_Job_Status = () => {
-
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
@@ -26,9 +25,6 @@ const Project_Job_Status = () => {
       });
   }, [reRender]);
 
-
-
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -39,27 +35,26 @@ const Project_Job_Status = () => {
 
   // Column Configuration
   const columns = [
-    {field: "Car System", title: "Car System"},
-    {field: "Customer", title: "Customer"},
-    {field: "Customer Phone", title:"Customer Phone"},
-    {field: "Make", title: "Make"},
-    {field:  "Mechanic", title: "Mechanic"},
-    {field: "Metal", title:"Metal"},
-    {field: "Model", title:"Model"},
-    {field: "Part", title:"Part"},
-    {field: "Part Status", title: "Part Status"},
-    {field: "Project Status", title:"Project Status"},
-    {field: "Service", title:"Service"},
-    {field: "Vin Num", title:"Vin Num"}
-   
-
+    { field: "Car System", title: "Car System" },
+    { field: "Customer", title: "Customer" },
+    { field: "Customer Phone", title: "Customer Phone" },
+    { field: "Make", title: "Make" },
+    { field: "Mechanic", title: "Mechanic" },
+    { field: "Metal", title: "Metal" },
+    { field: "Model", title: "Model" },
+    { field: "Part", title: "Part" },
+    { field: "Part Status", title: "Part Status" },
+    { field: "Project Status", title: "Project Status" },
+    { field: "Service", title: "Service" },
+    { field: "Vin Num", title: "Vin Num" },
   ];
 
   return (
     <Box m="20px">
-
-
-      <Header title="Completed Projects" subtitle="List of all Completed Projects" />
+      <Header
+        title="Completed Projects"
+        subtitle="List of all Completed Projects"
+      />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -97,22 +92,24 @@ const Project_Job_Status = () => {
           title="Customer Data"
           data={Data}
           columns={columns}
-
+          style={{ backgroundColor: colors.primary[400] }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",
             exportMenu: [
               {
                 label: "Export PDF",
-                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Project_Job_Status"),
+                exportFunc: (cols, datas) =>
+                  ExportPdf(cols, datas, "Project_Job_Status"),
               },
               {
                 label: "Export CSV",
-                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Project_Job_Status"),
+                exportFunc: (cols, datas) =>
+                  ExportCsv(cols, datas, "Project_Job_Status"),
               },
             ],
             filtering: true,
