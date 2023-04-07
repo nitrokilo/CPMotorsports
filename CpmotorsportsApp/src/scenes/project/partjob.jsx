@@ -69,6 +69,51 @@ export default function PartJob(props){
       });
   }, []);
 
+   // Api call and config for Categories and Transaction Accounts
+   const [mechanicdata, setmechanic_data] = useState([]);
+
+   // Api call to get project status for select option
+   useEffect(() => {
+     client
+       .get("/mechanic_name")
+       .then((res) => {
+         setmechanic_data(res.data);
+       })
+       .catch((err) => {
+         console.log(err);
+       });
+   }, []);
+
+   // Api call and config for Categories and Transaction Accounts
+   const [servicedata, setservice_data] = useState([]);
+
+   // Api call to get project status for select option
+   useEffect(() => {
+     client
+       .get("/service_type")
+       .then((res) => {
+         setservice_data(res.data);
+       })
+       .catch((err) => {
+         console.log(err);
+       });
+   }, []);
+
+
+    // Api call and config for Categories and Transaction Accounts
+    const [custompartdata, setcustom_part_data] = useState([]);
+
+    // Api call to get project status for select option
+    useEffect(() => {
+      client
+        .get("/custom_part")
+        .then((res) => {
+          setcustom_part_data(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, []);
 
 //   // Api call and config for Categories and Transaction Accounts
 //   const [vin_nums, setvin_nums] = useState([]);
@@ -92,6 +137,23 @@ export default function PartJob(props){
     </MenuItem>
   ));
 
+  const MechanicOptions = mechanicdata.map((mechanic) => (
+    <MenuItem value={mechanic.mechanic_id}>
+      {mechanic.Mechanic}
+    </MenuItem>
+  ));
+
+  const ServiceOptions = servicedata.map((service_type) => (
+    <MenuItem value={service_type.service_id}>
+      {service_type.service_name}
+    </MenuItem>
+  ));
+
+  const CustomPartOptions = custompartdata.map((custom_part) => (
+    <MenuItem value={custom_part.cust_part_id}>
+      {custom_part.cust_part_name}
+    </MenuItem>
+  ));
 
 //   const vinnumberoptions = vin_nums.map((number) => (
 //     <MenuItem value={number.vin_num}>
@@ -117,8 +179,36 @@ export default function PartJob(props){
         {part_job_stat_options}
       </Select>
     ),},
-    { field: "mechanic_name", title: "Mechanic Name", editable: false },
-    { field: "cust_part_name", title: "Custom Part Name", editable: false },
+    {
+      field: "Mechanic",
+      title: "Mechanic Name",
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          {MechanicOptions}
+        </Select>
+      ),
+    },
+    {
+      field: "cust_part_name",
+      title: "Custom Part Name",
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          {CustomPartOptions}
+        </Select>
+      ),
+    },
     { title: 'Part Service Start', field: "part_serv_start"},
 
     {
@@ -130,6 +220,17 @@ export default function PartJob(props){
     {
       field: "service_name",
       title: "Service Name",
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          {ServiceOptions}
+        </Select>
+      ),
     },
     { field: "actual_time_spent_hrs", title: "Actual Time Spent With Customer", editable: false },
     {
