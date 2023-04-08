@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
 import { SuccessAlert } from "../../components/alert.jsx";
 import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import PartJob from "./partjob";
 import AddProject from "./addproject";
+import { Link } from "react-router-dom";
+import MyButton from "../global/buttonstyles";
 
 const Project = () => {
   // State intialization for rerender to control page render
@@ -187,6 +188,10 @@ const Project = () => {
           projectstatusdata={project_statusdata}
           alert={SuccessAlert}
         />
+        <br />
+        <Link to="/custom_parts">
+          <MyButton text="Custom Parts"></MyButton>
+        </Link>
         <Box m="40px 0 0 0" height="75vh">
           <MaterialTable
             icons={tableIcons}

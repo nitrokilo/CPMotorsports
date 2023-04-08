@@ -207,21 +207,21 @@ const Sidebar = () => {
               Reports
             </Typography>
             <Item
-              title="Completed Projects Per Customer"
+              title="Customer Projects "
               to="/completed_projects"
               icon={<HowToRegIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Completed Projects Per Year"
+              title="Yearly Projects "
               to="/completed_projects_per_year"
               icon={<WorkHistoryIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Custom Parts Per Project"
+              title="Custom Parts "
               to="/c_parts_projects"
               icon={<HomeRepairServiceIcon />}
               selected={selected}
@@ -229,7 +229,7 @@ const Sidebar = () => {
             />
 
             <Item
-              title="Mechanics-Customer Time"
+              title="Mechanics Time"
               to="/mech_cutomer_time"
               icon={<AccessTimeFilledIcon />}
               selected={selected}
@@ -237,7 +237,7 @@ const Sidebar = () => {
             />
 
             <Item
-              title="Fabrication and Installation"
+              title="Custom Job"
               to="/fabrication_installation"
               icon={<ConstructionIcon />}
               selected={selected}

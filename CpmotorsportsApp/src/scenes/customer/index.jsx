@@ -9,6 +9,8 @@ import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { tableIcons } from "../global/tableicons";
 import AddCustomer from "./addcustomer";
+import { Link } from "react-router-dom";
+import MyButton from "../global/buttonstyles";
 
 const Customer = () => {
   // State intialization for rerender to control page render
@@ -140,6 +142,18 @@ const Customer = () => {
         customerstatusdata={customer_status_data}
         alert={SuccessAlert}
       />
+      <br />
+      <Link to="/customer_cars">
+        <MyButton text="Add a Car to Customer"></MyButton>
+      </Link>
+
+      <br />
+      <br />
+
+      <Link to="/projects">
+        <MyButton text="Add a Project"></MyButton>
+      </Link>
+
       <Box
         m="40px 0 0 0"
         height="75vh"

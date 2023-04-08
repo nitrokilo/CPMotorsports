@@ -46,7 +46,9 @@ const Completed_projects = () => {
     <Box m="20px">
       <Header
         title="Completed Projects"
-        subtitle="List of all Completed Projects"
+        subtitle="This query pulls customer name information from the customer table, project end dates from the project table, 
+        and joins the car, customer, and project status from their respective tables 
+        Returns an ordered list of customers, along with the most recent project date, and the number of completed projects"
       />
       <Box
         m="40px 0 0 0"
