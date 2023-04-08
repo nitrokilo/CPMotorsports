@@ -140,6 +140,7 @@ const Service = () => {
 
   return (
     <Box m="20px">
+      <Header title="Service Types" subtitle="List of all Service Types" />
       <AddService
         handleOpen={handleOpenadd}
         handleClose={handleCloseadd}
@@ -149,8 +150,6 @@ const Service = () => {
         servicestatusdata={service_status_data}
         alert={SuccessAlert}
       />
-
-      <Header title="Service Types" subtitle="List of all Service Types" />
       <Box
         m="40px 0 0 0"
         height="75vh"

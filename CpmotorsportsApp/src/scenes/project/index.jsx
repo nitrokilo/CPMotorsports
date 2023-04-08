@@ -176,6 +176,7 @@ const Project = () => {
   if (showProjects) {
     return (
       <Box m="20px">
+        <Header title="Project" subtitle="List of all Projects" />
         <AddProject
           handleOpen={handleOpenadd}
           handleClose={handleCloseadd}
@@ -186,7 +187,6 @@ const Project = () => {
           projectstatusdata={project_statusdata}
           alert={SuccessAlert}
         />
-        <Header title="Project" subtitle="List of all Projects" />
         <Box m="40px 0 0 0" height="75vh">
           <MaterialTable
             icons={tableIcons}

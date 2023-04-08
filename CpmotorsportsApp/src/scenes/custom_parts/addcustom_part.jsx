@@ -8,11 +8,14 @@ import {
   MenuItem,
   FormHelperText,
   FormControl,
+  useTheme,
 } from "@mui/material";
 import Modal from "@mui/material/Modal";
+import { tokens } from "../../theme";
 import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MyButton from "../global/buttonstyles";
 
 const style = {
   position: "absolute",
@@ -28,6 +31,8 @@ const style = {
 
 export default function AddCustomPart(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   // Behaviors and states passed as props and renamed
   const handleFormSubmit = (values) => {
@@ -43,7 +48,10 @@ export default function AddCustomPart(props) {
 
   // Mapping for category and transaction account options
   const CarSystemOptions = carsystemdata.map((car_system) => (
-    <MenuItem value={car_system.car_sys_id}> {car_system.car_sys_name} </MenuItem>
+    <MenuItem value={car_system.car_sys_id}>
+      {" "}
+      {car_system.car_sys_name}{" "}
+    </MenuItem>
   ));
 
   // Mapping for category and transaction account options
@@ -53,9 +61,8 @@ export default function AddCustomPart(props) {
 
   return (
     <div>
-      <Button onClick={handleOpen} color="secondary">
-        Add Custom Part
-      </Button>
+      <MyButton onClick={handleOpen} text="Add Custom Part" />
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -63,7 +70,7 @@ export default function AddCustomPart(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="Add Custom Part"/>
+          <Header title="Add Custom Part" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>

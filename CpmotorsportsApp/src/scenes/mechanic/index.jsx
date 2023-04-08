@@ -128,6 +128,7 @@ const Mechanic = () => {
 
   return (
     <Box m="20px">
+      <Header title="Mechanic" subtitle="List of all Mechanics" />
       <AddMechanic
         handleOpen={handleOpenadd}
         handleClose={handleCloseadd}
@@ -137,7 +138,6 @@ const Mechanic = () => {
         mechstatusdata={mechanic_statusdata}
         alert={SuccessAlert}
       />
-      <Header title="Mechanic" subtitle="List of all Mechanics" />
       <Box
         m="40px 0 0 0"
         height="75vh"

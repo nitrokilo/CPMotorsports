@@ -71,11 +71,6 @@ const Make = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const currencyFormatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-
   // Edit Capabilities
   const MakeStatusOptions = make_statusdata.map((make_status) => (
     <MenuItem value={make_status.make_stat_id}>
@@ -109,6 +104,7 @@ const Make = () => {
 
   return (
     <Box m="20px">
+      <Header title="Make" subtitle="List of all Makes" />
       <AddMake
         handleOpen={handleOpenadd}
         handleClose={handleCloseadd}
@@ -118,7 +114,6 @@ const Make = () => {
         makestatusdata={make_statusdata}
         alert={SuccessAlert}
       />
-      <Header title="Make" subtitle="List of all Makes" />
       <Box
         m="40px 0 0 0"
         height="75vh"

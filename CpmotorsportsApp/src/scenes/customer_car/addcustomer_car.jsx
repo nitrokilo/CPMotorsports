@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MyButton from "../global/buttonstyles";
 
 const style = {
   position: "absolute",
@@ -51,9 +52,7 @@ export default function AddCustomerCar(props) {
   ));
 
   const MakeOptions = make_data.map((make) => (
-    <MenuItem value={make.make_id}>
-      {make.make_name}
-    </MenuItem>
+    <MenuItem value={make.make_id}>{make.make_name}</MenuItem>
   ));
 
   const ModelOptions = model_data.map((model) => (
@@ -62,17 +61,17 @@ export default function AddCustomerCar(props) {
     </MenuItem>
   ));
 
-  const OwnershipStatusOptions = ownership_statusdata.map((ownership_status) => (
-    <MenuItem value={ownership_status.ownership_stat_id}>
-      {ownership_status.ownership_stat_name}
-    </MenuItem>
-  ));
+  const OwnershipStatusOptions = ownership_statusdata.map(
+    (ownership_status) => (
+      <MenuItem value={ownership_status.ownership_stat_id}>
+        {ownership_status.ownership_stat_name}
+      </MenuItem>
+    )
+  );
 
   return (
     <div>
-      <Button onClick={handleOpen} color="secondary">
-        Add Car to Customer
-      </Button>
+      <MyButton onClick={handleOpen} text="Add Car to Customer"></MyButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -80,7 +79,7 @@ export default function AddCustomerCar(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="Add a Customer Car"/>
+          <Header title="Add a Customer Car" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>

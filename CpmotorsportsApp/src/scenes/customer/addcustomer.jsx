@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MyButton from "../global/buttonstyles";
 
 const style = {
   position: "absolute",
@@ -42,14 +43,19 @@ export default function AddCustomer(props) {
 
   // Mapping for category and transaction account options
   const CustomerStatusOptions = customerstatusdata.map((customer_status) => (
-    <MenuItem value={customer_status.customer_stat_id}> {customer_status.customer_stat_name} </MenuItem>
+    <MenuItem value={customer_status.customer_stat_id}>
+      {" "}
+      {customer_status.customer_stat_name}{" "}
+    </MenuItem>
   ));
 
   return (
     <div>
-      <Button onClick={handleOpen} color="secondary">
-        Add Customer
-      </Button>
+      <MyButton
+        text="Add Customer"
+        onClick={handleOpen}
+        color="secondary"
+      ></MyButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -57,7 +63,7 @@ export default function AddCustomer(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="Add Customer"/>
+          <Header title="Add Customer" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>

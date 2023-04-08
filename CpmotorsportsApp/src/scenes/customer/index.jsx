@@ -130,6 +130,7 @@ const Customer = () => {
 
   return (
     <Box m="20px">
+      <Header title="Customer" subtitle="List of all Customers" />
       <AddCustomer
         handleOpen={handleOpenadd}
         handleClose={handleCloseadd}
@@ -139,7 +140,6 @@ const Customer = () => {
         customerstatusdata={customer_status_data}
         alert={SuccessAlert}
       />
-      <Header title="Customer" subtitle="List of all Customers" />
       <Box
         m="40px 0 0 0"
         height="75vh"

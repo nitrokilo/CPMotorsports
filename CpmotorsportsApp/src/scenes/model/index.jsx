@@ -147,6 +147,7 @@ const Model = () => {
 
   return (
     <Box m="20px">
+      <Header title="Model" subtitle="List of all Models" />
       <AddModel
         handleOpen={handleOpenadd}
         handleClose={handleCloseadd}
@@ -157,7 +158,6 @@ const Model = () => {
         vehicletypedata={vehicle_type_data}
         alert={SuccessAlert}
       />
-      <Header title="Model" subtitle="List of all Models" />
       <Box
         m="40px 0 0 0"
         height="75vh"

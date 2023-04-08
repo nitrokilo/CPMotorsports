@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MyButton from "../global/buttonstyles";
 
 const style = {
   position: "absolute",
@@ -47,14 +48,19 @@ export default function AddModel(props) {
   ));
 
   const VehicleTypeOptions = vehicletypedata.map((vehicle_type) => (
-    <MenuItem value={vehicle_type.vic_type_id}> {vehicle_type.vic_type_name} </MenuItem>
+    <MenuItem value={vehicle_type.vic_type_id}>
+      {" "}
+      {vehicle_type.vic_type_name}{" "}
+    </MenuItem>
   ));
 
   return (
     <div>
-      <Button onClick={handleOpen} color="secondary">
-        Add Model
-      </Button>
+      <MyButton
+        onClick={handleOpen}
+        color="secondary"
+        text="Add Model"
+      ></MyButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -62,7 +68,7 @@ export default function AddModel(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="Add Model"/>
+          <Header title="Add Model" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -141,7 +147,6 @@ export default function AddModel(props) {
                     name="prod_year"
                     sx={{ gridColumn: "span 2" }}
                   />
-                  
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
@@ -154,9 +159,7 @@ export default function AddModel(props) {
         </Box>
       </Modal>
 
-      {postsucessful && (
-        <Alert is_on={true} text="Model added Sucessfully" />
-      )}
+      {postsucessful && <Alert is_on={true} text="Model added Sucessfully" />}
     </div>
   );
 }

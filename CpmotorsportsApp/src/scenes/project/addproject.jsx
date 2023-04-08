@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MyButton from "../global/buttonstyles";
 
 const style = {
   position: "absolute",
@@ -56,9 +57,11 @@ export default function AddProject(props) {
 
   return (
     <div>
-      <Button onClick={handleOpen} color="secondary">
-        Add Project
-      </Button>
+      <MyButton
+        onClick={handleOpen}
+        color="secondary"
+        text="Add Project"
+      ></MyButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -80,10 +83,8 @@ export default function AddProject(props) {
                     },
                   }}
                 >
-                  <FormControl required >
-                    <InputLabel >
-                      VIN Number
-                    </InputLabel>
+                  <FormControl required>
+                    <InputLabel>VIN Number</InputLabel>
                     <Select
                       value={values.vin_num}
                       label="VIN Number"
@@ -98,7 +99,7 @@ export default function AddProject(props) {
                     </Select>
                   </FormControl>
                   <TextField
-                  InputLabelProps={{ shrink: true }} 
+                    InputLabelProps={{ shrink: true }}
                     fullWidth
                     required
                     variant="filled"
@@ -111,7 +112,7 @@ export default function AddProject(props) {
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
-                  InputLabelProps={{ shrink: true }} 
+                    InputLabelProps={{ shrink: true }}
                     fullWidth
                     required
                     variant="filled"

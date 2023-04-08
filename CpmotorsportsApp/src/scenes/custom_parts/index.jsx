@@ -173,6 +173,7 @@ const CustomParts = () => {
 
   return (
     <Box m="20px">
+      <Header title="Custom Parts" subtitle="List of all Custom Parts" />
       <AddCustomPart
         handleOpen={handleOpenadd}
         handleClose={handleCloseadd}
@@ -183,7 +184,6 @@ const CustomParts = () => {
         metaldata={metal_data}
         alert={SuccessAlert}
       />
-      <Header title="Custom Parts" subtitle="List of all Custom Parts" />
       <Box
         m="40px 0 0 0"
         height="75vh"

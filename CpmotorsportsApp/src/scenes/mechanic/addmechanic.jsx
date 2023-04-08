@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MyButton from "../global/buttonstyles";
 
 const style = {
   position: "absolute",
@@ -42,14 +43,19 @@ export default function AddMechanic(props) {
 
   // Mapping for category and transaction account options
   const MechStatusOptions = mechstatusdata.map((mech_status) => (
-    <MenuItem value={mech_status.mech_stat_id}> {mech_status.mech_stat_name} </MenuItem>
+    <MenuItem value={mech_status.mech_stat_id}>
+      {" "}
+      {mech_status.mech_stat_name}{" "}
+    </MenuItem>
   ));
 
   return (
     <div>
-      <Button onClick={handleOpen} color="secondary">
-        Add Mechanic
-      </Button>
+      <MyButton
+        onClick={handleOpen}
+        color="secondary"
+        text="Add Mechanic"
+      ></MyButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -57,7 +63,7 @@ export default function AddMechanic(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="Add Mechanic"/>
+          <Header title="Add Mechanic" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>

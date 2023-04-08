@@ -38,17 +38,6 @@ const Car = () => {
       .then(setPostsucessfuledit(true));
   };
 
-  /* Definitions for Delete Customer
-  const [postsucessfuldelete, setPostsucessfuldelete] = useState(false);
-  const handleFormSubmitdelete = (values) => {
-    const idtodelete = values.trans_id;
-    client
-      .delete(`/Projects/${idtodelete}`)
-      .then(setOpendelete(false))
-      .then(setReRender(true))
-      .then(setPostsucessfuldelete(true));
-  }; */
-
   // Api Call and config
   const [Car, setCar] = useState([]);
   useEffect(() => {
@@ -239,6 +228,7 @@ const Car = () => {
 
   return (
     <Box m="20px">
+      <Header title="Customer Cars" subtitle="List of all Customer Cars" />
       <AddCustomerCar
         handleOpen={handleOpenadd}
         handleClose={handleCloseadd}
@@ -251,7 +241,6 @@ const Car = () => {
         ownershipstatusdata={ownership_statusdata}
         alert={SuccessAlert}
       />
-      <Header title="Customer Cars" subtitle="List of all Customer Cars" />
       <Box
         m="40px 0 0 0"
         height="75vh"

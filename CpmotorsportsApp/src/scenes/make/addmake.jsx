@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MyButton from "../global/buttonstyles";
 
 const style = {
   position: "absolute",
@@ -42,14 +43,15 @@ export default function AddMake(props) {
 
   // Mapping for category and transaction account options
   const MakeStatusOptions = makestatusdata.map((make_status) => (
-    <MenuItem value={make_status.make_stat_id}> {make_status.make_stat_name} </MenuItem>
+    <MenuItem value={make_status.make_stat_id}>
+      {" "}
+      {make_status.make_stat_name}{" "}
+    </MenuItem>
   ));
 
   return (
     <div>
-      <Button onClick={handleOpen} color="secondary">
-        Add Make
-      </Button>
+      <MyButton onClick={handleOpen} text="Add Make"></MyButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -57,7 +59,7 @@ export default function AddMake(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="Add Make"/>
+          <Header title="Add Make" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -114,9 +116,7 @@ export default function AddMake(props) {
         </Box>
       </Modal>
 
-      {postsucessful && (
-        <Alert is_on={true} text="Make added Sucessfully" />
-      )}
+      {postsucessful && <Alert is_on={true} text="Make added Sucessfully" />}
     </div>
   );
 }

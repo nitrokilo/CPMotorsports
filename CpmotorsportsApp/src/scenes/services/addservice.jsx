@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MyButton from "../global/buttonstyles";
 
 const style = {
   position: "absolute",
@@ -49,9 +50,11 @@ export default function AddService(props) {
 
   return (
     <div>
-      <Button onClick={handleOpen} color="secondary">
-        Add Service
-      </Button>
+      <MyButton
+        onClick={handleOpen}
+        color="secondary"
+        text="Add Service"
+      ></MyButton>
       <Modal
         open={open}
         onClose={handleClose}
