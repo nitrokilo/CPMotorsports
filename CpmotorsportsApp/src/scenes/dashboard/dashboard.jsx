@@ -1,10 +1,10 @@
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+import FormatListNumberedRtlIcon from '@mui/icons-material/FormatListNumberedRtl';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import TrafficIcon from "@mui/icons-material/Traffic";
+import CameraFrontIcon from '@mui/icons-material/CameraFront';
 import Header from "../../components/Header";
 import LineChart from "../../components/LineChart";
 import BarChart from "../../components/BarChart";
@@ -54,12 +54,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="12,361"
-            subtitle="Emails Sent"
+            title="174"
+            subtitle="Number of Projects (Last 60 Days)"
             progress="0.75"
             increase="+14%"
             icon={
-              <EmailIcon
+              <FormatListNumberedRtlIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -73,12 +73,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="431,225"
-            subtitle="Sales Obtained"
+            title="$15,778"
+            subtitle="Total Project Cost (Last 60 Days)"
             progress="0.50"
             increase="+21%"
             icon={
-              <PointOfSaleIcon
+              <AttachMoneyIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -92,7 +92,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="32,441"
+            title="77"
             subtitle="New Clients"
             progress="0.30"
             increase="+5%"
@@ -111,12 +111,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
+            title="4"
+            subtitle="Avg Custom Parts Per Customer"
             progress="0.80"
-            increase="+43%"
+            increase="+13%"
             icon={
-              <TrafficIcon
+              <CameraFrontIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -142,7 +142,7 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                Revenue Generated
+                Total Project Revenue Over Time (Last One Year)
               </Typography>
               <Typography
                 variant="h3"
@@ -179,7 +179,7 @@ const Dashboard = () => {
             p="15px"
           >
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Stock Portfolio
+              Most Recent Projects (Last 3)
             </Typography>
           </Box>
           {mockTransactions.map((transaction, i) => (
@@ -223,7 +223,7 @@ const Dashboard = () => {
           p="30px"
         >
           <Typography variant="h5" fontWeight="600">
-            Campaign
+            Time With Customer vs. Actual Time Working
           </Typography>
           <Box
             display="flex"
@@ -252,25 +252,11 @@ const Dashboard = () => {
             fontWeight="600"
             sx={{ padding: "30px 30px 0 30px" }}
           >
-            Sales Quantity
+            Total Number of Services Used (Last 60 Days)
           </Typography>
           <Box height="250px" mt="-20px">
             <BarChart isDashboard={true} />
           </Box>
-        </Box>
-        <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-          padding="30px"
-        >
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            sx={{ marginBottom: "15px" }}
-          >
-            Spending Limit for Month
-          </Typography>
         </Box>
       </Box>
     </Box>
