@@ -16,7 +16,7 @@ import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
-import HowToRegIcon from '@mui/icons-material/HowToReg';
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
@@ -126,7 +126,7 @@ const Sidebar = () => {
             </Box>
           )}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          <Box paddingLeft={isCollapsed ? undefined : "1%"}>
             <Item
               title="Dashboard"
               to="/"
@@ -198,8 +198,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
-            
 
             <Typography
               variant="h6"
