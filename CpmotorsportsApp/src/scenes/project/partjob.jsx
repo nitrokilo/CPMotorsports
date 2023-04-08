@@ -232,7 +232,7 @@ export default function PartJob(props){
         </Select>
       ),
     },
-    { field: "actual_time_spent_hrs", title: "Actual Time Spent With Customer", editable: false },
+    { field: "actual_time_spent_hrs", title: "Actual Time Working", editable: false },
     {
       field: "time_with_customer",
       title: "Time With Customer",
