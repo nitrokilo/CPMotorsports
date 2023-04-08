@@ -137,7 +137,7 @@ export default function PartJob(props) {
   ));
 
   const MechanicOptions = mechanicdata.map((mechanic) => (
-    <MenuItem value={mechanic.mechanic_id}>{mechanic.Mechanic}</MenuItem>
+    <MenuItem value={mechanic.mech_id}>{mechanic.Mechanic}</MenuItem>
   ));
 
   const ServiceOptions = servicedata.map((service_type) => (
