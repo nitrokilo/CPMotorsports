@@ -9,6 +9,7 @@ import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import MyButton from "../global/buttonstyles";
+import AddPartJob from "./addpartjob";
 
 export default function PartJob(props) {
   const Project = props.project;
@@ -244,6 +245,18 @@ export default function PartJob(props) {
         title="Part Jobs for "
         {...Project["project_id"]}
         subtitle={"Project " + Project["project_id"]}
+      />
+      <AddPartJob
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        partjobstatusdata={partjob_statusdata}
+        mechanicdata={mechanicdata}
+        custompartdata={custompartdata}
+        servicedata={servicedata}
+        alert={SuccessAlert}
       />
       <h1>Customer Name: {Project["Customer"]}</h1>
       <Box m="40px 0 0 0" height="75vh">

@@ -26,7 +26,7 @@ const style = {
   p: 4,
 };
 
-export default function AddProject(props) {
+export default function AddPartJob(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   // Behaviors and states passed as props and renamed
@@ -71,7 +71,7 @@ export default function AddProject(props) {
   return (
     <div>
       <Button onClick={handleOpen} color="secondary">
-        Add Project
+        Add Part Job to Project
       </Button>
       <Modal
         open={open}

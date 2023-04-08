@@ -91,7 +91,7 @@ const Mechanic = () => {
 
   // Column Configuration
   const columns = [
-    { field: "mech_id", title: "ID", editable: false },
+    { field: "mech_id", title: "ID", editable: false, width: 5 },
     { field: "mech_first_name", title: "First Name" },
     { field: "mech_last_name", title: "Last Name" },
 
