@@ -46,7 +46,7 @@ export default function AddPartJob(props) {
   // Mapping for category and transaction account options
   const part_job_stat_options = partjob_statusdata.map((part_job) => (
     <MenuItem value={part_job.part_job_stat_id}>
-      {part_job.project_stat_name}
+      {part_job.part_job_stat_name}
     </MenuItem>
   ));
 
@@ -224,7 +224,7 @@ export default function AddPartJob(props) {
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Add Project
+                    Add Part Job to Project
                   </Button>
                 </Box>
               </form>

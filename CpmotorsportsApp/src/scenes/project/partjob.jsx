@@ -132,7 +132,7 @@ export default function PartJob(props) {
 
   const part_job_stat_options = partjob_statusdata.map((part_job) => (
     <MenuItem value={part_job.part_job_stat_id}>
-      {part_job.project_stat_name}
+      {part_job.part_job_stat_name}
     </MenuItem>
   ));
 
