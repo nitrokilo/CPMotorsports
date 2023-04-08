@@ -238,13 +238,13 @@ export default function PartJob(props) {
 
   return (
     <Box m="20px">
-      <MyButton onClick={BackButton} text="Back"></MyButton>
-
+      
       <Header
         title="Part Jobs for "
         {...Project["project_id"]}
         subtitle={"Project " + Project["project_id"]}
       />
+      <MyButton onClick={BackButton} text="Back"></MyButton>
       <h1>Customer Name: {Project["Customer"]}</h1>
       <Box m="40px 0 0 0" height="75vh">
         <MaterialTable
