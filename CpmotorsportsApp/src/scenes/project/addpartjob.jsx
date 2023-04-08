@@ -195,6 +195,32 @@ export default function AddProject(props) {
                     name="part_serv_end"
                     sx={{ gridColumn: "span 2" }}
                   />
+                  <TextField
+                  InputLabelProps={{ shrink: true }} 
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="numeric"
+                    label="Actual Time Working"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.actual_time_spent_hrs}
+                    name="actual_time_spent_hrs"
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                  InputLabelProps={{ shrink: true }} 
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="numeric"
+                    label="Time With Customer"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.actual_time_with_customer}
+                    name="time_with_customer"
+                    sx={{ gridColumn: "span 2" }}
+                  />
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
