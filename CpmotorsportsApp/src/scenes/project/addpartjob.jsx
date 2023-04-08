@@ -37,20 +37,34 @@ export default function AddProject(props) {
   const handleClose = props.handleClose;
   const open = props.open;
   const postsucessful = props.postsucessful;
-  const vin_nums = props.vinnumdata;
-  const project_statusdata = props.projectstatusdata;
+  const mechanicdata = props.mechanicdata;
+  const servicedata = props.servicedata;
+  const custompartdata = props.custompartdata
+  const partjob_statusdata = props.partjobstatusdata;
   const Alert = props.alert;
 
   // Mapping for category and transaction account options
-  const vinnumberoptions = vin_nums.map((number) => (
-    <MenuItem value={number.vin_num}>
-      ({number.customer}) {number.vin_num}
+  const part_job_stat_options = partjob_statusdata.map((part_job) => (
+    <MenuItem value={part_job.part_job_stat_id}>
+      {part_job.project_stat_name}
     </MenuItem>
   ));
 
-  const project_statusoptions = project_statusdata.map((project_status) => (
-    <MenuItem value={project_status.project_stat_id}>
-      {project_status.project_stat_name}
+  const MechanicOptions = mechanicdata.map((mechanic) => (
+    <MenuItem value={mechanic.mechanic_id}>
+      {mechanic.Mechanic}
+    </MenuItem>
+  ));
+
+  const ServiceOptions = servicedata.map((service_type) => (
+    <MenuItem value={service_type.service_id}>
+      {service_type.service_name}
+    </MenuItem>
+  ));
+
+  const CustomPartOptions = custompartdata.map((custom_part) => (
+    <MenuItem value={custom_part.cust_part_id}>
+      {custom_part.cust_part_name}
     </MenuItem>
   ));
 
@@ -66,7 +80,7 @@ export default function AddProject(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="Add Project" />
+          <Header title="Add Part Job to Project" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -82,66 +96,105 @@ export default function AddProject(props) {
                 >
                   <FormControl required >
                     <InputLabel >
-                      VIN Number
+                      Part Job Status
                     </InputLabel>
                     <Select
-                      value={values.vin_num}
-                      label="VIN Number"
-                      name="vin_num"
+                      value={values.part_job_stat_name}
+                      label="Part Job Status"
+                      name="part_job_stat_name"
                       onChange={handleChange}
                     >
                       <FormHelperText>Required</FormHelperText>
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {vinnumberoptions}
+                      {part_job_stat_options}
                     </Select>
                   </FormControl>
-                  <TextField
-                  InputLabelProps={{ shrink: true }} 
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="datetime-local"
-                    label="Project Start"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.project_start}
-                    name="project_start"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                  InputLabelProps={{ shrink: true }} 
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="datetime-local"
-                    label="Project End"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.project_end}
-                    name="project_end"
-                    sx={{ gridColumn: "span 2" }}
-                  />
                   <FormControl required sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-required-label">
-                      Project Status
+                      Mechanic
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-required-label"
                       id="demo-simple-select-required"
-                      value={values.project_stat_name}
-                      label="Project Status"
-                      name="project_stat_name"
+                      value={values.Mechanic}
+                      label="Mechanic"
+                      name="Mechanic"
                       onChange={handleChange}
                     >
                       <FormHelperText>Required</FormHelperText>
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {project_statusoptions}
+                      {MechanicOptions}
                     </Select>
                   </FormControl>
+                  <FormControl required sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-required-label">
+                      Custom Part Name
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-required-label"
+                      id="demo-simple-select-required"
+                      value={values.cust_part_name}
+                      label="Custom Part Name"
+                      name="cust_part_name"
+                      onChange={handleChange}
+                    >
+                      <FormHelperText>Required</FormHelperText>
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {CustomPartOptions}
+                    </Select>
+                  </FormControl>
+                  <FormControl required sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-required-label">
+                      Service Name
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-required-label"
+                      id="demo-simple-select-required"
+                      value={values.service_name}
+                      label="Service Name"
+                      name="service_name"
+                      onChange={handleChange}
+                    >
+                      <FormHelperText>Required</FormHelperText>
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {ServiceOptions}
+                    </Select>
+                  </FormControl>
+
+                  <TextField
+                  InputLabelProps={{ shrink: true }} 
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="datetime-local"
+                    label="Part Service Start"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.part_serv_start}
+                    name="part_serv_start"
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                  InputLabelProps={{ shrink: true }} 
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="datetime-local"
+                    label="Part Service End"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.part_serv_end}
+                    name="part_serv_end"
+                    sx={{ gridColumn: "span 2" }}
+                  />
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">

@@ -143,13 +143,6 @@ const Sidebar = () => {
               Management
             </Typography>
             <Item
-              title="Services"
-              to="/services"
-              icon={<BuildIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
               title="Customers"
               to="/customers"
               icon={<ContactsOutlinedIcon />}
@@ -164,16 +157,9 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Makes"
-              to="/makes"
-              icon={<DirectionsCarIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Models"
-              to="/models"
-              icon={<DirectionsCarFilledIcon />}
+              title="Projects"
+              to="/projects"
+              icon={<NoCrashIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -191,14 +177,29 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
             <Item
-              title="Projects"
-              to="/projects"
-              icon={<NoCrashIcon />}
+              title="Services"
+              to="/services"
+              icon={<BuildIcon />}
               selected={selected}
               setSelected={setSelected}
             />
+            <Item
+              title="Makes"
+              to="/makes"
+              icon={<DirectionsCarIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Models"
+              to="/models"
+              icon={<DirectionsCarFilledIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            
 
             <Typography
               variant="h6"
