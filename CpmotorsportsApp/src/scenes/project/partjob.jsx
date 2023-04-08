@@ -19,6 +19,13 @@ export default function PartJob(props) {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
+   // State definitions for Add Part Job
+   const [openadd, setOpenadd] = useState(false);
+   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
+
+  // Definitions for add part job
+  const handleOpenadd = () => setOpenadd(true);
+  const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client.post("/project", values).then(setReRender(true));
