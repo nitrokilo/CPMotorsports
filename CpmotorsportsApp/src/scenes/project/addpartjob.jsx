@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MyButton from "../global/buttonstyles";
 
 const style = {
   position: "absolute",
@@ -39,9 +40,10 @@ export default function AddPartJob(props) {
   const postsucessful = props.postsucessful;
   const mechanicdata = props.mechanicdata;
   const servicedata = props.servicedata;
-  const custompartdata = props.custompartdata
+  const custompartdata = props.custompartdata;
   const partjob_statusdata = props.partjobstatusdata;
   const Alert = props.alert;
+  const ProjectID = props.projectid;
 
   // Mapping for category and transaction account options
   const part_job_stat_options = partjob_statusdata.map((part_job) => (
@@ -51,9 +53,7 @@ export default function AddPartJob(props) {
   ));
 
   const MechanicOptions = mechanicdata.map((mechanic) => (
-    <MenuItem value={mechanic.mechanic_id}>
-      {mechanic.Mechanic}
-    </MenuItem>
+    <MenuItem value={mechanic.mechanic_id}>{mechanic.Mechanic}</MenuItem>
   ));
 
   const ServiceOptions = servicedata.map((service_type) => (
@@ -70,9 +70,7 @@ export default function AddPartJob(props) {
 
   return (
     <div>
-      <Button onClick={handleOpen} color="secondary">
-        Add Part Job to Project
-      </Button>
+      <MyButton onClick={handleOpen} text="Add Part Job to Project"></MyButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -81,7 +79,12 @@ export default function AddPartJob(props) {
       >
         <Box sx={style}>
           <Header title="Add Part Job to Project" />
-          <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
+          <Formik
+            onSubmit={handleFormSubmit}
+            initialValues={{
+              project_id: { ProjectID },
+            }}
+          >
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <Box
@@ -94,10 +97,8 @@ export default function AddPartJob(props) {
                     },
                   }}
                 >
-                  <FormControl required >
-                    <InputLabel >
-                      Part Job Status
-                    </InputLabel>
+                  <FormControl required>
+                    <InputLabel>Part Job Status</InputLabel>
                     <Select
                       value={values.part_job_stat_name}
                       label="Part Job Status"
@@ -170,7 +171,7 @@ export default function AddPartJob(props) {
                   </FormControl>
 
                   <TextField
-                  InputLabelProps={{ shrink: true }} 
+                    InputLabelProps={{ shrink: true }}
                     fullWidth
                     required
                     variant="filled"
@@ -183,7 +184,7 @@ export default function AddPartJob(props) {
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
-                  InputLabelProps={{ shrink: true }} 
+                    InputLabelProps={{ shrink: true }}
                     fullWidth
                     required
                     variant="filled"
@@ -196,7 +197,7 @@ export default function AddPartJob(props) {
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
-                  InputLabelProps={{ shrink: true }} 
+                    InputLabelProps={{ shrink: true }}
                     fullWidth
                     required
                     variant="filled"
@@ -209,7 +210,7 @@ export default function AddPartJob(props) {
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
-                  InputLabelProps={{ shrink: true }} 
+                    InputLabelProps={{ shrink: true }}
                     fullWidth
                     required
                     variant="filled"
@@ -237,6 +238,4 @@ export default function AddPartJob(props) {
     </div>
   );
 }
-const initialValues = {
-  description: "",
-};
+

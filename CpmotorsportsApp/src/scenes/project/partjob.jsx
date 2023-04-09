@@ -180,7 +180,7 @@ export default function PartJob(props) {
       ),
     },
     {
-      field: "Mechanic",
+      field: "mechanic_name",
       title: "Mechanic Name",
       flex: 1,
       editComponent: ({ value, onChange, rowData }) => (
@@ -209,7 +209,7 @@ export default function PartJob(props) {
         </Select>
       ),
     },
-    { title: "Part Service Start", field: "part_serv_start" },
+    { title: "Part Service Start", field: "part_serv_start", type: "datetime"},
 
     {
       field: "part_serv_end",
@@ -247,13 +247,16 @@ export default function PartJob(props) {
 
   return (
     <Box m="20px">
-      
       <Header
         title="Part Jobs for "
         {...Project["project_id"]}
         subtitle={"Project " + Project["project_id"]}
       />
       <MyButton onClick={BackButton} text="Back"></MyButton>
+      <br/>
+
+      <br/>
+
       <AddPartJob
         handleOpen={handleOpenadd}
         handleClose={handleCloseadd}
@@ -265,6 +268,7 @@ export default function PartJob(props) {
         custompartdata={custompartdata}
         servicedata={servicedata}
         alert={SuccessAlert}
+        projectid = {Project["project_id"]}
       />
       <h1>Customer Name: {Project["Customer"]}</h1>
       <Box m="40px 0 0 0" height="75vh">
@@ -274,24 +278,6 @@ export default function PartJob(props) {
           data={partjob_data}
           columns={columns}
           editable={{
-            onRowAdd: (newRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  console.log(newRow);
-                  handleFormSubmitadd(newRow);
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: (selectedRow) =>
-              new Promise((resolve, reject) => {
-                const index = selectedRow.tableData.id;
-                const updatedRows = [...data];
-                updatedRows.splice(index, 1);
-                setTimeout(() => {
-                  setData(updatedRows);
-                  resolve();
-                }, 2000);
-              }),
             onRowUpdate: (updatedRow, oldRow) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
