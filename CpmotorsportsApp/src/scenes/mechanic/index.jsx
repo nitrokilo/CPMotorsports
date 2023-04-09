@@ -104,15 +104,18 @@ const Mechanic = () => {
     {
       field: "mech_email",
       title: "Mechanic Email",
+      width: 250
     },
     {
       field: "mech_hourly_pay",
-      title: "Mechanic Hourly Pay",
+      title: "Hourly Pay",
+      width: 50,
       type: "currency",
     },
     {
       field: "mech_stat_name",
       title: "Mechanic Status",
+      width: 100,
       editComponent: ({ value, onChange, rowData }) => (
         <Select
           value={value}

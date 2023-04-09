@@ -104,7 +104,7 @@ const Model = () => {
 
   // Column Configuration
   const columns = [
-    { field: "model_id", title: "ID", flex: 0.5, editable: false },
+    { field: "model_id", title: "ID", flex: 0.5, editable: false, width: 15, },
     {
       field: "make_name",
       title: "Make",

@@ -99,7 +99,7 @@ const Customer = () => {
 
   // Column Configuration
   const columns = [
-    { field: "customer_id", title: "ID", flex: 0.5, editable: false },
+    { field: "customer_id", title: "ID", flex: 0.5, editable: false, width:5 },
     { field: "customer_first_name", title: "First Name", flex: 1 },
     { field: "customer_last_name", title: "Last Name", flex: 1 },
 
@@ -111,11 +111,13 @@ const Customer = () => {
     {
       field: "customer_email",
       title: "Customer Email",
+      width: 250,
       flex: 1,
     },
     {
       field: "customer_stat_name",
       title: "Customer Status",
+      width: 100,
       flex: 1,
       editComponent: ({ value, onChange, rowData }) => (
         <Select

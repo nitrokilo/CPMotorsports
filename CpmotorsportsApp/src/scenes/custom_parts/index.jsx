@@ -113,6 +113,7 @@ const CustomParts = () => {
       field: "cust_part_id",
       title: "ID",
       editable: false,
+      width: 10,
       flex: 0.5,
     },
 
@@ -162,12 +163,14 @@ const CustomParts = () => {
     {
       field: "cust_part_desc",
       title: "Part Description",
+      width: 400,
       flex: 1,
     },
     {
       field: "cust_part_cost",
       title: "Part Cost",
       type: "currency",
+      width: 50,
     },
   ];
 
