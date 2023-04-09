@@ -172,6 +172,7 @@ const Car = () => {
     {
       field: "make_name",
       title: "Make",
+      width: 175,
       flex: 1,
       editComponent: ({ value, onChange, rowData }) => (
         <Select
@@ -190,6 +191,7 @@ const Car = () => {
     {
       field: "model_name",
       title: "Model",
+      width: 200,
       flex: 1,
       editComponent: ({ value, onChange, rowData }) => (
         <Select
@@ -205,10 +207,11 @@ const Car = () => {
         </Select>
       ),
     },
-    { field: "color", title: "Color", flex: 1 },
+    { field: "color", title: "Color", flex: 1, width: 100, },
     {
       field: "ownership_stat_name",
       title: "Ownership Status",
+      width: 100,
       flex: 1,
       editComponent: ({ value, onChange, rowData }) => (
         <Select

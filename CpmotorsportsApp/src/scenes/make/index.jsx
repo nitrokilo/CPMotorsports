@@ -80,7 +80,7 @@ const Make = () => {
 
   // Column Configuration
   const columns = [
-    { field: "make_id", title: "ID", flex: 0.5, editable: false },
+    { field: "make_id", title: "ID", flex: 0.5, editable: false, width: 20 },
     { field: "make_name", title: "Name", flex: 1 },
     {
       field: "make_stat_name",
