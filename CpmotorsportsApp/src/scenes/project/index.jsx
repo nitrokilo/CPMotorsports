@@ -127,7 +127,7 @@ const Project = () => {
 
   // Column Configuration
   const columns = [
-    { field: "project_id", title: "ID", editable: false },
+    { field: "project_id", title: "ID", width: 10, editable: false },
     {
       field: "vin_num",
       title: "Vin Number",
@@ -155,11 +155,13 @@ const Project = () => {
       field: "total_cost",
       title: "Total Cost",
       type: "currency",
+      width: 50,
       editable: false,
     },
     {
       field: "project_stat_name",
       title: "Project Status",
+      width: 100,
       flex: 1,
       editComponent: ({ value, onChange, rowData }) => (
         <Select

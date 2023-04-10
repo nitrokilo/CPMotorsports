@@ -96,6 +96,7 @@ const Service = () => {
     {
       field: "service_id",
       title: "ID",
+      width: 10,
       flex: 0.5,
     },
 
@@ -115,12 +116,14 @@ const Service = () => {
       field: "service_cost",
       title: "Service Cost",
       type: "currency",
+      width: 50,
       cellClassName: "name-column--cell",
     },
 
     {
       field: "serv_type_stat_name",
       title: "Service Status",
+      width: 150,
       flex: 1,
       editComponent: ({ value, onChange, rowData }) => (
         <Select
