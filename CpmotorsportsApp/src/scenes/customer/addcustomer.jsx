@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import { Formik } from "formik";
+import * as yup from "yup";
+
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MyButton from "../global/buttonstyles";
@@ -64,7 +66,7 @@ export default function AddCustomer(props) {
       >
         <Box sx={style}>
           <Header title="Add Customer" />
-          <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
+          <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={userSchema}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <Box
@@ -160,5 +162,20 @@ export default function AddCustomer(props) {
   );
 }
 const initialValues = {
-  description: "",
+  customer_first_name: "",
+  customer_last_name: "",
+  customer_phone_number: "",
+  customer_email: "",
 };
+
+const phoneRegEx = /^[1-9]\d{2}-\d{3}-\d{4}/
+
+const userSchema = yup.object().shape({
+  customer_first_name: yup.string().required("required"),
+  customer_last_name: yup.string().required("required"),
+  customer_phone_number: yup
+  .string()
+  .matches(phoneRegEx, "Phone Number is not valid")
+  .required("required"),
+  customer_email: yup.string().email("Invalid Email").required("required"),
+})
