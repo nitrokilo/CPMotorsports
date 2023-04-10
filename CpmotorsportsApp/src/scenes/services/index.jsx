@@ -96,6 +96,7 @@ const Service = () => {
     {
       field: "service_id",
       title: "ID",
+      width: 5,
       flex: 0.5,
     },
 
