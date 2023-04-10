@@ -67,7 +67,7 @@ export default function AddCustomer(props) {
         <Box sx={style}>
           <Header title="Add Customer" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={userSchema}>
-            {({ values, handleBlur, handleChange, handleSubmit }) => (
+            {({ values, errors, touched, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <Box
                   display="grid"
@@ -89,6 +89,8 @@ export default function AddCustomer(props) {
                     onChange={handleChange}
                     value={values.customer_first_name}
                     name="customer_first_name"
+                    error={!!touched.customer_first_name && !!errors.customer_first_name}
+                    helperText={!!touched.customer_first_name && errors.customer_first_name}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -101,6 +103,8 @@ export default function AddCustomer(props) {
                     onChange={handleChange}
                     value={values.customer_last_name}
                     name="customer_last_name"
+                    error={!!touched.customer_last_name && !!errors.customer_last_name}
+                    helperText={!!touched.customer_last_name && errors.customer_last_name}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -113,6 +117,8 @@ export default function AddCustomer(props) {
                     onChange={handleChange}
                     value={values.customer_phone_number}
                     name="customer_phone_number"
+                    error={!!touched.customer_phone_number && !!errors.customer_phone_number}
+                    helperText={!!touched.customer_phone_number && errors.customer_phone_number}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -125,6 +131,8 @@ export default function AddCustomer(props) {
                     onChange={handleChange}
                     value={values.customer_email}
                     name="customer_email"
+                    error={!!touched.customer_email && !!errors.customer_email}
+                    helperText={!!touched.customer_email && errors.customer_email}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <FormControl required sx={{ m: 1, minWidth: 200 }}>
