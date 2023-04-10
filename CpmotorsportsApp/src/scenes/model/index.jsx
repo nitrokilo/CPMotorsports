@@ -24,6 +24,7 @@ const Model = () => {
     console.log(values);
     client
       .post("/model", values)
+      .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };

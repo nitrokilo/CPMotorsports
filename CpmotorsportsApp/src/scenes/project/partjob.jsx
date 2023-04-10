@@ -29,14 +29,17 @@ export default function PartJob(props) {
   const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
-    client.post("/project", values).then(setReRender(true));
+    client.post("/part_job", values)
+    .then(setReRender(true))
+    .then(setOpenadd(false))
+    .then(setPostsucessfuladd(true));
   };
 
-  // Definitions for Edit Project
+  // Definitions for Edit Part Job
 
   const handleFormSubmitedit = (values) => {
     console.log(values);
-    client.put("/project", values).then(setReRender(true));
+    client.put("/part_job", values).then(setReRender(true));
   };
 
   //   Api Call and config
@@ -106,7 +109,7 @@ export default function PartJob(props) {
   // Api call to get project status for select option
   useEffect(() => {
     client
-      .get("/custom_part")
+      .get("/car_system")
       .then((res) => {
         setcustom_part_data(res.data);
       })
@@ -115,24 +118,11 @@ export default function PartJob(props) {
       });
   }, []);
 
-  //   // Api call and config for Categories and Transaction Accounts
-  //   const [vin_nums, setvin_nums] = useState([]);
-
-  //   // Api call to get project status for select option
-  //   useEffect(() => {
-  //     client
-  //       .get("/car_vins")
-  //       .then((res) => {
-  //         setvin_nums(res.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }, []);
+ 
 
   const part_job_stat_options = partjob_statusdata.map((part_job) => (
-    <MenuItem value={part_job.part_job_stat_id}>
-      {part_job.part_job_stat_name}
+    <MenuItem value={part_job.car_sys_id}>
+      {part_job.car_sys_name}
     </MenuItem>
   ));
 
@@ -152,11 +142,7 @@ export default function PartJob(props) {
     </MenuItem>
   ));
 
-  //   const vinnumberoptions = vin_nums.map((number) => (
-  //     <MenuItem value={number.vin_num}>
-  //       ({number.customer}) {number.vin_num}
-  //     </MenuItem>
-  //   ));
+
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -271,11 +257,14 @@ export default function PartJob(props) {
         projectid = {Project["project_id"]}
       />
       <h1>Customer Name: {Project["Customer"]}</h1>
+      <h2>Customer Phone Number: {Project["customer_phone_number"]}</h2>
+      <h2>Customer Email: {Project["customer_email"]}</h2>
       <Box m="40px 0 0 0" height="75vh">
         <MaterialTable
           icons={tableIcons}
-          title="Project Data"
+          title="Part Job Data"
           data={partjob_data}
+          style={{ backgroundColor: colors.primary[400] }}
           columns={columns}
           editable={{
             onRowUpdate: (updatedRow, oldRow) =>
@@ -302,8 +291,8 @@ export default function PartJob(props) {
           }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",

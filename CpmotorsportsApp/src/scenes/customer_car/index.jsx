@@ -24,6 +24,7 @@ const Car = () => {
     console.log(values);
     client
       .post("/cars", values)
+      .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };

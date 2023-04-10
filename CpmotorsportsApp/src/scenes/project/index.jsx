@@ -108,10 +108,6 @@ const Project = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const currencyFormatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
 
   const [showProjects, setshowProjects] = useState(true);
   const [selectedProject, setselectedProject] = useState([]);
@@ -123,6 +119,7 @@ const Project = () => {
 
   function backbutton() {
     setshowProjects(true);
+    setReRender(true)
   }
 
   // Column Configuration
@@ -143,12 +140,12 @@ const Project = () => {
         </Select>
       ),
     },
-    { title: "Project Start", field: "project_start", type: "datetime" },
+    { title: "Project Start", field: "project_start", type: "date" },
 
     {
       field: "project_end",
       title: "Project End",
-      type: "datetime",
+      type: "date",
       dateSetting: { locale: "en-US", timeZone: "America/New_York" },
     },
     {

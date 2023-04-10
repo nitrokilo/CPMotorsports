@@ -103,7 +103,7 @@ export default function AddProject(props) {
                     fullWidth
                     required
                     variant="filled"
-                    type="datetime-local"
+                    type="date"
                     label="Project Start"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -116,7 +116,7 @@ export default function AddProject(props) {
                     fullWidth
                     required
                     variant="filled"
-                    type="datetime-local"
+                    type="date"
                     label="Project End"
                     onBlur={handleBlur}
                     onChange={handleChange}

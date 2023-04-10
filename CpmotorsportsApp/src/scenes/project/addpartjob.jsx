@@ -53,7 +53,8 @@ export default function AddPartJob(props) {
   ));
 
   const MechanicOptions = mechanicdata.map((mechanic) => (
-    <MenuItem value={mechanic.mechanic_id}>{mechanic.Mechanic}</MenuItem>
+    <MenuItem value={mechanic.mech_id}>
+      {mechanic.Mechanic}</MenuItem>
   ));
 
   const ServiceOptions = servicedata.map((service_type) => (
@@ -63,8 +64,8 @@ export default function AddPartJob(props) {
   ));
 
   const CustomPartOptions = custompartdata.map((custom_part) => (
-    <MenuItem value={custom_part.cust_part_id}>
-      {custom_part.cust_part_name}
+    <MenuItem value={custom_part.car_sys_id}>
+      {custom_part.car_sys_name}
     </MenuItem>
   ));
 
@@ -175,7 +176,7 @@ export default function AddPartJob(props) {
                     fullWidth
                     required
                     variant="filled"
-                    type="datetime-local"
+                    type="date"
                     label="Part Service Start"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -188,7 +189,7 @@ export default function AddPartJob(props) {
                     fullWidth
                     required
                     variant="filled"
-                    type="datetime-local"
+                    type="date"
                     label="Part Service End"
                     onBlur={handleBlur}
                     onChange={handleChange}
