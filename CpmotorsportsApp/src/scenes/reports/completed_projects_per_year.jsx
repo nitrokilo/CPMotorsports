@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import MaterialTable from '@material-table/core';
-import { tableIcons	 } from "../global/tableicons";
+import MaterialTable from "@material-table/core";
+import { tableIcons } from "../global/tableicons";
 
-const Completed_projects_per_year= () => {
-
+const Completed_projects_per_year = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
@@ -27,9 +26,6 @@ const Completed_projects_per_year= () => {
       });
   }, [reRender]);
 
-
-
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -40,19 +36,27 @@ const Completed_projects_per_year= () => {
 
   // Column Configuration
   const columns = [
-    { field: "year", title: "Year", flex: 0.5 },
-    { field: "num_projects", title: "Num of Projects", },
-    { field: "num_parts", title: "Num of Parts", flex: 1 },
-    { field: "total_rev", title: "Total Revenue", type:'currency', currencySetting:{ currencyCode:'USD', minimumFractionDigits:0, maximumFractionDigits:2}},
-   
-
+    { field: "year", title: "Year", type: "numeric" },
+    { field: "num_projects", title: "Num of Projects", type: "numeric" },
+    { field: "num_parts", title: "Num of Parts", flex: 1, type: "numeric" },
+    {
+      field: "total_rev",
+      title: "Total Revenue",
+      type: "currency",
+      currencySetting: {
+        currencyCode: "USD",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      },
+    },
   ];
 
   return (
     <Box m="20px">
-
-
-      <Header title="Completed Projects" subtitle="List of all Completed Projects" />
+      <Header
+        title="Yearly Projects"
+        subtitle="Total Cost of Completed Projects in Past Year "
+      />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -87,24 +91,27 @@ const Completed_projects_per_year= () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Completed Projects Per Year"
+          title=""
           data={Data}
           columns={columns}
+          style={{ backgroundColor: colors.primary[400] }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",
             exportMenu: [
               {
                 label: "Export PDF",
-                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Completed_Projects_Per_Year"),
+                exportFunc: (cols, datas) =>
+                  ExportPdf(cols, datas, "Completed_Projects_Per_Year"),
               },
               {
                 label: "Export CSV",
-                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Completed_Projects_Per_Year"),
+                exportFunc: (cols, datas) =>
+                  ExportCsv(cols, datas, "Completed_Projects_Per_Year"),
               },
             ],
             filtering: true,

@@ -1,5 +1,5 @@
-import { Box, Select, MenuItem} from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Box, Select, MenuItem } from "@mui/material";
+import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
@@ -8,6 +8,8 @@ import { useTheme } from "@mui/material";
 import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 import { SuccessAlert } from "../../components/alert.jsx";
+import AddMechanic from "./addmechanic";
+
 const Mechanic = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -43,7 +45,6 @@ const Mechanic = () => {
       .then(setPostsucessfuledit(true));
   };
 
- 
   // Api Call and config
   const [Mechanic, setMechanic] = useState([]);
   useEffect(() => {
@@ -81,7 +82,6 @@ const Mechanic = () => {
     currency: "USD",
   });
 
-
   // Edit Capabilities
   const mechanicstatusoptions = mechanic_statusdata.map((mechanic_status) => (
     <MenuItem value={mechanic_status.mech_stat_id}>
@@ -91,31 +91,31 @@ const Mechanic = () => {
 
   // Column Configuration
   const columns = [
-    { field: "mech_id", title: "ID", editable: false},
+    { field: "mech_id", title: "ID", editable: false, width: 5 },
     { field: "mech_first_name", title: "First Name" },
     { field: "mech_last_name", title: "Last Name" },
 
     {
       field: "mech_phone_number",
       title: "Phone Number",
-      
+
       cellClassName: "name-column--cell",
     },
-
     {
       field: "mech_email",
       title: "Mechanic Email",
-      
+      width: 250
     },
     {
       field: "mech_hourly_pay",
-      title: "Mechanic Hourly Pay",
+      title: "Hourly Pay",
+      width: 50,
       type: "currency",
     },
-      {
-
+    {
       field: "mech_stat_name",
       title: "Mechanic Status",
+      width: 100,
       editComponent: ({ value, onChange, rowData }) => (
         <Select
           value={value}
@@ -123,21 +123,24 @@ const Mechanic = () => {
             onChange(event.target.value);
           }}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
           {mechanicstatusoptions}
         </Select>
       ),
-      
-
     },
   ];
 
   return (
     <Box m="20px">
-
       <Header title="Mechanic" subtitle="List of all Mechanics" />
+      <AddMechanic
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        mechstatusdata={mechanic_statusdata}
+        alert={SuccessAlert}
+      />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -170,30 +173,13 @@ const Mechanic = () => {
           },
         }}
       >
-         <MaterialTable
+        <MaterialTable
           icons={tableIcons}
-          title="Mechanic Data"
+          title=""
           data={Mechanic}
           columns={columns}
+          style={{ backgroundColor: colors.primary[400], "padding-right": "90px" }}
           editable={{
-            onRowAdd: (newRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  console.log(newRow);
-                  handleFormSubmitadd(newRow);
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: (selectedRow) =>
-              new Promise((resolve, reject) => {
-                const index = selectedRow.tableData.id;
-                const updatedRows = [...data];
-                updatedRows.splice(index, 1);
-                setTimeout(() => {
-                  setData(updatedRows);
-                  resolve();
-                }, 2000);
-              }),
             onRowUpdate: (updatedRow, oldRow) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -204,8 +190,9 @@ const Mechanic = () => {
           }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              fontSize: "18px",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",

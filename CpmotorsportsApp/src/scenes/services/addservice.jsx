@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MyButton from "../global/buttonstyles";
 
 const style = {
   position: "absolute",
@@ -26,7 +27,7 @@ const style = {
   p: 4,
 };
 
-export default function AddTransaction(props) {
+export default function AddService(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   // Behaviors and states passed as props and renamed
@@ -37,26 +38,23 @@ export default function AddTransaction(props) {
   const handleClose = props.handleClose;
   const open = props.open;
   const postsucessful = props.postsucessful;
-  const categoriesdata = props.categoriesdata;
-  const transactionaccountdata = props.transactionaccountdata;
+  const servicestatusdata = props.servicestatusdata;
   const Alert = props.alert;
 
   // Mapping for category and transaction account options
-  const categoryoptions = categoriesdata.map((category) => (
-    <MenuItem value={category.category_id}> {category.category_desc} </MenuItem>
+  const servicestatusoptions = servicestatusdata.map((service_type_status) => (
+    <MenuItem value={service_type_status.serv_type_stat_id}>
+      {service_type_status.serv_type_stat_name}
+    </MenuItem>
   ));
-
-  const transactionaccountoptions = transactionaccountdata.map(
-    (trans_account) => (
-      <MenuItem value={trans_account.acc_id}>{trans_account.acc_name}</MenuItem>
-    )
-  );
 
   return (
     <div>
-      <Button onClick={handleOpen} color="secondary">
-        Add Transaction
-      </Button>
+      <MyButton
+        onClick={handleOpen}
+        color="secondary"
+        text="Add Service"
+      ></MyButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -64,7 +62,7 @@ export default function AddTransaction(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="ADD TRANSACTION" subtitle="ADD TRANSACTION" />
+          <Header title="Add a Service Type" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -83,93 +81,60 @@ export default function AddTransaction(props) {
                     required
                     variant="filled"
                     type="text"
-                    label="Transaction Name"
+                    label="Service Name"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.trans_name}
-                    name="trans_name"
+                    value={values.service_name}
+                    name="service_name"
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
                     fullWidth
                     required
                     variant="filled"
-                    type="number"
-                    label="Transaction Amount"
+                    type="text"
+                    label="Service Description"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.amount}
-                    name="amount"
+                    value={values.service_desc}
+                    name="service_desc"
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="amount"
+                    label="Service Cost"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.service_cost}
+                    name="service_cost"
                     sx={{ gridColumn: "span 2" }}
                   />
                   <FormControl required sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-required-label">
-                      Category
+                      Service Status
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-required-label"
                       id="demo-simple-select-required"
-                      value={values.category_id}
-                      label="category_id"
-                      name="category_id"
+                      value={values.serv_type_stat_name}
+                      label="Service Status"
+                      name="serv_type_stat_name"
                       onChange={handleChange}
                     >
                       <FormHelperText>Required</FormHelperText>
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {categoryoptions}
-                    </Select>
-                  </FormControl>
-
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="date"
-                    label="Transaction Date"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.transaction_date}
-                    name="transaction_date"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    required
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Transaction Description"
-                    multiline
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.description}
-                    name="description"
-                    sx={{ gridColumn: "span 4" }}
-                  />
-                  <FormControl required sx={{ m: 1, minWidth: 200 }}>
-                    <InputLabel id="demo-simple-select-required-label">
-                      Transaction Account
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-required-label"
-                      id="demo-simple-select-required"
-                      value={values.trans_acc}
-                      label="trans_acc"
-                      onChange={handleChange}
-                      name="trans_acc"
-                    >
-                      <FormHelperText>Required</FormHelperText>
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {transactionaccountoptions}
+                      {servicestatusoptions}
                     </Select>
                   </FormControl>
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Add Transaction
+                    Add Service
                   </Button>
                 </Box>
               </form>
@@ -178,9 +143,7 @@ export default function AddTransaction(props) {
         </Box>
       </Modal>
 
-      {postsucessful && (
-        <Alert is_on={true} text="Transaction added Sucessfully" />
-      )}
+      {postsucessful && <Alert is_on={true} text="Service added Sucessfully" />}
     </div>
   );
 }

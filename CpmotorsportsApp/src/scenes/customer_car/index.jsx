@@ -5,21 +5,26 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
-import MaterialTable from '@material-table/core';
+import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
+import AddCustomerCar from "./addcustomer_car";
 
 const Car = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
-  // State definitions for Add Make
+  // State definitions for Add Car
+  const [openadd, setOpenadd] = useState(false);
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
-  // Defintions for Add Make component
+  // Defintions for Add Car component
+  const handleOpenadd = () => setOpenadd(true);
+  const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
       .post("/cars", values)
+      .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };
@@ -34,17 +39,6 @@ const Car = () => {
       .then(setPostsucessfuledit(true));
   };
 
-  /* Definitions for Delete Customer
-  const [postsucessfuldelete, setPostsucessfuldelete] = useState(false);
-  const handleFormSubmitdelete = (values) => {
-    const idtodelete = values.trans_id;
-    client
-      .delete(`/Projects/${idtodelete}`)
-      .then(setOpendelete(false))
-      .then(setReRender(true))
-      .then(setPostsucessfuldelete(true));
-  }; */
-
   // Api Call and config
   const [Car, setCar] = useState([]);
   useEffect(() => {
@@ -58,6 +52,51 @@ const Car = () => {
         console.log(err);
       });
   }, [reRender]);
+
+  // Api call and config for Categories and Transaction Accounts
+  const [customer_data, set_customerdata] = useState([]);
+
+  // Api call to get make status for select option
+  useEffect(() => {
+    client
+      .get("/customer_id")
+      .then((res) => {
+        set_customerdata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // Api call and config for Categories and Transaction Accounts
+  const [make_data, set_makedata] = useState([]);
+
+  // Api call to get make status for select option
+  useEffect(() => {
+    client
+      .get("/make")
+      .then((res) => {
+        set_makedata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // Api call and config for Categories and Transaction Accounts
+  const [model_data, set_modeldata] = useState([]);
+
+  // Api call to get Model Names for select option
+  useEffect(() => {
+    client
+      .get("/model")
+      .then((res) => {
+        set_modeldata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   // Api call and config for Categories and Transaction Accounts
   const [ownership_statusdata, setownership_statusdata] = useState([]);
@@ -82,23 +121,98 @@ const Car = () => {
     currency: "USD",
   });
 
-  // Edit Capabilities
-  const OwnershipStatusOptions = ownership_statusdata.map((ownership_status) => (
-    <MenuItem value={ownership_status.ownership_stat_id}>
-      {ownership_status.ownership_stat_name}
+  // Edit Customer Capabilities
+  const CustomerOptions = customer_data.map((customer) => (
+    <MenuItem value={customer.customer_id}>
+      ({customer.customer_id}) {customer.Customer}
     </MenuItem>
   ));
 
+  // Edit Make Capabilities
+  const MakeOptions = make_data.map((make) => (
+    <MenuItem value={make.make_id}>{make.make_name}</MenuItem>
+  ));
+
+  // Edit Model Capabilities
+  const ModelOptions = model_data.map((model) => (
+    <MenuItem value={model.model_id}>
+      ({model.make_name}) {model.model_name} {model.prod_year}
+    </MenuItem>
+  ));
+
+  // Edit Ownership StatusCapabilities
+  const OwnershipStatusOptions = ownership_statusdata.map(
+    (ownership_status) => (
+      <MenuItem value={ownership_status.ownership_stat_id}>
+        {ownership_status.ownership_stat_name}
+      </MenuItem>
+    )
+  );
+
   // Column Configuration
   const columns = [
-    { field: "vin_num", title: "VIN No.", flex: 0.5, editable: false },
-    { field: "Customer", title: "Customer", flex: 1 },
-    { field: "make_name", title: "Make", flex: 1 },
-    { field: "model_name", title: "Model", flex: 1 },
-    { field: "color", title: "Color", flex: 1 },
+    { field: "vin_num", title: "VIN Number", flex: 0.5 },
+    {
+      field: "Customer",
+      title: "Customer",
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {CustomerOptions}
+        </Select>
+      ),
+    },
+    {
+      field: "make_name",
+      title: "Make",
+      width: 175,
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {MakeOptions}
+        </Select>
+      ),
+    },
+    {
+      field: "model_name",
+      title: "Model",
+      width: 200,
+      flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {ModelOptions}
+        </Select>
+      ),
+    },
+    { field: "color", title: "Color", flex: 1, width: 100, },
     {
       field: "ownership_stat_name",
       title: "Ownership Status",
+      width: 100,
       flex: 1,
       editComponent: ({ value, onChange, rowData }) => (
         <Select
@@ -119,6 +233,18 @@ const Car = () => {
   return (
     <Box m="20px">
       <Header title="Customer Cars" subtitle="List of all Customer Cars" />
+      <AddCustomerCar
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        customerdata={customer_data}
+        makedata={make_data}
+        modeldata={model_data}
+        ownershipstatusdata={ownership_statusdata}
+        alert={SuccessAlert}
+      />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -153,28 +279,11 @@ const Car = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Customer Car Data"
+          title=""
           data={Car}
           columns={columns}
+          style={{ backgroundColor: colors.primary[400], "padding-right": "90px" }}
           editable={{
-            onRowAdd: (newRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  console.log(newRow);
-                  handleFormSubmitadd(newRow);
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: (selectedRow) =>
-              new Promise((resolve, reject) => {
-                const index = selectedRow.tableData.id;
-                const updatedRows = [...data];
-                updatedRows.splice(index, 1);
-                setTimeout(() => {
-                  setData(updatedRows);
-                  resolve();
-                }, 2000);
-              }),
             onRowUpdate: (updatedRow, oldRow) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -185,8 +294,9 @@ const Car = () => {
           }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              fontSize: "18px",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",

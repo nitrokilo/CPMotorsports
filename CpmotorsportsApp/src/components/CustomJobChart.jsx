@@ -3,17 +3,10 @@ import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../theme";
 // import { mockBarData as data } from "../data/mockData";
 
-const BarChart = (props) => {
-  const isDashboard = false
+const CustomJobChart = ({ isDashboard = false }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const data = props.data
-  const transformedData = data[0];
-
-// const result = Object.entries(transformedData).map(([key, value]) => {
-//   return { service: key, count: value };
-// });
-
+  const data = [];
   return (
     <ResponsiveBar
       data={data}
@@ -46,8 +39,8 @@ const BarChart = (props) => {
           },
         },
       }}
-      keys={["Installation", "Fabrication", "Testing", "Tuning"]}
-      indexBy="service"
+      keys={["Not sure", "what columns", "go here", "yet"]}
+      indexBy="country"
       margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
       padding={0.3}
       valueScale={{ type: "linear" }}
@@ -83,7 +76,7 @@ const BarChart = (props) => {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: isDashboard ? undefined : "Service", // changed
+        legend: isDashboard ? undefined : "country", // changed
         legendPosition: "middle",
         legendOffset: 32,
       }}
@@ -91,7 +84,7 @@ const BarChart = (props) => {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: isDashboard ? undefined : "Amount", // changed
+        legend: isDashboard ? undefined : "food", // changed
         legendPosition: "middle",
         legendOffset: -40,
       }}
@@ -134,4 +127,4 @@ const BarChart = (props) => {
   );
 };
 
-export default BarChart;
+export default CustomJobChart;

@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MyButton from "../global/buttonstyles";
 
 const style = {
   position: "absolute",
@@ -26,7 +27,7 @@ const style = {
   p: 4,
 };
 
-export default function AddTransaction(props) {
+export default function AddModel(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   // Behaviors and states passed as props and renamed
@@ -37,26 +38,29 @@ export default function AddTransaction(props) {
   const handleClose = props.handleClose;
   const open = props.open;
   const postsucessful = props.postsucessful;
-  const categoriesdata = props.categoriesdata;
-  const transactionaccountdata = props.transactionaccountdata;
+  const makedata = props.makedata;
+  const vehicletypedata = props.vehicletypedata;
   const Alert = props.alert;
 
   // Mapping for category and transaction account options
-  const categoryoptions = categoriesdata.map((category) => (
-    <MenuItem value={category.category_id}> {category.category_desc} </MenuItem>
+  const MakeOptions = makedata.map((make) => (
+    <MenuItem value={make.make_id}> {make.make_name} </MenuItem>
   ));
 
-  const transactionaccountoptions = transactionaccountdata.map(
-    (trans_account) => (
-      <MenuItem value={trans_account.acc_id}>{trans_account.acc_name}</MenuItem>
-    )
-  );
+  const VehicleTypeOptions = vehicletypedata.map((vehicle_type) => (
+    <MenuItem value={vehicle_type.vic_type_id}>
+      {" "}
+      {vehicle_type.vic_type_name}{" "}
+    </MenuItem>
+  ));
 
   return (
     <div>
-      <Button onClick={handleOpen} color="secondary">
-        Add Transaction
-      </Button>
+      <MyButton
+        onClick={handleOpen}
+        color="secondary"
+        text="Add Model"
+      ></MyButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -64,7 +68,7 @@ export default function AddTransaction(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="ADD TRANSACTION" subtitle="ADD TRANSACTION" />
+          <Header title="Add Model" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -78,47 +82,23 @@ export default function AddTransaction(props) {
                     },
                   }}
                 >
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="text"
-                    label="Transaction Name"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.trans_name}
-                    name="trans_name"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="number"
-                    label="Transaction Amount"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.amount}
-                    name="amount"
-                    sx={{ gridColumn: "span 2" }}
-                  />
                   <FormControl required sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-required-label">
-                      Category
+                      Make
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-required-label"
                       id="demo-simple-select-required"
-                      value={values.category_id}
-                      label="category_id"
-                      name="category_id"
+                      value={values.make_name}
+                      label="Make"
                       onChange={handleChange}
+                      name="make_name"
                     >
                       <FormHelperText>Required</FormHelperText>
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {categoryoptions}
+                      {MakeOptions}
                     </Select>
                   </FormControl>
 
@@ -126,50 +106,54 @@ export default function AddTransaction(props) {
                     fullWidth
                     required
                     variant="filled"
-                    type="date"
-                    label="Transaction Date"
+                    type="text"
+                    label="Model"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.transaction_date}
-                    name="transaction_date"
+                    value={values.model_name}
+                    name="model_name"
                     sx={{ gridColumn: "span 2" }}
                   />
-                  <TextField
-                    required
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Transaction Description"
-                    multiline
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.description}
-                    name="description"
-                    sx={{ gridColumn: "span 4" }}
-                  />
-                  <FormControl required sx={{ m: 1, minWidth: 200 }}>
+
+                  <FormControl required sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-required-label">
-                      Transaction Account
+                      Vehicle Type
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-required-label"
                       id="demo-simple-select-required"
-                      value={values.trans_acc}
-                      label="trans_acc"
+                      value={values.vic_type_name}
+                      label="Vehicle Type"
                       onChange={handleChange}
-                      name="trans_acc"
+                      name="vic_type_name"
                     >
                       <FormHelperText>Required</FormHelperText>
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {transactionaccountoptions}
+                      {VehicleTypeOptions}
                     </Select>
                   </FormControl>
+
+                  <TextField
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="text"
+                    label="Year"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.prod_year}
+                    name="prod_year"
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                </Box>
+                <Box display="flex" justifyContent="left" mt="5px">
+                  (*) - Means the field is required.
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Add Transaction
+                    Add Model
                   </Button>
                 </Box>
               </form>
@@ -178,9 +162,7 @@ export default function AddTransaction(props) {
         </Box>
       </Modal>
 
-      {postsucessful && (
-        <Alert is_on={true} text="Transaction added Sucessfully" />
-      )}
+      {postsucessful && <Alert is_on={true} text="Model added Sucessfully" />}
     </div>
   );
 }

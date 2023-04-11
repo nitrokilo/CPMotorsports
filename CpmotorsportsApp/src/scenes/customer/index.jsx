@@ -5,21 +5,30 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
-import MaterialTable from '@material-table/core';
+import MaterialTable from "@material-table/core";
+import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { tableIcons } from "../global/tableicons";
+import AddCustomer from "./addcustomer";
+import { Link } from "react-router-dom";
+import MyButton from "../global/buttonstyles";
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 const Customer = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
   // State definitions for Add Customer
+  const [openadd, setOpenadd] = useState(false);
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
   // Defintions for Add Customer component
+  const handleOpenadd = () => setOpenadd(true);
+  const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
       .post("/customer", values)
+      .then(setOpenadd(false))
       .then(setReRender(true))
       .then(setPostsucessfuladd(true));
   };
@@ -60,14 +69,14 @@ const Customer = () => {
   }, [reRender]);
 
   // Api call and config for Categories and Transaction Accounts
-  const [customer_statusdata, setcustomer_statusdata] = useState([]);
+  const [customer_status_data, setcustomer_status_data] = useState([]);
 
   // Api call to get customer status for select option
   useEffect(() => {
     client
       .get("/customer_status")
       .then((res) => {
-        setcustomer_statusdata(res.data);
+        setcustomer_status_data(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -83,7 +92,7 @@ const Customer = () => {
   });
 
   // Edit Capabilities
-  const customerstatusoptions = customer_statusdata.map((customer_status) => (
+  const customerstatusoptions = customer_status_data.map((customer_status) => (
     <MenuItem value={customer_status.customer_stat_id}>
       {customer_status.customer_stat_name}
     </MenuItem>
@@ -91,23 +100,26 @@ const Customer = () => {
 
   // Column Configuration
   const columns = [
-    { field: "customer_id", title: "ID", flex: 0.5, editable: false },
+    { field: "customer_id", title: "ID", flex: 0.5, editable: false, width:5 },
     { field: "customer_first_name", title: "First Name", flex: 1 },
     { field: "customer_last_name", title: "Last Name", flex: 1 },
 
     {
       field: "customer_phone_number",
       title: "Phone Number",
+      width: 1000
     },
 
     {
       field: "customer_email",
       title: "Customer Email",
-      flex: 1,
+      width: 250,
+      
     },
     {
       field: "customer_stat_name",
       title: "Customer Status",
+      width: 100,
       flex: 1,
       editComponent: ({ value, onChange, rowData }) => (
         <Select
@@ -116,9 +128,6 @@ const Customer = () => {
             onChange(event.target.value);
           }}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
           {customerstatusoptions}
         </Select>
       ),
@@ -127,7 +136,30 @@ const Customer = () => {
 
   return (
     <Box m="20px">
-      <Header title="Customer" subtitle="List of all Cusotmers" />
+      <Header title="Customer" subtitle="List of all Customers" />
+      
+      <ButtonGroup variant="contained" >
+      <AddCustomer
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        customerstatusdata={customer_status_data}
+        alert={SuccessAlert}
+      />
+      <br/>
+      <Link to="/customer_cars">
+        <MyButton text="Add a Car to Customer"></MyButton>
+      </Link>
+      <br/>
+      <Link to="/projects">
+        <MyButton text="Add a Project"></MyButton>
+      </Link>
+    </ButtonGroup>
+  
+      
+
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -162,28 +194,11 @@ const Customer = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Customer Data"
+          title=""
           data={Customer}
           columns={columns}
+          style={{ backgroundColor: colors.primary[400], "padding-right": "90px"} }
           editable={{
-            onRowAdd: (newRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  console.log(newRow);
-                  handleFormSubmitadd(newRow);
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: (selectedRow) =>
-              new Promise((resolve, reject) => {
-                const index = selectedRow.tableData.id;
-                const updatedRows = [...data];
-                updatedRows.splice(index, 1);
-                setTimeout(() => {
-                  setData(updatedRows);
-                  resolve();
-                }, 2000);
-              }),
             onRowUpdate: (updatedRow, oldRow) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -194,8 +209,9 @@ const Customer = () => {
           }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              fontSize: 18,
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",

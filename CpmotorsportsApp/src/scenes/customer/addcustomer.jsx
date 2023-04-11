@@ -11,8 +11,11 @@ import {
 } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import { Formik } from "formik";
+import * as yup from "yup";
+
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MyButton from "../global/buttonstyles";
 
 const style = {
   position: "absolute",
@@ -26,7 +29,7 @@ const style = {
   p: 4,
 };
 
-export default function AddTransaction(props) {
+export default function AddCustomer(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   // Behaviors and states passed as props and renamed
@@ -37,26 +40,24 @@ export default function AddTransaction(props) {
   const handleClose = props.handleClose;
   const open = props.open;
   const postsucessful = props.postsucessful;
-  const categoriesdata = props.categoriesdata;
-  const transactionaccountdata = props.transactionaccountdata;
+  const customerstatusdata = props.customerstatusdata;
   const Alert = props.alert;
 
   // Mapping for category and transaction account options
-  const categoryoptions = categoriesdata.map((category) => (
-    <MenuItem value={category.category_id}> {category.category_desc} </MenuItem>
+  const CustomerStatusOptions = customerstatusdata.map((customer_status) => (
+    <MenuItem value={customer_status.customer_stat_id}>
+      {" "}
+      {customer_status.customer_stat_name}{" "}
+    </MenuItem>
   ));
-
-  const transactionaccountoptions = transactionaccountdata.map(
-    (trans_account) => (
-      <MenuItem value={trans_account.acc_id}>{trans_account.acc_name}</MenuItem>
-    )
-  );
 
   return (
     <div>
-      <Button onClick={handleOpen} color="secondary">
-        Add Transaction
-      </Button>
+      <MyButton
+        text="Add Customer"
+        onClick={handleOpen}
+        color="secondary"
+      ></MyButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -64,9 +65,9 @@ export default function AddTransaction(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="ADD TRANSACTION" subtitle="ADD TRANSACTION" />
-          <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
-            {({ values, handleBlur, handleChange, handleSubmit }) => (
+          <Header title="Add Customer" />
+          <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={userSchema}>
+            {({ values, errors, touched, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <Box
                   display="grid"
@@ -83,93 +84,80 @@ export default function AddTransaction(props) {
                     required
                     variant="filled"
                     type="text"
-                    label="Transaction Name"
+                    label="First Name"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.trans_name}
-                    name="trans_name"
+                    value={values.customer_first_name}
+                    name="customer_first_name"
+                    error={!!touched.customer_first_name && !!errors.customer_first_name}
+                    helperText={!!touched.customer_first_name && errors.customer_first_name}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
                     fullWidth
                     required
-                    variant="filled"
-                    type="number"
-                    label="Transaction Amount"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.amount}
-                    name="amount"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <FormControl required sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="demo-simple-select-required-label">
-                      Category
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-required-label"
-                      id="demo-simple-select-required"
-                      value={values.category_id}
-                      label="category_id"
-                      name="category_id"
-                      onChange={handleChange}
-                    >
-                      <FormHelperText>Required</FormHelperText>
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {categoryoptions}
-                    </Select>
-                  </FormControl>
-
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="date"
-                    label="Transaction Date"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.transaction_date}
-                    name="transaction_date"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    required
-                    fullWidth
                     variant="filled"
                     type="text"
-                    label="Transaction Description"
-                    multiline
+                    label="Last Name"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.description}
-                    name="description"
-                    sx={{ gridColumn: "span 4" }}
+                    value={values.customer_last_name}
+                    name="customer_last_name"
+                    error={!!touched.customer_last_name && !!errors.customer_last_name}
+                    helperText={!!touched.customer_last_name && errors.customer_last_name}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="text"
+                    label="Phone Number - (XXX-XXX-XXXX)"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.customer_phone_number}
+                    name="customer_phone_number"
+                    error={!!touched.customer_phone_number && !!errors.customer_phone_number}
+                    helperText={!!touched.customer_phone_number && errors.customer_phone_number}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="text"
+                    label="Email - (example@gmail.com)"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.customer_email}
+                    name="customer_email"
+                    error={!!touched.customer_email && !!errors.customer_email}
+                    helperText={!!touched.customer_email && errors.customer_email}
+                    sx={{ gridColumn: "span 2" }}
                   />
                   <FormControl required sx={{ m: 1, minWidth: 200 }}>
                     <InputLabel id="demo-simple-select-required-label">
-                      Transaction Account
+                      Customer Status
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-required-label"
                       id="demo-simple-select-required"
-                      value={values.trans_acc}
-                      label="trans_acc"
+                      value={values.customer_stat_name}
+                      label="Customer Status"
                       onChange={handleChange}
-                      name="trans_acc"
+                      name="customer_stat_name"
                     >
                       <FormHelperText>Required</FormHelperText>
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {transactionaccountoptions}
+                      {CustomerStatusOptions}
                     </Select>
                   </FormControl>
                 </Box>
+                <Box display="flex" justifyContent="left" mt="5px">
+                  (*) - Means the field is required.
+                </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Add Transaction
+                    Add Customer
                   </Button>
                 </Box>
               </form>
@@ -179,11 +167,26 @@ export default function AddTransaction(props) {
       </Modal>
 
       {postsucessful && (
-        <Alert is_on={true} text="Transaction added Sucessfully" />
+        <Alert is_on={true} text="Customer added Sucessfully" />
       )}
     </div>
   );
 }
 const initialValues = {
-  description: "",
+  customer_first_name: "",
+  customer_last_name: "",
+  customer_phone_number: "",
+  customer_email: "",
 };
+
+const phoneRegEx = /^[1-9]\d{2}-\d{3}-\d{4}/
+
+const userSchema = yup.object().shape({
+  customer_first_name: yup.string().required("required"),
+  customer_last_name: yup.string().required("required"),
+  customer_phone_number: yup
+  .string()
+  .matches(phoneRegEx, "Phone Number is not valid")
+  .required("required"),
+  customer_email: yup.string().email("Invalid Email").required("required"),
+})

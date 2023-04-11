@@ -8,11 +8,14 @@ import {
   MenuItem,
   FormHelperText,
   FormControl,
+  useTheme,
 } from "@mui/material";
 import Modal from "@mui/material/Modal";
+import { tokens } from "../../theme";
 import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MyButton from "../global/buttonstyles";
 
 const style = {
   position: "absolute",
@@ -26,8 +29,10 @@ const style = {
   p: 4,
 };
 
-export default function AddTransaction(props) {
+export default function AddCustomPart(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   // Behaviors and states passed as props and renamed
   const handleFormSubmit = (values) => {
@@ -37,26 +42,27 @@ export default function AddTransaction(props) {
   const handleClose = props.handleClose;
   const open = props.open;
   const postsucessful = props.postsucessful;
-  const categoriesdata = props.categoriesdata;
-  const transactionaccountdata = props.transactionaccountdata;
+  const carsystemdata = props.carsystemdata;
+  const metaldata = props.metaldata;
   const Alert = props.alert;
 
   // Mapping for category and transaction account options
-  const categoryoptions = categoriesdata.map((category) => (
-    <MenuItem value={category.category_id}> {category.category_desc} </MenuItem>
+  const CarSystemOptions = carsystemdata.map((car_system) => (
+    <MenuItem value={car_system.car_sys_id}>
+      {" "}
+      {car_system.car_sys_name}{" "}
+    </MenuItem>
   ));
 
-  const transactionaccountoptions = transactionaccountdata.map(
-    (trans_account) => (
-      <MenuItem value={trans_account.acc_id}>{trans_account.acc_name}</MenuItem>
-    )
-  );
+  // Mapping for category and transaction account options
+  const MetalOptions = metaldata.map((metal_type) => (
+    <MenuItem value={metal_type.metal_id}> {metal_type.metal_name} </MenuItem>
+  ));
 
   return (
     <div>
-      <Button onClick={handleOpen} color="secondary">
-        Add Transaction
-      </Button>
+      <MyButton onClick={handleOpen} text="Add Custom Part" />
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -64,7 +70,7 @@ export default function AddTransaction(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Header title="ADD TRANSACTION" subtitle="ADD TRANSACTION" />
+          <Header title="Add Custom Part" />
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -78,47 +84,43 @@ export default function AddTransaction(props) {
                     },
                   }}
                 >
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="text"
-                    label="Transaction Name"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.trans_name}
-                    name="trans_name"
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    required
-                    variant="filled"
-                    type="number"
-                    label="Transaction Amount"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.amount}
-                    name="amount"
-                    sx={{ gridColumn: "span 2" }}
-                  />
                   <FormControl required sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-required-label">
-                      Category
+                      Car System Name
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-required-label"
                       id="demo-simple-select-required"
-                      value={values.category_id}
-                      label="category_id"
-                      name="category_id"
+                      value={values.car_sys_name}
+                      label="Car System"
                       onChange={handleChange}
+                      name="car_sys_name"
                     >
                       <FormHelperText>Required</FormHelperText>
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {categoryoptions}
+                      {CarSystemOptions}
+                    </Select>
+                  </FormControl>
+
+                  <FormControl required sx={{ m: 1, minWidth: 100 }}>
+                    <InputLabel id="demo-simple-select-required-label">
+                      Metal Name
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-required-label"
+                      id="demo-simple-select-required"
+                      value={values.metal_name}
+                      label="Metal Name"
+                      onChange={handleChange}
+                      name="metal_name"
+                    >
+                      <FormHelperText>Required</FormHelperText>
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {MetalOptions}
                     </Select>
                   </FormControl>
 
@@ -126,50 +128,45 @@ export default function AddTransaction(props) {
                     fullWidth
                     required
                     variant="filled"
-                    type="date"
-                    label="Transaction Date"
+                    type="text"
+                    label="Custom Part Name"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.transaction_date}
-                    name="transaction_date"
+                    value={values.cust_part_name}
+                    name="cust_part_name"
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
-                    required
                     fullWidth
+                    required
                     variant="filled"
                     type="text"
-                    label="Transaction Description"
-                    multiline
+                    label="Part Description"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.description}
-                    name="description"
-                    sx={{ gridColumn: "span 4" }}
+                    value={values.cust_part_desc}
+                    name="cust_part_desc"
+                    sx={{ gridColumn: "span 2" }}
                   />
-                  <FormControl required sx={{ m: 1, minWidth: 200 }}>
-                    <InputLabel id="demo-simple-select-required-label">
-                      Transaction Account
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-required-label"
-                      id="demo-simple-select-required"
-                      value={values.trans_acc}
-                      label="trans_acc"
-                      onChange={handleChange}
-                      name="trans_acc"
-                    >
-                      <FormHelperText>Required</FormHelperText>
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {transactionaccountoptions}
-                    </Select>
-                  </FormControl>
+                  <TextField
+                    fullWidth
+                    required
+                    variant="filled"
+                    type="amount"
+                    label="Part Cost"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.cust_part_cost}
+                    name="cust_part_cost"
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                </Box>
+                <Box display="flex" justifyContent="left" mt="5px">
+                  (*) - Means the field is required.
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Add Transaction
+                    Add Custom Part
                   </Button>
                 </Box>
               </form>
@@ -179,7 +176,7 @@ export default function AddTransaction(props) {
       </Modal>
 
       {postsucessful && (
-        <Alert is_on={true} text="Transaction added Sucessfully" />
+        <Alert is_on={true} text="Custom Part added Sucessfully" />
       )}
     </div>
   );

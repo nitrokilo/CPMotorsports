@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import MaterialTable from '@material-table/core';
+import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
 
 const Completed_projects = () => {
-
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
@@ -27,9 +26,6 @@ const Completed_projects = () => {
       });
   }, [reRender]);
 
-
-
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -40,18 +36,18 @@ const Completed_projects = () => {
 
   // Column Configuration
   const columns = [
-    { field: "Customer", title: "Customer", flex: 0.5 },
-    { field: "Most Recent Job", title: "Most Recent Job", flex: 1, cellClassName: "name-column--cell",},
-    { field: "Num of Projects", title: "Num of Projects", flex: 1 },
-   
-
+    { field: "Num_of_Customer", title: "Number of Customers", type: "numeric" },
+    { field: "Num_of_Project", title: "Number of Projects", type: "numeric" },
+    { field: "Year", title: "Year", type: "numeric" },
+    { field: "average", title: "Yearly Average", type: "numeric" },
   ];
 
   return (
     <Box m="20px">
-
-
-      <Header title="Completed Projects" subtitle="List of all Completed Projects" />
+      <Header
+        title="Completed Projects per Customer"
+        subtitle="Customer Info for Completed Projects"
+      />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -86,24 +82,27 @@ const Completed_projects = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Completed Projects Per Customer"
+          title=""
           data={Data}
           columns={columns}
+          style={{ backgroundColor: colors.primary[400] }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",
             exportMenu: [
               {
                 label: "Export PDF",
-                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Completed_Projects_Per_Year"),
+                exportFunc: (cols, datas) =>
+                  ExportPdf(cols, datas, "Completed_Projects_Per_Year"),
               },
               {
                 label: "Export CSV",
-                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Completed_Projects_Per_Year"),
+                exportFunc: (cols, datas) =>
+                  ExportCsv(cols, datas, "Completed_Projects_Per_Year"),
               },
             ],
             filtering: true,

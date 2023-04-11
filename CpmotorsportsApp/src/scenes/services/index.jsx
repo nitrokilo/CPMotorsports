@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Select, Box, MenuItem } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
@@ -6,8 +6,10 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
-import MaterialTable from '@material-table/core';
+import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
+import AddService from "./addservice";
+import { ThemeProvider } from "@mui/material/styles";
 const Service = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
@@ -60,6 +62,15 @@ const Service = () => {
   // Api call and config for Categories and Transaction Accounts
   const [service_status_data, setservice_statusdata] = useState([]);
 
+  // Edit Capabilities
+  const servicestatusoptions = service_status_data.map(
+    (service_type_status) => (
+      <MenuItem value={service_type_status.serv_type_stat_id}>
+        {service_type_status.serv_type_stat_name}
+      </MenuItem>
+    )
+  );
+
   // Api call to get service status for select option
   useEffect(() => {
     client
@@ -82,66 +93,66 @@ const Service = () => {
 
   // Column Configuration
   const columns = [
-    { 
+    {
       field: "service_id",
       title: "ID",
-      flex: 0.5 
+      width: 5,
+      flex: 0.5,
     },
 
-    { 
+    {
       field: "service_name",
-      title: "Service Name", 
-      flex: 1 
+      title: "Service Name",
+      flex: 1,
     },
 
-    { 
+    {
       field: "service_desc",
       title: "Service Description",
-      flex: 1 
+      flex: 1,
     },
 
     {
       field: "service_cost",
       title: "Service Cost",
       type: "currency",
+      width: 50,
       cellClassName: "name-column--cell",
     },
 
-  
     {
       field: "serv_type_stat_name",
       title: "Service Status",
+      width: 150,
       flex: 1,
+      editComponent: ({ value, onChange, rowData }) => (
+        <Select
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {servicestatusoptions}
+        </Select>
+      ),
     },
   ];
 
   return (
     <Box m="20px">
-
-
-      {/* <EditTransaction
-        handleOpen={handleOpenedit}
-        handleClose={handleCloseedit}
-        open={openedit}
-        handleFormSubmit={handleFormSubmitedit}
-        postsucessful={postsucessfuledit}
-        Projects={Projects}
-        categoriesdata={categoriesdata}
-        transactionaccountdata={transactionaccountdata}
+      <Header title="Service Types" subtitle="List of all Service Types" />
+      <AddService
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        servicestatusdata={service_status_data}
         alert={SuccessAlert}
       />
-
-      <DeleteTransaction
-        handleOpen={handleOpendelete}
-        handleClose={handleClosedelete}
-        open={opendelete}
-        handleFormSubmit={handleFormSubmitdelete}
-        postsucessful={postsucessfuldelete}
-        Projects={Projects}
-        alert={SuccessAlert}
-      />  */}
-
-      <Header title="Service Types" subtitle="List of all Service Types" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -174,59 +185,47 @@ const Service = () => {
           },
         }}
       >
-        <MaterialTable
-          icons={tableIcons}
-          title="Mechanic Data"
-          data={Service}
-          columns={columns}
-          editable={{
-            onRowAdd: (newRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  console.log(newRow);
-                  handleFormSubmitadd(newRow);
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: (selectedRow) =>
-              new Promise((resolve, reject) => {
-                const index = selectedRow.tableData.id;
-                const updatedRows = [...data];
-                updatedRows.splice(index, 1);
-                setTimeout(() => {
-                  setData(updatedRows);
-                  resolve();
-                }, 2000);
-              }),
-            onRowUpdate: (updatedRow, oldRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  handleFormSubmitedit(updatedRow);
-                  resolve();
-                }, 1000);
-              }),
-          }}
-          options={{
-            headerStyle: {
-              backgroundColor: "white",
-              color: "black",
-            },
-            actionsColumnIndex: -1,
-            addRowPosition: "first",
-            exportMenu: [
-              {
-                label: "Export PDF",
-                exportFunc: (cols, datas) => ExportPdf(cols, datas, "Service"),
+        <ThemeProvider theme={theme}>
+          <MaterialTable
+            icons={tableIcons}
+            title=""
+            data={Service}
+            columns={columns}
+            editable={{
+              onRowUpdate: (updatedRow, oldRow) =>
+                new Promise((resolve, reject) => {
+                  setTimeout(() => {
+                    handleFormSubmitedit(updatedRow);
+                    resolve();
+                  }, 1000);
+                }),
+            }}
+            style={{ backgroundColor: colors.primary[400], "padding-right": "90px" }}
+            options={{
+              headerStyle: {
+                fontWeight: "bold",
+                fontSize: "18px",
+                backgroundColor: colors.primary[500],
               },
-              {
-                label: "Export CSV",
-                exportFunc: (cols, datas) => ExportCsv(cols, datas, "Service"),
-              },
-            ],
-            filtering: true,
-            pageSize: 15,
-          }}
-        />
+              actionsColumnIndex: -1,
+              addRowPosition: "first",
+              exportMenu: [
+                {
+                  label: "Export PDF",
+                  exportFunc: (cols, datas) =>
+                    ExportPdf(cols, datas, "Service"),
+                },
+                {
+                  label: "Export CSV",
+                  exportFunc: (cols, datas) =>
+                    ExportCsv(cols, datas, "Service"),
+                },
+              ],
+              filtering: true,
+              pageSize: 15,
+            }}
+          />
+        </ThemeProvider>
       </Box>
     </Box>
   );

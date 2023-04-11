@@ -7,9 +7,7 @@ import { useTheme } from "@mui/material";
 import MaterialTable from "material-table";
 import { tableIcons } from "../global/tableicons";
 
-
 const Invoice = () => {
-
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
@@ -27,9 +25,6 @@ const Invoice = () => {
       });
   }, [reRender]);
 
-
-
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -40,16 +35,24 @@ const Invoice = () => {
 
   // Column Configuration
   const columns = [
-    {field: "Customer", title: "Customer", flex: 0.5 },
-    {field: "End Date", title: "End Date", type: "date" }, 
-    {field: "Labor", title: "Labor", type: "currency" },
-    {field: "Mechanic", title: "Mechanic", flex: 0.5 },
-    {field: "Total", title: "Total", flex: 0.5 },
-    {field: "car_sys_name", title: "car_sys_name", flex: 0.5 },
-    {field: "cust_part_cost", title: "cust_part_cost", flex: 0.5 },
-    {field: "cust_part_name", title: "cust_part_name", flex: 0.5 },
-    {field: "customer_phone_number", title: "customer_phone_number", flex: 0.5 },
-    {field: "make_name", title: "make_name", flex: 0.5 },
+    { field: "Customer", title: "Customer", flex: 0.5 },
+    {
+      field: "customer_phone_number",
+      title: "customer_phone_number",
+      flex: 0.5,
+    },
+    { field: "make_name", title: "make_name", flex: 0.5 },
+    { field: "model_name", headerName: "model_name", flex: 0.5 },
+    { field: "vin_num", headerName: "vin_num", flex: 0.5 },
+    { field: "End Date", title: "End Date", type: "date" },
+    { field: "Total", title: "Total", flex: 0.5 },
+    { field: "Mechanic", title: "Mechanic", flex: 0.5 },
+    { field: "Labor", title: "Labor", type: "currency" },
+
+    { field: "car_sys_name", title: "car_sys_name", flex: 0.5 },
+    { field: "cust_part_cost", title: "cust_part_cost", flex: 0.5 },
+    { field: "cust_part_name", title: "cust_part_name", flex: 0.5 },
+
     // {field: "Customer", headerName: "Customer", flex: 0.5 },
     // {field: "metal_name", headerName: "metal_name", flex: 0.5 },
     // {field: "model_name", headerName: "model_name", flex: 0.5 },
@@ -57,12 +60,11 @@ const Invoice = () => {
     // {field: "service_name", headerName: "service_name", flex: 0.5 },
     // {field: "total_cost", headerName: "total_cost", flex: 0.5 },
     // {field: "vin_num", headerName: "vin_num", flex: 0.5 }
-
   ];
 
   return (
     <Box m="20px">
-      <Header title="Invoice" subtitle="List of all Completed Projects" />
+      <Header title="Invoice" subtitle="Customer Invoice Line Items" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -97,27 +99,28 @@ const Invoice = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Customer Data"
+          title=""
           data={Data}
           columns={columns}
-          detailPanel={rowData => {
-        return (
-         <div>
-         Labor: {rowData['Labor']} <br/>
-         Metal Name:{rowData ["metal_name"]} <br/>
-         model_name: {rowData ["model_name"]} <br/>
-         service_cost: {rowData ["service_cost"]} <br/>
-         service_name: {rowData ["service_name"]} <br/>
-         total_cost: {rowData ["total_cost"]} <br/>
-         vin_num: {rowData ["vin_num"]} <br/>
-         </div>
-        )
-      }}
-      onRowClick={(event, rowData, togglePanel) => togglePanel()}
+          detailPanel={(rowData) => {
+            return (
+              <div>
+                Labor: {rowData["Labor"]} <br />
+                Metal Name:{rowData["metal_name"]} <br />
+                model_name: {rowData["model_name"]} <br />
+                service_cost: {rowData["service_cost"]} <br />
+                service_name: {rowData["service_name"]} <br />
+                total_cost: {rowData["total_cost"]} <br />
+                vin_num: {rowData["vin_num"]} <br />
+              </div>
+            );
+          }}
+          onRowClick={(event, rowData, togglePanel) => togglePanel()}
+          style={{ backgroundColor: colors.primary[400] }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",

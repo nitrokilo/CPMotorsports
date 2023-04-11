@@ -1,15 +1,36 @@
 import { ResponsiveLine } from "@nivo/line";
 import { useTheme } from "@mui/material";
 import { tokens } from "../theme";
-import { mockLineData as data } from "../data/mockData";
 
-const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
+const LineChart = (props) => {
+  const isCustomLineColors = false
+  const isDashboard = false
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const data = props.data
+  const transformedData = [
+    {
+      id: "Customer Time",
+      data: data.map((entry) => ({
+        x: entry.year,
+        y: parseFloat(entry.customer_time),
+      })),
+    },
+    {
+      id: "Part Work Time",
+      data: data
+      .map((entry) => ({
+        x: entry.year,
+        y: parseFloat(entry.part_work_time),
+      })),
+    },
+  ];
+  
+
 
   return (
     <ResponsiveLine
-      data={data}
+      data={transformedData}
       theme={{
         axis: {
           domain: {
@@ -44,7 +65,7 @@ const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
         },
       }}
       colors={isDashboard ? { datum: "color" } : { scheme: "nivo" }} // added
-      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+      margin={{ top: 50, right: 140, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
@@ -62,7 +83,7 @@ const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
         tickSize: 0,
         tickPadding: 5,
         tickRotation: 0,
-        legend: isDashboard ? undefined : "transportation", // added
+        legend: isDashboard ? undefined : "Year", // added
         legendOffset: 36,
         legendPosition: "middle",
       }}

@@ -5,22 +5,27 @@ import client from "../../Api/apiconfig.js";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { SuccessAlert } from "../../components/alert.jsx";
-import MaterialTable from '@material-table/core';
+import MaterialTable from "@material-table/core";
 import { tableIcons } from "../global/tableicons";
+import AddMake from "./addmake";
 
 const Make = () => {
   // State intialization for rerender to control page render
   const [reRender, setReRender] = useState(false);
 
   // State definitions for Add Make
+  const [openadd, setOpenadd] = useState(false);
   const [postsucessfuladd, setPostsucessfuladd] = useState(false);
 
   // Defintions for Add Make component
+  const handleOpenadd = () => setOpenadd(true);
+  const handleCloseadd = () => setOpenadd(false);
   const handleFormSubmitadd = (values) => {
     console.log(values);
     client
       .post("/make", values)
       .then(setReRender(true))
+      .then(setOpenadd(false))
       .then(setPostsucessfuladd(true));
   };
 
@@ -33,17 +38,6 @@ const Make = () => {
       .then(setReRender(true))
       .then(setPostsucessfuledit(true));
   };
-
-  /* Definitions for Delete Customer
-  const [postsucessfuldelete, setPostsucessfuldelete] = useState(false);
-  const handleFormSubmitdelete = (values) => {
-    const idtodelete = values.trans_id;
-    client
-      .delete(`/Projects/${idtodelete}`)
-      .then(setOpendelete(false))
-      .then(setReRender(true))
-      .then(setPostsucessfuldelete(true));
-  }; */
 
   // Api Call and config
   const [Make, setMake] = useState([]);
@@ -77,11 +71,6 @@ const Make = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const currencyFormatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-
   // Edit Capabilities
   const MakeStatusOptions = make_statusdata.map((make_status) => (
     <MenuItem value={make_status.make_stat_id}>
@@ -91,7 +80,7 @@ const Make = () => {
 
   // Column Configuration
   const columns = [
-    { field: "make_id", title: "ID", flex: 0.5, editable: false },
+    { field: "make_id", title: "ID", flex: 0.5, editable: false, width: 10 },
     { field: "make_name", title: "Name", flex: 1 },
     {
       field: "make_stat_name",
@@ -116,6 +105,15 @@ const Make = () => {
   return (
     <Box m="20px">
       <Header title="Make" subtitle="List of all Makes" />
+      <AddMake
+        handleOpen={handleOpenadd}
+        handleClose={handleCloseadd}
+        open={openadd}
+        handleFormSubmit={handleFormSubmitadd}
+        postsucessful={postsucessfuladd}
+        makestatusdata={make_statusdata}
+        alert={SuccessAlert}
+      />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -150,28 +148,10 @@ const Make = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Make Data"
+          title=""
           data={Make}
           columns={columns}
           editable={{
-            onRowAdd: (newRow) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  console.log(newRow);
-                  handleFormSubmitadd(newRow);
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: (selectedRow) =>
-              new Promise((resolve, reject) => {
-                const index = selectedRow.tableData.id;
-                const updatedRows = [...data];
-                updatedRows.splice(index, 1);
-                setTimeout(() => {
-                  setData(updatedRows);
-                  resolve();
-                }, 2000);
-              }),
             onRowUpdate: (updatedRow, oldRow) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -180,10 +160,12 @@ const Make = () => {
                 }, 1000);
               }),
           }}
+          style={{ backgroundColor: colors.primary[400], "padding-right": "90px" }}
           options={{
             headerStyle: {
-              backgroundColor: "white",
-              color: "black",
+              fontWeight: "bold",
+              fontSize: "18px",
+              backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,
             addRowPosition: "first",

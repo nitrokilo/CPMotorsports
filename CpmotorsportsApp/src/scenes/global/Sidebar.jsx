@@ -11,11 +11,12 @@ import DirectionsCarFilledIcon from "@mui/icons-material/DirectionsCarFilled";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import NoCrashIcon from "@mui/icons-material/NoCrash";
 import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
-import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
-import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
-import ConstructionIcon from '@mui/icons-material/Construction';
-import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
-import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
+import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
@@ -88,9 +89,9 @@ const Sidebar = () => {
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h3" color={colors.grey[100]}>
+                {/* <Typography variant="h3" color={colors.grey[100]}>
                   CP MOTORSPORTS
-                </Typography>
+                </Typography> */}
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
                 </IconButton>
@@ -101,13 +102,13 @@ const Sidebar = () => {
           {!isCollapsed && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
-                {/* <img
-                  alt="profile-user"
+                <img
+                  alt="Company-logo"
                   width="100px"
                   height="100px"
-                  src={`../../assets/user.png`}
+                  src={`../../assets/cplogo1.jpg`}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
-                /> */}
+                />
               </Box>
               <Box textAlign="center">
                 <Typography
@@ -125,7 +126,7 @@ const Sidebar = () => {
             </Box>
           )}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          <Box paddingLeft={isCollapsed ? undefined : "1%"}>
             <Item
               title="Dashboard"
               to="/"
@@ -142,13 +143,6 @@ const Sidebar = () => {
               Management
             </Typography>
             <Item
-              title="Services"
-              to="/services"
-              icon={<BuildIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
               title="Customers"
               to="/customers"
               icon={<ContactsOutlinedIcon />}
@@ -163,16 +157,9 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Makes"
-              to="/makes"
-              icon={<DirectionsCarIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Models"
-              to="/models"
-              icon={<DirectionsCarFilledIcon />}
+              title="Projects"
+              to="/projects"
+              icon={<NoCrashIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -190,11 +177,24 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
             <Item
-              title="Projects"
-              to="/projects"
-              icon={<NoCrashIcon />}
+              title="Services"
+              to="/services"
+              icon={<BuildIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Makes"
+              to="/makes"
+              icon={<DirectionsCarIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Models"
+              to="/models"
+              icon={<DirectionsCarFilledIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -207,30 +207,29 @@ const Sidebar = () => {
               Reports
             </Typography>
             <Item
-              title="Completed Projects Per Customer"
+              title="Customer Projects "
               to="/completed_projects"
-              icon={<PersonOutlinedIcon />}
+              icon={<HowToRegIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Completed Projects Per Year"
+              title="Yearly Projects "
               to="/completed_projects_per_year"
               icon={<WorkHistoryIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Custom Parts Per Project"
+              title="Custom Parts "
               to="/c_parts_projects"
               icon={<HomeRepairServiceIcon />}
               selected={selected}
               setSelected={setSelected}
             />
 
-
             <Item
-              title="Mechanics-Customer Time"
+              title="Mechanics Time"
               to="/mech_cutomer_time"
               icon={<AccessTimeFilledIcon />}
               selected={selected}
@@ -238,7 +237,7 @@ const Sidebar = () => {
             />
 
             <Item
-              title="Fabrication and Installation"
+              title="Custom Job"
               to="/fabrication_installation"
               icon={<ConstructionIcon />}
               selected={selected}
