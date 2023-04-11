@@ -190,10 +190,10 @@ const Customer = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Customer Data"
+          title=""
           data={Customer}
           columns={columns}
-          style={{ backgroundColor: colors.primary[400] }}
+          style={{ backgroundColor: colors.primary[400]}}
           editable={{
             onRowUpdate: (updatedRow, oldRow) =>
               new Promise((resolve, reject) => {
@@ -206,6 +206,7 @@ const Customer = () => {
           options={{
             headerStyle: {
               fontWeight: "bold",
+              fontSize: 18,
               backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,

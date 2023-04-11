@@ -3,10 +3,17 @@ import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../theme";
 // import { mockBarData as data } from "../data/mockData";
 
-const BarChart = ({ isDashboard = false }) => {
+const BarChart = (props) => {
+  const isDashboard = false
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const data = [];
+  const data = props.data
+  const transformedData = data[0];
+
+// const result = Object.entries(transformedData).map(([key, value]) => {
+//   return { service: key, count: value };
+// });
+
   return (
     <ResponsiveBar
       data={data}
@@ -40,7 +47,7 @@ const BarChart = ({ isDashboard = false }) => {
         },
       }}
       keys={["Installation", "Fabrication", "Testing", "Tuning"]}
-      indexBy="country"
+      indexBy="service"
       margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
       padding={0.3}
       valueScale={{ type: "linear" }}
@@ -76,7 +83,7 @@ const BarChart = ({ isDashboard = false }) => {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: isDashboard ? undefined : "country", // changed
+        legend: isDashboard ? undefined : "Service", // changed
         legendPosition: "middle",
         legendOffset: 32,
       }}
@@ -84,7 +91,7 @@ const BarChart = ({ isDashboard = false }) => {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: isDashboard ? undefined : "food", // changed
+        legend: isDashboard ? undefined : "Amount", // changed
         legendPosition: "middle",
         legendOffset: -40,
       }}

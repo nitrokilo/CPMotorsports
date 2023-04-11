@@ -195,13 +195,13 @@ export default function PartJob(props) {
         </Select>
       ),
     },
-    { title: "Part Service Start", field: "part_serv_start", type: "datetime"},
+    { title: "Part Service Start", field: "part_serv_start", type: "date"},
 
     {
       field: "part_serv_end",
       title: "Part Service End",
-      type: "datetime",
-      dateSetting: { locale: "en-US", timeZone: "America/New_York" },
+      type: "date",
+      
     },
     {
       field: "service_name",

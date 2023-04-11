@@ -160,13 +160,13 @@ export const themeSettings = (mode) => {
               light: "#2C3E50",
             },
             background: {
-              default: "#C0E1FF",
+              default: "#D6FFD8",
             },
           }),
     },
     typography: {
       fontFamily: [ "Open Sans","sans-serif"].join(","),
-      fontSize: 13,
+      fontSize: 15,
       h1: {
         fontFamily: [ "Open Sans","sans-serif"].join(","),
         fontSize: 40,
