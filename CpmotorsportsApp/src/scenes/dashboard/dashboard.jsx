@@ -52,7 +52,7 @@ const Dashboard = () => {
       >
         {/* ROW 1 */}
         <Box
-          gridColumn="span 4 "
+          gridColumn="span 3"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -60,11 +60,10 @@ const Dashboard = () => {
         >
           <StatBox
             title={
-              "$ " +
-                Dashboard?.Total_project_cost_year?.[0]?.Total_Project_Costs ??
+                Dashboard?.read_completed_propjects_last_60?.[0]?.project_count ??
               "Not Available"
             }
-            subtitle="Total Project Cost"
+            subtitle="Number of Completed Projects (Last 60 Days)"
             progress="0.75"
             increase="+14%"
             icon={
@@ -75,7 +74,7 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn="span 3"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -98,7 +97,7 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn="span 3"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
@@ -119,7 +118,7 @@ const Dashboard = () => {
             }
           />
         </Box>
-        {/* <Box
+        <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
           display="flex"
@@ -127,7 +126,10 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="4"
+            title={
+                Dashboard?.average_part_per_project?.[0]?.avg_per_project ??
+              "Not Available"
+            }
             subtitle="Average Parts Per Project"
             progress="0.80"
             increase="+13%"
@@ -137,7 +139,7 @@ const Dashboard = () => {
               />
             }
           />
-        </Box> */}
+        </Box>
 
         {/* ROW 2 */}
         <Box

@@ -11,6 +11,7 @@ import { tableIcons } from "../global/tableicons";
 import AddCustomer from "./addcustomer";
 import { Link } from "react-router-dom";
 import MyButton from "../global/buttonstyles";
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 const Customer = () => {
   // State intialization for rerender to control page render
@@ -136,6 +137,7 @@ const Customer = () => {
   return (
     <Box m="20px">
       <Header title="Customer" subtitle="List of all Customers" />
+      <ButtonGroup variant="contained" >
       <AddCustomer
         handleOpen={handleOpenadd}
         handleClose={handleCloseadd}
@@ -145,17 +147,16 @@ const Customer = () => {
         customerstatusdata={customer_status_data}
         alert={SuccessAlert}
       />
-      <br />
+      <br/>
       <Link to="/customer_cars">
         <MyButton text="Add a Car to Customer"></MyButton>
       </Link>
-
-      <br />
-      <br />
-
+      <br/>
       <Link to="/projects">
         <MyButton text="Add a Project"></MyButton>
       </Link>
+    </ButtonGroup>
+      
 
       <Box
         m="40px 0 0 0"
