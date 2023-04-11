@@ -162,5 +162,5 @@ export default function AddProject(props) {
   );
 }
 const initialValues = {
-  description: "",
+  project_end: "",
 };

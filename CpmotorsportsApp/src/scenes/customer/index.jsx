@@ -137,6 +137,7 @@ const Customer = () => {
   return (
     <Box m="20px">
       <Header title="Customer" subtitle="List of all Customers" />
+      
       <ButtonGroup variant="contained" >
       <AddCustomer
         handleOpen={handleOpenadd}
@@ -156,6 +157,7 @@ const Customer = () => {
         <MyButton text="Add a Project"></MyButton>
       </Link>
     </ButtonGroup>
+  
       
 
       <Box

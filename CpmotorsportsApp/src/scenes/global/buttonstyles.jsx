@@ -13,6 +13,7 @@ export default function MyButton(props) {
         fontSize: "14px",
         fontWeight: "bold",
         padding: "10px 20px",
+        margin: "10px 20px"
       }}
       onClick={props.onClick}
       color="secondary"
