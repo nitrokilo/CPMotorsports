@@ -99,7 +99,7 @@ const Invoice = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Customer Data"
+          title=""
           data={Data}
           columns={columns}
           detailPanel={(rowData) => {

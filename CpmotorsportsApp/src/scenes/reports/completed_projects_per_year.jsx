@@ -91,7 +91,7 @@ const Completed_projects_per_year = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Completed Projects Per Year"
+          title=""
           data={Data}
           columns={columns}
           style={{ backgroundColor: colors.primary[400] }}

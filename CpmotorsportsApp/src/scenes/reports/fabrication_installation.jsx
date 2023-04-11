@@ -85,7 +85,7 @@ const Fabrication_Installation = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Fabrication And Installation"
+          title=""
           data={Data}
           columns={columns}
           style={{ backgroundColor: colors.primary[400] }}
