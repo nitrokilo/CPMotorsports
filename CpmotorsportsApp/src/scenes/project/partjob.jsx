@@ -138,7 +138,7 @@ export default function PartJob(props) {
 
   const CustomPartOptions = custompartdata.map((custom_part) => (
     <MenuItem value={custom_part.car_sys_id}>
-      {custom_part.car_sys_name} {(custom_part.metal_name)}
+      {custom_part.car_sys_name} ({custom_part.metal_name})
     </MenuItem>
   ));
 
