@@ -39,7 +39,7 @@ const Completed_projects = () => {
     { field: "Num_of_Customer", title: "Number of Customers", type: "numeric" },
     { field: "Num_of_Project", title: "Number of Projects", type: "numeric" },
     { field: "Year", title: "Year", type: "numeric" },
-    { field: "average", title: "Average", type: "numeric" },
+    { field: "average", title: "Yearly Average", type: "numeric" },
   ];
 
   return (
