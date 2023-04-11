@@ -109,7 +109,7 @@ export default function PartJob(props) {
   // Api call to get project status for select option
   useEffect(() => {
     client
-      .get("/car_system")
+      .get("/custom_part")
       .then((res) => {
         setcustom_part_data(res.data);
       })
@@ -137,8 +137,8 @@ export default function PartJob(props) {
   ));
 
   const CustomPartOptions = custompartdata.map((custom_part) => (
-    <MenuItem value={custom_part.cust_part_id}>
-      {custom_part.cust_part_name}
+    <MenuItem value={custom_part.car_sys_id}>
+      {custom_part.car_sys_name} {(custom_part.metal_name)}
     </MenuItem>
   ));
 
