@@ -175,10 +175,10 @@ const Mechanic = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Mechanic Data"
+          title=""
           data={Mechanic}
           columns={columns}
-          style={{ backgroundColor: colors.primary[400] }}
+          style={{ backgroundColor: colors.primary[400], "padding-right": "90px" }}
           editable={{
             onRowUpdate: (updatedRow, oldRow) =>
               new Promise((resolve, reject) => {
@@ -191,6 +191,7 @@ const Mechanic = () => {
           options={{
             headerStyle: {
               fontWeight: "bold",
+              fontSize: "18px",
               backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,

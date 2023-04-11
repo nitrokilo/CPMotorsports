@@ -188,7 +188,7 @@ const Service = () => {
         <ThemeProvider theme={theme}>
           <MaterialTable
             icons={tableIcons}
-            title="Service Type Data"
+            title=""
             data={Service}
             columns={columns}
             editable={{
@@ -200,10 +200,11 @@ const Service = () => {
                   }, 1000);
                 }),
             }}
-            style={{ backgroundColor: colors.primary[400] }}
+            style={{ backgroundColor: colors.primary[400], "padding-right": "90px" }}
             options={{
               headerStyle: {
                 fontWeight: "bold",
+                fontSize: "18px",
                 backgroundColor: colors.primary[500],
               },
               actionsColumnIndex: -1,

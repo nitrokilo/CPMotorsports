@@ -262,9 +262,9 @@ export default function PartJob(props) {
       <Box m="40px 0 0 0" height="75vh">
         <MaterialTable
           icons={tableIcons}
-          title="Part Job Data"
+          title=""
           data={partjob_data}
-          style={{ backgroundColor: colors.primary[400] }}
+          style={{ backgroundColor: colors.primary[400], "padding-right": "90px" }}
           columns={columns}
           editable={{
             onRowUpdate: (updatedRow, oldRow) =>
@@ -292,6 +292,7 @@ export default function PartJob(props) {
           options={{
             headerStyle: {
               fontWeight: "bold",
+              fontSize: "18px",
               backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,

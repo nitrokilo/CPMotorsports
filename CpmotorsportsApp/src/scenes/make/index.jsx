@@ -148,7 +148,7 @@ const Make = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Make Data"
+          title=""
           data={Make}
           columns={columns}
           editable={{
@@ -160,10 +160,11 @@ const Make = () => {
                 }, 1000);
               }),
           }}
-          style={{ backgroundColor: colors.primary[400] }}
+          style={{ backgroundColor: colors.primary[400], "padding-right": "90px" }}
           options={{
             headerStyle: {
               fontWeight: "bold",
+              fontSize: "18px",
               backgroundColor: colors.primary[500],
             },
             actionsColumnIndex: -1,

@@ -194,10 +194,10 @@ const Project = () => {
         <Box m="40px 0 0 0" height="75vh">
           <MaterialTable
             icons={tableIcons}
-            title="Project Data"
+            title=""
             data={Project}
             columns={columns}
-            style={{ backgroundColor: colors.primary[400] }}
+            style={{ backgroundColor: colors.primary[400], "padding-right": "90px" }}
             actions={[
               {
                 icon: tableIcons["More"],
@@ -233,6 +233,7 @@ const Project = () => {
             options={{
               headerStyle: {
                 fontWeight: "bold",
+                fontSize: "18px",
                 backgroundColor: colors.primary[500],
               },
               actionsColumnIndex: -1,
