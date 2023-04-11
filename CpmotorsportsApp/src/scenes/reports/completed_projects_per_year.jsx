@@ -54,8 +54,8 @@ const Completed_projects_per_year = () => {
   return (
     <Box m="20px">
       <Header
-        title="Completed Projects"
-        subtitle="List of all Completed Projects"
+        title="Yearly Projects"
+        subtitle="Total Cost of Completed Projects in Past Year "
       />
       <Box
         m="40px 0 0 0"

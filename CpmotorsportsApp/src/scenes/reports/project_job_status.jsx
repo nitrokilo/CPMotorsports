@@ -52,8 +52,9 @@ const Project_Job_Status = () => {
   return (
     <Box m="20px">
       <Header
-        title="Completed Projects"
-        subtitle="List of all Completed Projects"
+        title="Projects in Progress"
+        subtitle="This query pulls information related to projects that are still being worked on that include data from make, model, project status, car system, custom part, metal type, service type, project job status and project job tables.
+        Returns a list of projects that are currently being worked on that are not completed."
       />
       <Box
         m="40px 0 0 0"

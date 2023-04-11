@@ -14,6 +14,7 @@ import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MyButton from "../global/buttonstyles";
+import * as yup from "yup";
 
 const style = {
   position: "absolute",
@@ -80,8 +81,8 @@ export default function AddCustomerCar(props) {
       >
         <Box sx={style}>
           <Header title="Add a Customer Car" />
-          <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
-            {({ values, handleBlur, handleChange, handleSubmit }) => (
+          <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={userSchema}>
+            {({ values, errors, touched, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <Box
                   display="grid"
@@ -98,11 +99,13 @@ export default function AddCustomerCar(props) {
                     required
                     variant="filled"
                     type="text"
-                    label="VIN No."
+                    label="VIN Number - (X1XX00X1XX0X11XX0)"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.vin_num}
                     name="vin_num"
+                    error={!!touched.vin_num && !!errors.vin_num}
+                    helperText={!!touched.vin_num && errors.vin_num}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <FormControl required sx={{ m: 1, minWidth: 120 }}>
@@ -175,6 +178,8 @@ export default function AddCustomerCar(props) {
                     onChange={handleChange}
                     value={values.color}
                     name="color"
+                    error={!!touched.color && !!errors.color}
+                    helperText={!!touched.color && errors.color}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <FormControl required sx={{ m: 1, minWidth: 120 }}>
@@ -197,6 +202,9 @@ export default function AddCustomerCar(props) {
                     </Select>
                   </FormControl>
                 </Box>
+                <Box display="flex" justifyContent="left" mt="5px">
+                  (*) - Means the field is required.
+                </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
                     Add Car to Customer
@@ -215,5 +223,16 @@ export default function AddCustomerCar(props) {
   );
 }
 const initialValues = {
-  description: "",
+  vin_num: "",
+  color: "",
 };
+
+const vinRegEx = /b[(A-H|J-N|P|R-Z|0-9)]{17}b/
+
+const userSchema = yup.object().shape({
+  vin_num: yup
+  .string()
+  .matches(vinRegEx, "VIN Number is not valid")
+  .required("required"),
+  color: yup.string().required("required"),
+})

@@ -14,6 +14,7 @@ import { Formik } from "formik";
 import Header from "../../components/Header";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MyButton from "../global/buttonstyles";
+import * as yup from "yup";
 
 const style = {
   position: "absolute",
@@ -64,8 +65,8 @@ export default function AddMechanic(props) {
       >
         <Box sx={style}>
           <Header title="Add Mechanic" />
-          <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
-            {({ values, handleBlur, handleChange, handleSubmit }) => (
+          <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={userSchema}>
+            {({ values, errors, touched, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <Box
                   display="grid"
@@ -87,6 +88,8 @@ export default function AddMechanic(props) {
                     onChange={handleChange}
                     value={values.mech_first_name}
                     name="mech_first_name"
+                    error={!!touched.mech_first_name && !!errors.mech_first_name}
+                    helperText={!!touched.mech_first_name && errors.mech_first_name}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -99,6 +102,8 @@ export default function AddMechanic(props) {
                     onChange={handleChange}
                     value={values.mech_last_name}
                     name="mech_last_name"
+                    error={!!touched.mech_last_name && !!errors.mech_last_name}
+                    helperText={!!touched.mech_last_name && errors.mech_last_name}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -111,6 +116,8 @@ export default function AddMechanic(props) {
                     onChange={handleChange}
                     value={values.mech_phone_number}
                     name="mech_phone_number"
+                    error={!!touched.mech_phone_number && !!errors.mech_phone_number}
+                    helperText={!!touched.mech_phone_number && errors.mech_phone_number}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -123,6 +130,8 @@ export default function AddMechanic(props) {
                     onChange={handleChange}
                     value={values.mech_email}
                     name="mech_email"
+                    error={!!touched.mech_email && !!errors.mech_email}
+                    helperText={!!touched.mech_email && errors.mech_email}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -154,6 +163,9 @@ export default function AddMechanic(props) {
                     </Select>
                   </FormControl>
                 </Box>
+                <Box display="flex" justifyContent="left" mt="5px">
+                  (*) - Means the field is required.
+                </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
                     Add Mechanic
@@ -172,5 +184,20 @@ export default function AddMechanic(props) {
   );
 }
 const initialValues = {
-  description: "",
+  mech_first_name: "",
+  mech_last_name: "",
+  mech_phone_number: "",
+  mech_email: "",
 };
+
+const phoneRegEx = /^[1-9]\d{2}-\d{3}-\d{4}/
+
+const userSchema = yup.object().shape({
+  mech_first_name: yup.string().required("required"),
+  mech_last_name: yup.string().required("required"),
+  mech_phone_number: yup
+  .string()
+  .matches(phoneRegEx, "Phone Number is not valid")
+  .required("required"),
+  mech_email: yup.string().email("Invalid Email").required("required"),
+})

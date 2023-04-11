@@ -152,6 +152,9 @@ export default function AddCustomer(props) {
                     </Select>
                   </FormControl>
                 </Box>
+                <Box display="flex" justifyContent="left" mt="5px">
+                  (*) - Means the field is required.
+                </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
                     Add Customer
