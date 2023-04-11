@@ -187,7 +187,6 @@ export default function AddPartJob(props) {
                   <TextField
                     InputLabelProps={{ shrink: true }}
                     fullWidth
-                    required
                     variant="filled"
                     type="date"
                     label="Part Service End"
@@ -223,6 +222,9 @@ export default function AddPartJob(props) {
                     name="time_with_customer"
                     sx={{ gridColumn: "span 2" }}
                   />
+                </Box>
+                <Box display="flex" justifyContent="left" mt="5px">
+                  (*) - Means the field is required.
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">

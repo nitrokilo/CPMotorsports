@@ -114,7 +114,6 @@ export default function AddProject(props) {
                   <TextField
                     InputLabelProps={{ shrink: true }}
                     fullWidth
-                    required
                     variant="filled"
                     type="date"
                     label="Project End"
@@ -143,6 +142,9 @@ export default function AddProject(props) {
                       {project_statusoptions}
                     </Select>
                   </FormControl>
+                </Box>
+                <Box display="flex" justifyContent="left" mt="5px">
+                  (*) - Means the field is required.
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">

@@ -40,7 +40,7 @@ const Custom_Parts_Per_Project = () => {
       title: "Number of Custom Parts",
       type: "numeric",
     },
-    { field: "vin_num", title: "VIn Number", flex: 0.5 },
+    { field: "vin_num", title: "VIN Number", flex: 0.5 },
     { field: "make_name", title: "Make Name", flex: 1 },
     { field: "model_name", title: "Model Name", flex: 1 },
     { field: "project_date", title: "Project Date", flex: 1 },
@@ -51,7 +51,7 @@ const Custom_Parts_Per_Project = () => {
     <Box m="20px">
       <Header
         title="Custom Parts per Project"
-        subtitle="List of all Custom Parts per Project"
+        subtitle="Custom Parts per Project"
       />
       <Box
         m="40px 0 0 0"

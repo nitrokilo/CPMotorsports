@@ -221,7 +221,7 @@ export default function PartJob(props) {
     {
       field: "actual_time_spent_hrs",
       title: "Actual Time Working",
-      editable: false,
+      editable: true,
     },
     {
       field: "time_with_customer",

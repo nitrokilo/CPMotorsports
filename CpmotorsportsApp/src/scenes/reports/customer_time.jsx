@@ -39,7 +39,7 @@ const Customer_time = () => {
     { field: "year", title: "Year", flex: 0.5 },
     {
       field: "Avg_Time_w/Customer",
-      title: "Average time With Customer in ??",
+      title: "Average time With Customer in Hours",
       flex: 1,
       type: "numeric",
     },
@@ -53,7 +53,7 @@ const Customer_time = () => {
 
   return (
     <Box m="20px">
-      <Header title="Customer Time" subtitle="List of all Customer Time" />
+      <Header title="Customer Time" subtitle="Time for Consultation vs Project Work for Past 60 Days" />
       <Box
         m="40px 0 0 0"
         height="75vh"

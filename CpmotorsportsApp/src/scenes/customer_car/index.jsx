@@ -151,7 +151,7 @@ const Car = () => {
 
   // Column Configuration
   const columns = [
-    { field: "vin_num", title: "VIN No.", flex: 0.5 },
+    { field: "vin_num", title: "VIN Number", flex: 0.5 },
     {
       field: "Customer",
       title: "Customer",
