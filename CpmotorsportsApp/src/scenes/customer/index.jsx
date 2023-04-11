@@ -106,13 +106,14 @@ const Customer = () => {
     {
       field: "customer_phone_number",
       title: "Phone Number",
+      width: 1000
     },
 
     {
       field: "customer_email",
       title: "Customer Email",
       width: 250,
-      flex: 1,
+      
     },
     {
       field: "customer_stat_name",
@@ -193,7 +194,7 @@ const Customer = () => {
           title=""
           data={Customer}
           columns={columns}
-          style={{ backgroundColor: colors.primary[400]}}
+          style={{ backgroundColor: colors.primary[400], "padding-right": "90px"} }
           editable={{
             onRowUpdate: (updatedRow, oldRow) =>
               new Promise((resolve, reject) => {
