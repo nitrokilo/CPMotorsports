@@ -89,7 +89,7 @@ const Project_Job_Status = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Customer Data"
+          title=""
           data={Data}
           columns={columns}
           style={{ backgroundColor: colors.primary[400] }}

@@ -88,7 +88,7 @@ const Customer_time = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Customer Data"
+          title=""
           data={Data}
           columns={columns}
           style={{ backgroundColor: colors.primary[400] }}

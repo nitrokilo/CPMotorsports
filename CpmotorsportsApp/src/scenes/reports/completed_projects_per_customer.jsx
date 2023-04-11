@@ -82,7 +82,7 @@ const Completed_projects = () => {
       >
         <MaterialTable
           icons={tableIcons}
-          title="Completed Projects Per Customer"
+          title=""
           data={Data}
           columns={columns}
           style={{ backgroundColor: colors.primary[400] }}
